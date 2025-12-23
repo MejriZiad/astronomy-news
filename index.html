@@ -20,19 +20,17 @@
             <div class="AN-header-content">
                 <!-- Column 1: Logo -->
                 <div class="AN-logo-section">
-                    <a href="index.html" class="AN-logo-link">
+                    <a href="/" class="AN-logo-link">
                         <div class="AN-logo fallback-logo">
                             <img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
                             <i class="fas fa-star" style="display: none;"></i>
                         </div>
                     </a>
                 </div>
-                
                 <!-- Column 2: Title -->
                 <div class="AN-title-section">
                     <h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
                 </div>
-                
                 <!-- Column 3: Options Card -->
                 <div class="AN-options-card">
                     <div class="AN-controls-compact">
@@ -44,7 +42,6 @@
                                 <option value="ar">العربية</option>
                             </select>
                         </div>
-                        
                         <div class="AN-control-group">
                             <div class="AN-theme-toggle">
                                 <input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
@@ -54,31 +51,44 @@
                                 </label>
                             </div>
                         </div>
-                        
                         <div class="AN-control-group">
                             <button class="AN-notification-btn" id="AN-notification-toggle">
                                 <i class="fas fa-bell"></i>
                                 <span class="AN-notification-badge" id="AN-notification-badge">0</span>
                             </button>
                         </div>
+                        <!-- Auth Buttons -->
+                        <div class="AN-control-group" id="AN-auth-buttons">
+                            <button class="AN-btn AN-btn-secondary AN-btn-sm" id="AN-login-btn" data-i18n="An.auth.login">Login</button>
+                            <button class="AN-btn AN-btn-primary AN-btn-sm" id="AN-register-btn" data-i18n="An.auth.register">Register</button>
+                        </div>
+                        <!-- User Menu (Hidden by default) -->
+                        <div class="AN-user-menu" id="AN-user-menu" style="display: none;">
+                            <div class="AN-user-info">
+                                <span class="AN-user-name" id="AN-user-name"></span>
+                                <i class="fas fa-user-circle AN-user-avatar"></i>
+                            </div>
+                            <div class="AN-user-dropdown">
+                                <a href="#" class="AN-user-dropdown-item" data-i18n="An.auth.profile">Profile</a>
+                                <button class="AN-user-dropdown-item" id="AN-logout-btn" data-i18n="An.auth.logout">Logout</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
             <!-- Navigation -->
             <nav class="AN-nav">
                 <ul class="AN-nav-list">
-                    <li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
-                    <li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
-                    <li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
-                    <li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
-                    <li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
-                    <li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
+                    <li class="AN-nav-item"><a href="/" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+                    <li class="AN-nav-item"><a href="/AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
+                    <li class="AN-nav-item"><a href="/AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
+                    <li class="AN-nav-item"><a href="/AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
+                    <li class="AN-nav-item"><a href="/AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                    <li class="AN-nav-item"><a href="/AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
     <!-- Main Content -->
     <main class="AN-main">
         <div class="AN-container">
@@ -87,7 +97,7 @@
                 <div class="AN-hero-content">
                     <h2 class="AN-hero-title" data-i18n="An.index.heroTitle">Exploring the Universe</h2>
                     <p class="AN-hero-text" data-i18n="An.index.heroText">Latest discoveries, missions, and cosmic events from across the universe</p>
-                    <a href="AN_explore.html" class="AN-btn AN-btn-primary" data-i18n="An.index.exploreBtn">Explore News</a>
+                    <a href="/AN_explore.html" class="AN-btn AN-btn-primary" data-i18n="An.index.exploreBtn">Explore News</a>
                 </div>
                 <div class="AN-hero-image">
                     <div class="AN-planet AN-planet-1"></div>
@@ -96,7 +106,6 @@
                     <div class="AN-stars"></div>
                 </div>
             </section>
-            
             <!-- Featured News Section -->
             <section class="AN-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -107,23 +116,19 @@
                         <button class="AN-category-btn" data-category="local" data-i18n="An.index.localNews">Tunisia</button>
                     </div>
                 </div>
-                
                 <div class="AN-news-grid" id="AN-news-container">
                     <!-- News cards will be dynamically generated here -->
                 </div>
             </section>
-            
             <!-- Upcoming Events Section -->
             <section class="AN-section">
                 <h2 class="AN-section-title" data-i18n="An.index.upcomingEvents">Upcoming Events</h2>
-                
                 <div class="AN-events-list" id="AN-events-container">
                     <!-- Event items will be dynamically generated here -->
                 </div>
             </section>
         </div>
     </main>
-
     <!-- Footer -->
     <footer class="AN-footer">
         <div class="AN-container">
@@ -133,26 +138,23 @@
                     <h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
                     <p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
                 </div>
-                
                 <!-- Column 2: Developer -->
                 <div class="AN-footer-section">
                     <h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
                     <p class="AN-footer-text">Mejri Ziad</p>
                 </div>
-                
                 <!-- Column 3: Quick Links -->
                 <div class="AN-footer-section">
                     <h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
                     <ul class="AN-footer-links">
-                        <li><a href="index.html" data-i18n="An.index.home">Home</a></li>
-                        <li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
-                        <li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
-                        <li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
-                        <li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
-                        <li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+                        <li><a href="/" data-i18n="An.index.home">Home</a></li>
+                        <li><a href="/AN_news.html" data-i18n="An.index.news">News</a></li>
+                        <li><a href="/AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+                        <li><a href="/AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+                        <li><a href="/AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                        <li><a href="/AN_about.html" data-i18n="An.index.about">About</a></li>
                     </ul>
                 </div>
-                
                 <!-- Column 4: Legal -->
                 <div class="AN-footer-section">
                     <h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
@@ -162,9 +164,111 @@
                     </ul>
                 </div>
             </div>
+            <div class="AN-footer-bottom">
+                <p>&copy; 2025 Astronomy News. All rights reserved.</p>
+            </div>
         </div>
     </footer>
-
+    
+    <!-- Registration Modal -->
+    <div class="AN-registration-modal" id="AN-registration-modal">
+        <div class="AN-registration-modal-content">
+            <div class="AN-registration-modal-header">
+                <h3 data-i18n="An.auth.register">Register</h3>
+                <button class="AN-registration-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-registration-modal-body">
+                <div class="AN-registration-tabs">
+                    <button class="AN-registration-tab active" data-form="login" data-i18n="An.auth.login">Login</button>
+                    <button class="AN-registration-tab" data-form="register" data-i18n="An.auth.register">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="AN-login-form" class="AN-registration-form active">
+                    <div class="AN-form-group">
+                        <label for="AN-login-email" class="AN-form-label" data-i18n="An.auth.email">Email</label>
+                        <input type="email" id="AN-login-email" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group">
+                        <label for="AN-login-password" class="AN-form-label" data-i18n="An.auth.password">Password</label>
+                        <input type="password" id="AN-login-password" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group AN-form-checkbox">
+                        <input type="checkbox" id="AN-remember-me">
+                        <label for="AN-remember-me" data-i18n="An.auth.rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="AN-btn AN-btn-primary AN-btn-block" data-i18n="An.auth.signIn">Sign In</button>
+                    <div class="AN-form-divider">
+                        <span data-i18n="An.auth.or">or</span>
+                    </div>
+                    <button type="button" class="AN-btn AN-btn-secondary AN-btn-block">
+                        <i class="fab fa-google"></i>
+                        <span data-i18n="An.auth.loginWithGoogle">Login with Google</span>
+                    </button>
+                    <div class="AN-form-footer">
+                        <a href="#" data-i18n="An.auth.forgotPassword">Forgot password?</a>
+                        <span data-i18n="An.auth.noAccount">Don't have an account? <a href="#" id="AN-switch-to-register">Sign up</a></span>
+                    </div>
+                </form>
+                
+                <!-- Register Form -->
+                <form id="AN-register-form" class="AN-registration-form">
+                    <div class="AN-form-group">
+                        <label for="AN-register-name" class="AN-form-label" data-i18n="An.auth.name">Full Name</label>
+                        <input type="text" id="AN-register-name" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group">
+                        <label for="AN-register-username" class="AN-form-label" data-i18n="An.auth.username">Username</label>
+                        <input type="text" id="AN-register-username" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group">
+                        <label for="AN-register-email" class="AN-form-label" data-i18n="An.auth.email">Email</label>
+                        <input type="email" id="AN-register-email" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group">
+                        <label for="AN-register-password" class="AN-form-label" data-i18n="An.auth.password">Password</label>
+                        <input type="password" id="AN-register-password" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group">
+                        <label for="AN-register-confirm-password" class="AN-form-label" data-i18n="An.auth.confirmPassword">Confirm Password</label>
+                        <input type="password" id="AN-register-confirm-password" class="AN-form-input" required>
+                    </div>
+                    <div class="AN-form-group AN-form-checkbox">
+                        <input type="checkbox" id="AN-agree-terms" required>
+                        <label for="AN-agree-terms" data-i18n="An.auth.agreeTerms">I agree to the Terms and Privacy Policy</label>
+                    </div>
+                    <button type="submit" class="AN-btn AN-btn-primary AN-btn-block" data-i18n="An.auth.signUp">Sign Up</button>
+                    <div class="AN-form-footer">
+                        <span data-i18n="An.auth.haveAccount">Already have an account? <a href="#" id="AN-switch-to-login">Sign in</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reaction Modal (for comments) -->
+    <div class="AN-reaction-modal" id="AN-reaction-modal">
+        <div class="AN-reaction-modal-content">
+            <div class="AN-reaction-modal-header">
+                <h3 id="AN-reaction-modal-title"></h3>
+                <button class="AN-reaction-modal-close" id="AN-reaction-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-reaction-modal-body">
+                <div class="AN-comment-form">
+                    <textarea id="AN-comment-input" placeholder="Add your comment..." rows="4" data-i18n-placeholder="An.reaction.addComment"></textarea>
+                    <button id="AN-submit-comment" class="AN-btn AN-btn-primary" data-i18n="An.reaction.postComment">Post Comment</button>
+                </div>
+                <div class="AN-comments-list" id="AN-comments-list">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Notification Panel -->
     <div class="AN-notification-panel" id="AN-notification-panel">
         <div class="AN-notification-header">
@@ -177,7 +281,7 @@
             <!-- Notifications will be dynamically generated here -->
         </div>
     </div>
-
+    
     <!-- Event Modal -->
     <div class="AN-event-modal" id="AN-event-modal">
         <div class="AN-event-modal-content">
@@ -201,77 +305,46 @@
             </div>
         </div>
     </div>
-
-    <!-- Reaction Modal (for comments) -->
-    <div class="AN-reaction-modal" id="AN-reaction-modal">
-        <div class="AN-reaction-modal-content">
-            <div class="AN-reaction-modal-header">
-                <h3 id="AN-reaction-modal-title"></h3>
-                <button class="AN-reaction-modal-close" id="AN-reaction-modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="AN-reaction-modal-body">
-                <div class="AN-comment-form">
-                    <textarea id="AN-comment-input" placeholder="Add your comment..." rows="4"></textarea>
-                    <button id="AN-submit-comment" class="AN-btn AN-btn-primary">Post Comment</button>
-                </div>
-                <div class="AN-comments-list" id="AN-comments-list">
-                    <!-- Comments will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
+    <!-- Scripts -->
     <script src="pwa-main.js"></script>
     <script src="data.js"></script>
     <script src="data_processing.js"></script>
     <script src="translation.js"></script>
+    <script src="router.js"></script>
+    <script src="share-manager.js"></script>
     <script src="app.js"></script>
     <script>
-        // Theme toggle functionality
+        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            const themeSwitch = document.getElementById('AN-theme-switch');
-            const body = document.body;
-            
-            // Check for saved theme preference
-            const savedTheme = localStorage.getItem('AN-theme') || 
-                              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            
-            if (savedTheme === 'dark') {
-                body.classList.add('AN-dark-mode');
-                themeSwitch.checked = true;
+            if (typeof AN_initializeApp === 'function') {
+                AN_initializeApp();
             }
             
-            // Toggle theme
-            themeSwitch.addEventListener('change', function() {
-                if (this.checked) {
-                    body.classList.add('AN-dark-mode');
-                    localStorage.setItem('AN-theme', 'dark');
-                } else {
-                    body.classList.remove('AN-dark-mode');
-                    localStorage.setItem('AN-theme', 'light');
+            // Setup tab switching in registration modal
+            document.getElementById('AN-switch-to-register')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modal = document.getElementById('AN-registration-modal');
+                if (modal) {
+                    const tabs = modal.querySelectorAll('.AN-registration-tab');
+                    tabs.forEach(tab => {
+                        if (tab.dataset.form === 'register') {
+                            tab.click();
+                        }
+                    });
                 }
             });
             
-            // Notification panel toggle
-            const notificationToggle = document.getElementById('AN-notification-toggle');
-            const notificationPanel = document.getElementById('AN-notification-panel');
-            const closeNotifications = document.getElementById('AN-close-notifications');
-            
-            notificationToggle.addEventListener('click', function() {
-                notificationPanel.classList.toggle('AN-active');
-            });
-            
-            closeNotifications.addEventListener('click', function() {
-                notificationPanel.classList.remove('AN-active');
-            });
-            
-            // Close notification panel when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!notificationToggle.contains(event.target) && 
-                    !notificationPanel.contains(event.target)) {
-                    notificationPanel.classList.remove('AN-active');
+            document.getElementById('AN-switch-to-login')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modal = document.getElementById('AN-registration-modal');
+                if (modal) {
+                    const tabs = modal.querySelectorAll('.AN-registration-tab');
+                    tabs.forEach(tab => {
+                        if (tab.dataset.form === 'login') {
+                            tab.click();
+                        }
+                    });
                 }
             });
             
@@ -280,11 +353,6 @@
                 navigator.serviceWorker.register('/sw.js')
                     .then(() => console.log('Service Worker registered'))
                     .catch(err => console.error('Service Worker registration failed:', err));
-            }
-            
-            // Initialize app
-            if (typeof AN_initializeApp === 'function') {
-                AN_initializeApp();
             }
         });
     </script>
