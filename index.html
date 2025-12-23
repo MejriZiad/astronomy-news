@@ -9,6 +9,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#4a6fa5">
     <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Astronomy News">
     <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
@@ -193,7 +194,7 @@
                     </div>
                     <div class="AN-form-group">
                         <label for="AN-login-password" class="AN-form-label" data-i18n="An.auth.password">Password</label>
-                        <input type="password" id="AN-login-password" class="AN-form-input" required>
+                        <input type="password" id="AN-login-password" class="AN-form-input" required autocomplete="current-password">
                     </div>
                     <div class="AN-form-group AN-form-checkbox">
                         <input type="checkbox" id="AN-remember-me">
@@ -229,11 +230,11 @@
                     </div>
                     <div class="AN-form-group">
                         <label for="AN-register-password" class="AN-form-label" data-i18n="An.auth.password">Password</label>
-                        <input type="password" id="AN-register-password" class="AN-form-input" required>
+                        <input type="password" id="AN-register-password" class="AN-form-input" required autocomplete="new-password">
                     </div>
                     <div class="AN-form-group">
                         <label for="AN-register-confirm-password" class="AN-form-label" data-i18n="An.auth.confirmPassword">Confirm Password</label>
-                        <input type="password" id="AN-register-confirm-password" class="AN-form-input" required>
+                        <input type="password" id="AN-register-confirm-password" class="AN-form-input" required autocomplete="new-password">
                     </div>
                     <div class="AN-form-group AN-form-checkbox">
                         <input type="checkbox" id="AN-agree-terms" required>
