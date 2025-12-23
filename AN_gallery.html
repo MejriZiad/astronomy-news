@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomy News - Astronomy Gallery</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="manifest" href="/manifest.json">
+   <meta name="theme-color" content="#4a6fa5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <meta name="apple-mobile-web-app-title" content="Astronomy News">
+   <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <style>
+        /* Gallery-specific color palette - Nebula Inspired */
+        :root {
+            --AN-gallery-primary: #7c3aed; /* Cosmic purple */
+            --AN-gallery-secondary: #06b6d4; /* Nebula cyan */
+            --AN-gallery-accent: #f59e0b; /* Starlight amber */
+            --AN-gallery-bg: #0f172a; /* Deep space indigo */
+            --AN-gallery-card: #1e293b; /* Galaxy card */
+            --AN-gallery-text: #e2e8f0; /* Cosmic light */
+            --AN-gallery-border: #334155; /* Space border */
+            --AN-gallery-hover: #8b5cf6; /* Vibrant purple */
+        }
+        
+        .AN-body-gallery {
+            --AN-primary-color: var(--AN-gallery-primary);
+            --AN-secondary-color: var(--AN-gallery-secondary);
+            --AN-accent-color: var(--AN-gallery-accent);
+            --AN-bg-color: var(--AN-gallery-bg);
+            --AN-card-bg: var(--AN-gallery-card);
+            --AN-text-color: var(--AN-gallery-text);
+            --AN-border-color: var(--AN-gallery-border);
+            --AN-header-bg: var(--AN-gallery-card);
+            --AN-footer-bg: #0d1b2a;
+        }
+        
+        /* Gallery-specific body styles */
+        .AN-body-gallery {
+            background-color: var(--AN-bg-color);
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 30%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Floating stars effect */
+        .AN-gallery-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .AN-star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: AN-twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        @keyframes AN-twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        /* Gallery Page Header */
+        .AN-gallery-header {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 var(--AN-radius) var(--AN-radius);
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, var(--AN-gallery-primary), var(--AN-gallery-secondary));
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .AN-gallery-header-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+            max-width: 800px;
+        }
+        
+        .AN-gallery-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .AN-gallery-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        /* Gallery Stats */
+        .AN-gallery-stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .AN-gallery-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--AN-radius);
+            padding: 15px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .AN-gallery-stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+        
+        .AN-gallery-stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        /* Gallery Filter */
+        .AN-gallery-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            justify-content: center;
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            background-color: var(--AN-card-bg);
+            padding: 15px;
+            border-radius: var(--AN-radius);
+            border: 1px solid var(--AN-border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .AN-gallery-filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--AN-border-color);
+            background-color: var(--AN-card-bg);
+            color: var(--AN-text-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--AN-transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .AN-gallery-filter-btn:hover {
+            background-color: var(--AN-gallery-primary);
+            color: white;
+            border-color: var(--AN-gallery-primary);
+            transform: translateY(-2px);
+        }
+        
+        .AN-gallery-filter-btn.AN-active {
+            background-color: var(--AN-gallery-primary);
+            color: white;
+            border-color: var(--AN-gallery-primary);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+        
+        /* Gallery Grid - Masonry Style */
+        .AN-gallery-grid {
+            columns: 4 300px;
+            column-gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .AN-gallery-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            position: relative;
+            border-radius: var(--AN-radius);
+            overflow: hidden;
+            background-color: var(--AN-card-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--AN-transition);
+            cursor: pointer;
+        }
+        
+        .AN-gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.2);
+        }
+        
+        .AN-gallery-item-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-gallery-item:hover .AN-gallery-item-image {
+            transform: scale(1.05);
+        }
+        
+        .AN-gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: var(--AN-transition);
+        }
+        
+        .AN-gallery-item:hover .AN-gallery-item-overlay {
+            transform: translateY(0);
+        }
+        
+        .AN-gallery-item-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .AN-gallery-item-category {
+            font-size: 14px;
+            color: var(--AN-gallery-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .AN-gallery-item-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Gallery Modal */
+        .AN-gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .AN-gallery-modal.AN-active {
+            display: flex;
+            opacity: 1;
+            animation: AN-modal-fade-in 0.3s ease;
+        }
+        
+        .AN-gallery-modal-content {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            width: 100%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: AN-modal-slide-up 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .AN-gallery-modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--AN-border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--AN-card-bg);
+        }
+        
+        .AN-gallery-modal-title {
+            font-size: 24px;
+            color: var(--AN-text-color);
+            margin: 0;
+            flex: 1;
+        }
+        
+        .AN-gallery-modal-close {
+            background: none;
+            border: none;
+            color: var(--AN-text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--AN-transition);
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .AN-gallery-modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--AN-gallery-accent);
+        }
+        
+        .AN-gallery-modal-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 0;
+        }
+        
+        .AN-gallery-modal-image-container {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #000;
+        }
+        
+        .AN-gallery-modal-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: var(--AN-radius);
+        }
+        
+        .AN-gallery-modal-info {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .AN-gallery-modal-description {
+            margin-bottom: 25px;
+        }
+        
+        .AN-gallery-modal-description h3 {
+            color: var(--AN-gallery-accent);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .AN-gallery-modal-description p {
+            line-height: 1.7;
+            color: var(--AN-text-color);
+        }
+        
+        .AN-gallery-modal-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .AN-gallery-modal-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .AN-gallery-modal-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--AN-gallery-accent);
+            font-weight: 600;
+        }
+        
+        .AN-gallery-modal-value {
+            font-size: 16px;
+            color: var(--AN-text-color);
+        }
+        
+        .AN-gallery-modal-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-top: 1px solid var(--AN-border-color);
+            background-color: var(--AN-card-bg);
+        }
+        
+        .AN-gallery-modal-btn {
+            background: none;
+            border: 1px solid var(--AN-border-color);
+            color: var(--AN-text-color);
+            padding: 10px 20px;
+            border-radius: var(--AN-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-gallery-modal-btn:hover {
+            background-color: var(--AN-gallery-primary);
+            color: white;
+            border-color: var(--AN-gallery-primary);
+        }
+        
+        .AN-gallery-modal-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        /* Gallery Load More Button */
+        .AN-gallery-load-more {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .AN-gallery-load-more-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--AN-gallery-primary), var(--AN-gallery-secondary));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--AN-transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .AN-gallery-load-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+        
+        /* Gallery No Results */
+        .AN-gallery-no-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .AN-gallery-no-results i {
+            font-size: 64px;
+            color: var(--AN-gallery-primary);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .AN-gallery-no-results h3 {
+            color: var(--AN-text-color);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .AN-gallery-no-results p {
+            color: var(--AN-text-color);
+            opacity: 0.7;
+        }
+        
+        /* Animations */
+        @keyframes AN-modal-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes AN-modal-slide-up {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes AN-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .AN-pulse {
+            animation: AN-pulse 2s infinite;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .AN-gallery-grid {
+                columns: 3 250px;
+            }
+            
+            .AN-gallery-modal-body {
+                flex-direction: column;
+            }
+            
+            .AN-gallery-modal-image-container {
+                flex: none;
+                height: 300px;
+            }
+            
+            .AN-gallery-modal-image {
+                max-height: 250px;
+            }
+            
+            .AN-gallery-title {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .AN-gallery-grid {
+                columns: 2 200px;
+            }
+            
+            .AN-gallery-title {
+                font-size: 32px;
+            }
+            
+            .AN-gallery-subtitle {
+                font-size: 18px;
+            }
+            
+            .AN-gallery-filter {
+                top: 60px;
+                padding: 10px;
+            }
+            
+            .AN-gallery-filter-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .AN-gallery-modal-content {
+                max-width: 95%;
+            }
+            
+            .AN-gallery-modal-header {
+                padding: 15px 20px;
+            }
+            
+            .AN-gallery-modal-title {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .AN-gallery-grid {
+                columns: 1 100%;
+            }
+            
+            .AN-gallery-header {
+                min-height: 250px;
+            }
+            
+            .AN-gallery-stats {
+                gap: 10px;
+            }
+            
+            .AN-gallery-stat {
+                padding: 10px 15px;
+            }
+            
+            .AN-gallery-stat-number {
+                font-size: 24px;
+            }
+            
+            .AN-gallery-filter {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 5px;
+            }
+            
+            .AN-gallery-filter::-webkit-scrollbar {
+                height: 4px;
+            }
+            
+            .AN-gallery-filter::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            
+            .AN-gallery-filter::-webkit-scrollbar-thumb {
+                background: var(--AN-gallery-primary);
+                border-radius: 2px;
+            }
+            
+            .AN-gallery-modal-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* RTL support for gallery */
+        .AN-rtl .AN-gallery-item-badge {
+            right: auto;
+            left: 15px;
+        }
+        
+        .AN-rtl .AN-gallery-filter {
+            direction: rtl;
+        }
+        
+        .AN-rtl .AN-gallery-modal-nav {
+            direction: rtl;
+        }
+        
+        .AN-rtl .AN-gallery-modal-btn {
+            flex-direction: row-reverse;
+        }
+        
+        /* Gallery item animations */
+        .AN-gallery-item {
+            animation: AN-item-fade-in 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes AN-item-fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="AN-body AN-body-gallery">
+    <!-- Header Section -->
+    <header class="AN-header">
+        <div class="AN-container">
+            <div class="AN-header-content">
+                <!-- Column 1: Logo (1/4) -->
+                <div class="AN-logo-section">
+                    <a href="index.html" class="AN-logo-link">
+                        <div class="AN-logo fallback-logo">
+                            <img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
+                            <i class="fas fa-star" style="display: none;"></i>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Column 2: Title (2/4) -->
+                <div class="AN-title-section">
+                    <h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
+                </div>
+                
+                <!-- Column 3: Options Card (1/4) -->
+                <div class="AN-options-card">
+                    <div class="AN-controls-compact">
+                        <div class="AN-control-group">
+                            <label for="AN-language-select" class="AN-control-label" data-i18n="An.index.language">Language:</label>
+                            <select id="AN-language-select" class="AN-select">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="ar">العربية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <div class="AN-theme-toggle">
+                                <input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
+                                <label for="AN-theme-switch" class="AN-theme-slider">
+                                    <span class="AN-theme-icon AN-theme-sun"><i class="fas fa-sun"></i></span>
+                                    <span class="AN-theme-icon AN-theme-moon"><i class="fas fa-moon"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <button class="AN-notification-btn" id="AN-notification-toggle">
+                                <i class="fas fa-bell"></i>
+                                <span class="AN-notification-badge" id="AN-notification-badge">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="AN-nav">
+                <ul class="AN-nav-list">
+                    <li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+                    <li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
+                    <li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
+                    <li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link AN-active" data-i18n="An.index.gallery">Gallery</a></li>
+                    <li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                    <li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Gallery Page Header -->
+    <div class="AN-gallery-header">
+        <div class="AN-stars"></div>
+        <div class="AN-gallery-header-content">
+            <h1 class="AN-gallery-title">
+                <i class="fas fa-images AN-pulse"></i> <span data-i18n="An.gallery.title">Cosmic Gallery</span>
+            </h1>
+            <p class="AN-gallery-subtitle" data-i18n="An.gallery.subtitle">Explore stunning astronomical images from telescopes and space missions around the world. Marvel at galaxies, nebulae, planets, and cosmic phenomena.</p>
+            
+            <div class="AN-gallery-stats">
+                <div class="AN-gallery-stat">
+                    <span class="AN-gallery-stat-number" id="AN-total-images">0</span>
+                    <span class="AN-gallery-stat-label" data-i18n="An.gallery.totalImages">Total Images</span>
+                </div>
+                <div class="AN-gallery-stat">
+                    <span class="AN-gallery-stat-number" id="AN-categories">0</span>
+                    <span class="AN-gallery-stat-label" data-i18n="An.gallery.categories">Categories</span>
+                </div>
+                <div class="AN-gallery-stat">
+                    <span class="AN-gallery-stat-number" id="AN-tunisia-images">0</span>
+                    <span class="AN-gallery-stat-label" data-i18n="An.gallery.tunisiaImages">Tunisia Related</span>
+                </div>
+                <div class="AN-gallery-stat">
+                    <span class="AN-gallery-stat-number" id="AN-last-updated">2023</span>
+                    <span class="AN-gallery-stat-label" data-i18n="An.gallery.lastUpdated">Last Updated</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="AN-main">
+        <div class="AN-container">
+            <!-- Gallery Filter -->
+            <section class="AN-section">
+                <div class="AN-gallery-filter" id="AN-gallery-filter">
+                    <button class="AN-gallery-filter-btn AN-active" data-filter="all" data-i18n="An.gallery.all">All Images</button>
+                    <button class="AN-gallery-filter-btn" data-filter="galaxies">
+                        <i class="fas fa-galactic-republic"></i> <span data-i18n="An.gallery.galaxies">Galaxies</span>
+                    </button>
+                    <button class="AN-gallery-filter-btn" data-filter="nebulae">
+                        <i class="fas fa-cloud"></i> <span data-i18n="An.gallery.nebulae">Nebulae</span>
+                    </button>
+                    <button class="AN-gallery-filter-btn" data-filter="planets">
+                        <i class="fas fa-globe"></i> <span data-i18n="An.gallery.planets">Planets</span>
+                    </button>
+                    <button class="AN-gallery-filter-btn" data-filter="stars">
+                        <i class="fas fa-star"></i> <span data-i18n="An.gallery.stars">Stars</span>
+                    </button>
+                    <button class="AN-gallery-filter-btn" data-filter="tunisia">
+                        <i class="fas fa-flag"></i> <span data-i18n="An.gallery.tunisia">Tunisia</span>
+                    </button>
+                    <button class="AN-gallery-filter-btn" data-filter="telescopes">
+                        <i class="fas fa-satellite"></i> <span data-i18n="An.gallery.telescopes">Telescopes</span>
+                    </button>
+                </div>
+                
+                <!-- Gallery Grid -->
+                <div class="AN-gallery-grid" id="AN-gallery-container">
+                    <!-- Gallery items will be dynamically generated here -->
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="AN-gallery-load-more" id="AN-load-more-container">
+                    <button class="AN-gallery-load-more-btn" id="AN-load-more-btn" data-i18n="An.gallery.loadMore">
+                        <i class="fas fa-plus"></i> Load More Images
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Gallery Information -->
+            <section class="AN-section">
+                <h2 class="AN-section-title" data-i18n="An.gallery.aboutImages">About These Images</h2>
+                <div class="AN-about-gallery">
+                    <p data-i18n="An.gallery.aboutDescription">The images in this gallery are collected from various space agencies including NASA, ESA, and other astronomical observatories. Each image is accompanied by detailed information about the object, the telescope used, and the significance of the observation.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Gallery Modal -->
+    <div class="AN-gallery-modal" id="AN-gallery-modal">
+        <div class="AN-gallery-modal-content">
+            <div class="AN-gallery-modal-header">
+                <h2 class="AN-gallery-modal-title" id="AN-modal-title">Image Title</h2>
+                <button class="AN-gallery-modal-close" id="AN-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-gallery-modal-body">
+                <div class="AN-gallery-modal-image-container">
+                    <img src="" alt="" class="AN-gallery-modal-image" id="AN-modal-image">
+                </div>
+                <div class="AN-gallery-modal-info" id="AN-modal-info">
+                    <!-- Modal info will be inserted here -->
+                </div>
+            </div>
+            <div class="AN-gallery-modal-nav">
+                <button class="AN-gallery-modal-btn" id="AN-modal-prev">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span id="AN-modal-counter">1 of 10</span>
+                <button class="AN-gallery-modal-btn" id="AN-modal-next">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="AN-footer">
+        <div class="AN-container">
+            <div class="AN-footer-content">
+                <!-- Column 1: Information -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
+                    <p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
+                </div>
+                
+                <!-- Column 2: Developer -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
+                    <p class="AN-footer-text">Mejri Ziad</p>
+                </div>
+                
+                <!-- Column 3: Quick Links -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="index.html" data-i18n="An.index.home">Home</a></li>
+                        <li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
+                        <li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+                        <li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+                        <li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                        <li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="#" data-i18n="An.index.privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="An.index.termsOfUse">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Panel -->
+    <div class="AN-notification-panel" id="AN-notification-panel">
+        <div class="AN-notification-header">
+            <h3 data-i18n="An.index.notifications">Notifications</h3>
+            <button class="AN-close-btn" id="AN-close-notifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="AN-notification-list" id="AN-notification-list">
+            <!-- Notifications will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Floating Stars Effect Script -->
+    <div class="AN-gallery-stars" id="AN-stars-container"></div>
+
+    <script src="data.js"></script>
+<script src="data_processing.js"></script>
+    <script src="translation.js"></script>
+    <script src="data_gallery.js"></script>
+    <script>
+        // Add gallery translations to the global translations object
+        const AN_gallery_translations = {
+            en: {
+                'An.gallery.title': 'Cosmic Gallery',
+                'An.gallery.subtitle': 'Explore stunning astronomical images from telescopes and space missions around the world. Marvel at galaxies, nebulae, planets, and cosmic phenomena.',
+                'An.gallery.totalImages': 'Total Images',
+                'An.gallery.categories': 'Categories',
+                'An.gallery.tunisiaImages': 'Tunisia Related',
+                'An.gallery.lastUpdated': 'Last Updated',
+                'An.gallery.all': 'All Images',
+                'An.gallery.galaxies': 'Galaxies',
+                'An.gallery.nebulae': 'Nebulae',
+                'An.gallery.planets': 'Planets',
+                'An.gallery.stars': 'Stars',
+                'An.gallery.tunisia': 'Tunisia',
+                'An.gallery.telescopes': 'Telescopes',
+                'An.gallery.loadMore': 'Load More Images',
+                'An.gallery.aboutImages': 'About These Images',
+                'An.gallery.aboutDescription': 'The images in this gallery are collected from various space agencies including NASA, ESA, and other astronomical observatories. Each image is accompanied by detailed information about the object, the telescope used, and the significance of the observation.',
+                'An.gallery.noImagesFound': 'No images found in this category',
+                'An.gallery.tryDifferentFilter': 'Try selecting a different category',
+                'An.gallery.imageDetails': 'Image Details',
+                'An.gallery.telescope': 'Telescope/Instrument',
+                'An.gallery.date': 'Date Captured',
+                'An.gallery.location': 'Location',
+                'An.gallery.description': 'Description',
+                'An.gallery.download': 'Download Image',
+                'An.gallery.share': 'Share',
+                'An.gallery.previous': 'Previous',
+                'An.gallery.next': 'Next'
+            },
+            fr: {
+                'An.gallery.title': 'Galerie Cosmique',
+                'An.gallery.subtitle': 'Explorez de superbes images astronomiques provenant de télescopes et de missions spatiales du monde entier. Admirez les galaxies, nébuleuses, planètes et phénomènes cosmiques.',
+                'An.gallery.totalImages': 'Images Totales',
+                'An.gallery.categories': 'Catégories',
+                'An.gallery.tunisiaImages': 'Liées à la Tunisie',
+                'An.gallery.lastUpdated': 'Dernière Mise à Jour',
+                'An.gallery.all': 'Toutes les Images',
+                'An.gallery.galaxies': 'Galaxies',
+                'An.gallery.nebulae': 'Nébuleuses',
+                'An.gallery.planets': 'Planètes',
+                'An.gallery.stars': 'Étoiles',
+                'An.gallery.tunisia': 'Tunisie',
+                'An.gallery.telescopes': 'Télescopes',
+                'An.gallery.loadMore': 'Charger Plus d\'Images',
+                'An.gallery.aboutImages': 'À Propos de Ces Images',
+                'An.gallery.aboutDescription': 'Les images de cette galerie sont collectées auprès de diverses agences spatiales, notamment la NASA, l\'ESA et d\'autres observatoires astronomiques. Chaque image est accompagnée d\'informations détaillées sur l\'objet, le télescope utilisé et l\'importance de l\'observation.',
+                'An.gallery.noImagesFound': 'Aucune image trouvée dans cette catégorie',
+                'An.gallery.tryDifferentFilter': 'Essayez de sélectionner une catégorie différente',
+                'An.gallery.imageDetails': 'Détails de l\'Image',
+                'An.gallery.telescope': 'Télescope/Instrument',
+                'An.gallery.date': 'Date de Capture',
+                'An.gallery.location': 'Localisation',
+                'An.gallery.description': 'Description',
+                'An.gallery.download': 'Télécharger l\'Image',
+                'An.gallery.share': 'Partager',
+                'An.gallery.previous': 'Précédent',
+                'An.gallery.next': 'Suivant'
+            },
+            ar: {
+                'An.gallery.title': 'المعرض الكوني',
+                'An.gallery.subtitle': 'استكشف صورًا فلكية مذهلة من التلسكوبات والبعثات الفضائية حول العالم. انبهر بالمجرات والسدم والكواكب والظواهر الكونية.',
+                'An.gallery.totalImages': 'إجمالي الصور',
+                'An.gallery.categories': 'الفئات',
+                'An.gallery.tunisiaImages': 'مرتبطة بتونس',
+                'An.gallery.lastUpdated': 'آخر تحديث',
+                'An.gallery.all': 'جميع الصور',
+                'An.gallery.galaxies': 'المجرات',
+                'An.gallery.nebulae': 'السدم',
+                'An.gallery.planets': 'الكواكب',
+                'An.gallery.stars': 'النجوم',
+                'An.gallery.tunisia': 'تونس',
+                'An.gallery.telescopes': 'التلسكوبات',
+                'An.gallery.loadMore': 'تحميل المزيد من الصور',
+                'An.gallery.aboutImages': 'حول هذه الصور',
+                'An.gallery.aboutDescription': 'تم جمع الصور في هذا المعرض من وكالات فضائية مختلفة بما في ذلك ناسا ووكالة الفضاء الأوروبية ومراصد فلكية أخرى. كل صورة مصحوبة بمعلومات مفصلة عن الجسم الفلكي والتلسكوب المستخدم وأهمية الملاحظة.',
+                'An.gallery.noImagesFound': 'لم يتم العثور على صور في هذه الفئة',
+                'An.gallery.tryDifferentFilter': 'حاول اختيار فئة مختلفة',
+                'An.gallery.imageDetails': 'تفاصيل الصورة',
+                'An.gallery.telescope': 'التلسكوب/الأداة',
+                'An.gallery.date': 'تاريخ الالتقاط',
+                'An.gallery.location': 'الموقع',
+                'An.gallery.description': 'الوصف',
+                'An.gallery.download': 'تنزيل الصورة',
+                'An.gallery.share': 'مشاركة',
+                'An.gallery.previous': 'السابق',
+                'An.gallery.next': 'التالي'
+            }
+        };
+
+        // Merge gallery translations with existing translations
+        Object.keys(AN_gallery_translations).forEach(lang => {
+            if (AN_translations[lang]) {
+                Object.assign(AN_translations[lang], AN_gallery_translations[lang]);
+            }
+        });
+
+        // Function to get translated text
+        function AN_getTranslatedText(key, language) {
+            if (AN_translations[language] && AN_translations[language][key]) {
+                return AN_translations[language][key];
+            }
+            // Fallback to English if translation not found
+            return AN_translations['en'][key] || key;
+        }
+
+        // Create floating stars effect
+        function AN_createStars() {
+            const starsContainer = document.getElementById('AN-stars-container');
+            if (!starsContainer) return;
+            
+            starsContainer.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'AN-star';
+                
+                // Random properties
+                const size = Math.random() * 3;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = 3 + Math.random() * 5;
+                const delay = Math.random() * 5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.opacity = 0.2 + Math.random() * 0.8;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Function to update gallery statistics
+        function AN_updateGalleryStats() {
+            // Calculate total images
+            const totalImages = AN_gallery_data.length;
+            
+            // Calculate unique categories
+            const categories = new Set();
+            AN_gallery_data.forEach(item => {
+                categories.add(item.category);
+            });
+            const uniqueCategories = categories.size;
+            
+            // Calculate Tunisia images
+            const tunisiaImages = AN_gallery_data.filter(item => item.category === 'tunisia').length;
+            
+            // Get latest year from images
+            const years = AN_gallery_data.map(item => {
+                const date = new Date(item.date);
+                return date.getFullYear();
+            });
+            const latestYear = Math.max(...years);
+            
+            // Update the DOM elements
+            document.getElementById('AN-total-images').textContent = totalImages;
+            document.getElementById('AN-categories').textContent = uniqueCategories;
+            document.getElementById('AN-tunisia-images').textContent = tunisiaImages;
+            document.getElementById('AN-last-updated').textContent = latestYear;
+        }
+
+        // Function to render gallery items with pagination
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const itemsPerPage = 12;
+        
+        function AN_renderGallery(language, filter = 'all', page = 1) {
+            const container = document.getElementById('AN-gallery-container');
+            const loadMoreContainer = document.getElementById('AN-load-more-container');
+            const loadMoreBtn = document.getElementById('AN-load-more-btn');
+            
+            if (!container) return;
+            
+            // Update current filter and page
+            currentFilter = filter;
+            currentPage = page;
+            
+            // Filter images
+            let images = AN_gallery_data;
+            if (filter !== 'all') {
+                images = images.filter(image => image.category === filter);
+            }
+            
+            // Calculate total pages
+            const totalPages = Math.ceil(images.length / itemsPerPage);
+            
+            // Get images for current page
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageImages = images.slice(startIndex, endIndex);
+            
+            // Clear container if it's the first page
+            if (page === 1) {
+                container.innerHTML = '';
+            }
+            
+            // Update load more button
+            if (loadMoreContainer && loadMoreBtn) {
+                if (page >= totalPages) {
+                    loadMoreContainer.style.display = 'none';
+                } else {
+                    loadMoreContainer.style.display = 'block';
+                    loadMoreBtn.textContent = `${AN_getTranslatedText('An.gallery.loadMore', language)} (${pageImages.length}/${images.length - startIndex})`;
+                }
+            }
+            
+            // If no images found
+            if (pageImages.length === 0 && page === 1) {
+                container.innerHTML = `
+                    <div class="AN-gallery-no-results">
+                        <i class="fas fa-image"></i>
+                        <h3>${AN_getTranslatedText('An.gallery.noImagesFound', language)}</h3>
+                        <p>${AN_getTranslatedText('An.gallery.tryDifferentFilter', language)}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Render each gallery item
+            pageImages.forEach((image, index) => {
+                const content = image[language] || image.en;
+                const item = document.createElement('div');
+                item.className = 'AN-gallery-item';
+                item.setAttribute('data-id', image.id);
+                item.setAttribute('data-category', image.category);
+                item.setAttribute('data-index', startIndex + index);
+                
+                // Category icon
+                let categoryIcon = 'fas fa-image';
+                if (image.category === 'galaxies') categoryIcon = 'fas fa-galactic-republic';
+                if (image.category === 'nebulae') categoryIcon = 'fas fa-cloud';
+                if (image.category === 'planets') categoryIcon = 'fas fa-globe';
+                if (image.category === 'stars') categoryIcon = 'fas fa-star';
+                if (image.category === 'tunisia') categoryIcon = 'fas fa-flag';
+                if (image.category === 'telescopes') categoryIcon = 'fas fa-satellite';
+                
+                item.innerHTML = `
+                    <img src="${image.image}" alt="${content.title}" class="AN-gallery-item-image" loading="lazy">
+                    <div class="AN-gallery-item-overlay">
+                        <h3 class="AN-gallery-item-title">${content.title}</h3>
+                        <span class="AN-gallery-item-category">${content.category || image.category}</span>
+                    </div>
+                    <div class="AN-gallery-item-badge">
+                        <i class="${categoryIcon}"></i>
+                        <span>${content.category || image.category}</span>
+                    </div>
+                `;
+                
+                // Add click event to open modal
+                item.addEventListener('click', function() {
+                    const imageIndex = parseInt(this.getAttribute('data-index'));
+                    AN_openGalleryModal(imageIndex, language);
+                });
+                
+                // Add animation delay for staggered effect
+                item.style.animationDelay = `${(index % 12) * 0.1}s`;
+                
+                container.appendChild(item);
+            });
+            
+            // Update statistics
+            AN_updateGalleryStats();
+        }
+        
+        // Function to open gallery modal
+        function AN_openGalleryModal(imageIndex, language) {
+            const modal = document.getElementById('AN-gallery-modal');
+            const modalTitle = document.getElementById('AN-modal-title');
+            const modalImage = document.getElementById('AN-modal-image');
+            const modalInfo = document.getElementById('AN-modal-info');
+            const modalCounter = document.getElementById('AN-modal-counter');
+            
+            // Get filtered images based on current filter
+            let images = AN_gallery_data;
+            if (currentFilter !== 'all') {
+                images = images.filter(image => image.category === currentFilter);
+            }
+            
+            // Check if imageIndex is valid
+            if (imageIndex < 0 || imageIndex >= images.length) {
+                imageIndex = 0;
+            }
+            
+            const image = images[imageIndex];
+            const content = image[language] || image.en;
+            
+            // Set modal title and image
+            modalTitle.textContent = content.title;
+            modalImage.src = image.image;
+            modalImage.alt = content.title;
+            
+            // Build modal info
+            modalInfo.innerHTML = `
+                <div class="AN-gallery-modal-description">
+                    <h3>${AN_getTranslatedText('An.gallery.description', language)}</h3>
+                    <p>${content.description}</p>
+                </div>
+                <div class="AN-gallery-modal-meta">
+                    <div class="AN-gallery-modal-meta-item">
+                        <span class="AN-gallery-modal-label">${AN_getTranslatedText('An.gallery.telescope', language)}</span>
+                        <span class="AN-gallery-modal-value">${content.telescope || 'Various'}</span>
+                    </div>
+                    <div class="AN-gallery-modal-meta-item">
+                        <span class="AN-gallery-modal-label">${AN_getTranslatedText('An.gallery.date', language)}</span>
+                        <span class="AN-gallery-modal-value">${AN_formatDate(image.date, language)}</span>
+                    </div>
+                    <div class="AN-gallery-modal-meta-item">
+                        <span class="AN-gallery-modal-label">${AN_getTranslatedText('An.gallery.location', language)}</span>
+                        <span class="AN-gallery-modal-value">${content.location || 'Space'}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Update counter
+            modalCounter.textContent = `${imageIndex + 1} of ${images.length}`;
+            
+            // Set data attributes for navigation
+            modal.setAttribute('data-current-index', imageIndex);
+            modal.setAttribute('data-total-images', images.length);
+            
+            // Show modal
+            modal.classList.add('AN-active');
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close gallery modal
+        function AN_closeGalleryModal() {
+            const modal = document.getElementById('AN-gallery-modal');
+            modal.classList.remove('AN-active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Function to navigate between images in modal
+        function AN_navigateGalleryModal(direction, language) {
+            const modal = document.getElementById('AN-gallery-modal');
+            let currentIndex = parseInt(modal.getAttribute('data-current-index') || 0);
+            const totalImages = parseInt(modal.getAttribute('data-total-images') || 0);
+            
+            // Calculate new index
+            let newIndex = currentIndex + direction;
+            
+            // Wrap around
+            if (newIndex < 0) newIndex = totalImages - 1;
+            if (newIndex >= totalImages) newIndex = 0;
+            
+            // Open new image
+            AN_openGalleryModal(newIndex, language);
+        }
+        
+        // Function to apply gallery-specific translations
+        function AN_applyGalleryTranslations(language) {
+            // Apply static text translations
+            AN_applyTranslations(language);
+            
+            // Update filter button texts
+            const filterButtons = document.querySelectorAll('.AN-gallery-filter-btn');
+            filterButtons.forEach(button => {
+                const key = button.getAttribute('data-i18n');
+                if (key) {
+                    const textSpan = button.querySelector('span');
+                    if (textSpan) {
+                        textSpan.textContent = AN_getTranslatedText(key, language);
+                    }
+                }
+            });
+            
+            // Update stat labels
+            const statLabels = document.querySelectorAll('.AN-gallery-stat-label[data-i18n]');
+            statLabels.forEach(label => {
+                const key = label.getAttribute('data-i18n');
+                if (key) {
+                    label.textContent = AN_getTranslatedText(key, language);
+                }
+            });
+            
+            // Update load more button
+            const loadMoreBtn = document.getElementById('AN-load-more-btn');
+            if (loadMoreBtn) {
+                const key = loadMoreBtn.getAttribute('data-i18n');
+                if (key) {
+                    loadMoreBtn.innerHTML = `<i class="fas fa-plus"></i> ${AN_getTranslatedText(key, language)}`;
+                }
+            }
+            
+            // Update modal button texts
+            const modalPrevBtn = document.getElementById('AN-modal-prev');
+            const modalNextBtn = document.getElementById('AN-modal-next');
+            if (modalPrevBtn) {
+                modalPrevBtn.innerHTML = `<i class="fas fa-chevron-left"></i> ${AN_getTranslatedText('An.gallery.previous', language)}`;
+            }
+            if (modalNextBtn) {
+                modalNextBtn.innerHTML = `${AN_getTranslatedText('An.gallery.next', language)} <i class="fas fa-chevron-right"></i>`;
+            }
+            
+            // Re-render gallery with current filter
+            AN_renderGallery(language, currentFilter, currentPage);
+            
+            // Re-render notifications
+            AN_renderNotifications(language);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create stars effect
+            AN_createStars();
+            
+            // Theme toggle functionality
+            const themeSwitch = document.getElementById('AN-theme-switch');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('AN-theme') || 
+                              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('AN-dark-mode');
+                themeSwitch.checked = true;
+            }
+            
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    body.classList.add('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'dark');
+                } else {
+                    body.classList.remove('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'light');
+                }
+            });
+            
+            // Notification panel toggle
+            const notificationToggle = document.getElementById('AN-notification-toggle');
+            const notificationPanel = document.getElementById('AN-notification-panel');
+            const closeNotifications = document.getElementById('AN-close-notifications');
+            
+            notificationToggle.addEventListener('click', function() {
+                notificationPanel.classList.toggle('AN-active');
+            });
+            
+            closeNotifications.addEventListener('click', function() {
+                notificationPanel.classList.remove('AN-active');
+            });
+            
+            // Close notification panel when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!notificationToggle.contains(event.target) && 
+                    !notificationPanel.contains(event.target)) {
+                    notificationPanel.classList.remove('AN-active');
+                }
+            });
+            
+            // Language selection
+            const languageSelect = document.getElementById('AN-language-select');
+            const savedLanguage = localStorage.getItem('AN-language-preference') || 'en';
+            
+            if (languageSelect) {
+                languageSelect.value = savedLanguage;
+                languageSelect.addEventListener('change', function() {
+                    AN_applyGalleryTranslations(this.value);
+                    localStorage.setItem('AN-language-preference', this.value);
+                });
+            }
+            
+            // Gallery filter button functionality
+            const filterButtons = document.querySelectorAll('.AN-gallery-filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all filter buttons
+                    filterButtons.forEach(btn => btn.classList.remove('AN-active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('AN-active');
+                    
+                    // Get filter value
+                    const filter = this.getAttribute('data-filter');
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    
+                    // Reset to page 1 when filter changes
+                    AN_renderGallery(language, filter, 1);
+                });
+            });
+            
+            // Load more button functionality
+            const loadMoreBtn = document.getElementById('AN-load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    AN_renderGallery(language, currentFilter, currentPage + 1);
+                });
+            }
+            
+            // Modal functionality
+            const galleryModal = document.getElementById('AN-gallery-modal');
+            const modalCloseBtn = document.getElementById('AN-modal-close');
+            const modalPrevBtn = document.getElementById('AN-modal-prev');
+            const modalNextBtn = document.getElementById('AN-modal-next');
+            
+            // Close modal when clicking close button
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', AN_closeGalleryModal);
+            }
+            
+            // Close modal when clicking outside the content
+            galleryModal.addEventListener('click', function(event) {
+                if (event.target === galleryModal) {
+                    AN_closeGalleryModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && galleryModal.classList.contains('AN-active')) {
+                    AN_closeGalleryModal();
+                }
+                
+                // Navigate with arrow keys
+                if (galleryModal.classList.contains('AN-active')) {
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    if (event.key === 'ArrowLeft') {
+                        AN_navigateGalleryModal(-1, language);
+                    } else if (event.key === 'ArrowRight') {
+                        AN_navigateGalleryModal(1, language);
+                    }
+                }
+            });
+            
+            // Navigation buttons
+            if (modalPrevBtn) {
+                modalPrevBtn.addEventListener('click', function() {
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    AN_navigateGalleryModal(-1, language);
+                });
+            }
+            
+            if (modalNextBtn) {
+                modalNextBtn.addEventListener('click', function() {
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    AN_navigateGalleryModal(1, language);
+                });
+            }
+            
+            // Initialize with saved language
+            AN_applyGalleryTranslations(savedLanguage);
+        });
+    </script>
+</body>
+</html>

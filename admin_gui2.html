@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر بيانات Astronomy News</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            color: #4cc9f0;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+
+        .subtitle {
+            color: #9d9d9d;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-y: auto;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 25px;
+        }
+
+        .data-view {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-y: auto;
+        }
+
+        .file-selector {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .file-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(76, 201, 240, 0.1);
+            border: 2px solid #4cc9f0;
+            color: #4cc9f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+
+        .file-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .file-btn.active {
+            background: rgba(76, 201, 240, 0.3);
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .section-title {
+            color: #4cc9f0;
+            margin: 20px 0 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            margin: 10px 0;
+            background: rgba(76, 201, 240, 0.15);
+            border: 2px solid #4cc9f0;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background: rgba(76, 201, 240, 0.3);
+            transform: scale(1.05);
+        }
+
+        .action-btn.delete {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: #f44336;
+            margin-top: 20px;
+        }
+
+        .action-btn.delete:hover {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+        .action-btn.download {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: #4caf50;
+        }
+
+        .action-btn.download:hover {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .action-btn.upload {
+            background: rgba(255, 152, 0, 0.15);
+            border-color: #ff9800;
+        }
+
+        .action-btn.upload:hover {
+            background: rgba(255, 152, 0, 0.3);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .data-table th {
+            background: rgba(76, 201, 240, 0.2);
+            color: #4cc9f0;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .row-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .row-btn:hover {
+            background: rgba(76, 201, 240, 0.3);
+        }
+
+        .row-btn.delete {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.4);
+        }
+
+        .row-btn.delete:hover {
+            background: rgba(244, 67, 54, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #4cc9f0;
+        }
+
+        .form-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4cc9f0;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            text-align: right;
+            direction: rtl;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .language-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 10px;
+            justify-content: flex-end;
+        }
+
+        .lang-tab {
+            padding: 8px 20px;
+            background: rgba(76, 201, 240, 0.1);
+            border: none;
+            color: #4cc9f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-tab.active {
+            background: rgba(76, 201, 240, 0.3);
+            color: white;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-completed { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+        .status-active { background: rgba(33, 150, 243, 0.2); color: #2196f3; }
+        .status-upcoming { background: rgba(255, 152, 0, 0.2); color: #ff9800; }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 15px 25px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            border-radius: 8px;
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            text-align: center;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .file-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #9d9d9d;
+            text-align: right;
+        }
+
+        .counter {
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+
+        .preview-area {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview-title {
+            color: #4cc9f0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #9d9d9d;
+            padding: 40px 20px;
+            font-style: italic;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff6b6b;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .sidebar {
+                max-height: 400px;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+
+        /* Add new styles for image changes */
+        .action-btn.images {
+            background: rgba(156, 39, 176, 0.15);
+            border-color: #9c27b0;
+        }
+        
+        .action-btn.images:hover {
+            background: rgba(156, 39, 176, 0.3);
+        }
+
+        .image-changes-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        
+        .image-changes-list h4 {
+            color: #4cc9f0;
+            margin: 15px 0 10px 0;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 5px;
+        }
+        
+        .image-list {
+            list-style: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .image-list.added {
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .image-list.removed {
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .image-list li {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .image-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Update notification position */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            border-radius: 8px;
+            z-index: 10000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+            text-align: center;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>محرر بيانات Astronomy News</h1>
+            <p class="subtitle">تعديل وإدارة بيانات الأخبار والمهام الفلكية</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="file-selector">
+                    <h3 class="section-title">ملفات البيانات</h3>
+                    <button class="file-btn active" data-file="data">📄 data.js (الأخبار والفعاليات)</button>
+                    <button class="file-btn" data-file="missions">🚀 data_missions.js (المهام)</button>
+                    <button class="file-btn" data-file="gallery">🖼️ data_gallery.js (المعرض)</button>
+                </div>
+
+                <div class="upload-section">
+                    <h3 class="section-title">تحميل الملفات</h3>
+                    <input type="file" id="fileUpload" class="file-input" accept=".js" multiple>
+                    <button class="action-btn upload" onclick="document.getElementById('fileUpload').click()">
+                        <span>📁</span> تحميل ملفات JS
+                    </button>
+                    <p style="font-size: 0.8rem; color: #9d9d9d; margin-top: 10px;">
+                        اختر ملفات data.js و data_missions.js و data_gallery.js
+                    </p>
+                </div>
+
+                <h3 class="section-title">الإجراءات</h3>
+                <button class="action-btn" id="addBtn">
+                    <span>+</span> إضافة مدخل جديد
+                </button>
+                <button class="action-btn download" id="downloadBtn">
+                    <span>⬇️</span> تحميل الملف الحالي
+                </button>
+                <button class="action-btn images" id="showImageChangesBtn">
+                    <span>🖼️</span> عرض تغييرات الصور
+                </button>
+                <button class="action-btn delete" id="deleteAllBtn">
+                    <span>🗑️</span> حذف جميع المدخلات
+                </button>
+
+                <div class="file-info">
+                    <p>الملف الحالي: <span id="currentFileName" class="counter">data.js</span></p>
+                    <p>عدد المدخلات: <span id="entryCount" class="counter">0</span></p>
+                    <p>آخر تعديل: <span id="lastModified" class="counter">الآن</span></p>
+                    <p>الحالة: <span id="fileStatus" class="counter">جديد</span></p>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="data-view">
+                    <h3 id="dataViewTitle">بيانات الأخبار والفعاليات</h3>
+                    <div id="dataTableContainer">
+                        <!-- سيتم إدخال جدول البيانات هنا -->
+                    </div>
+                </div>
+
+                <div class="preview-area">
+                    <h4 class="preview-title">معاينة سريعة</h4>
+                    <div id="previewArea">
+                        <p class="empty-message">انقر على "معاينة" بجانب أي مدخل لرؤية تفاصيله هنا</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة التعديل/الإضافة -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">إضافة مدخل جديد</h2>
+            <form id="dataForm" dir="rtl">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="id">المعرف:</label>
+                        <input type="text" id="id" name="id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">النوع:</label>
+                        <select id="type" name="type" onchange="toggleFields()">
+                            <option value="news">خبر</option>
+                            <option value="event">فعالية</option>
+                            <option value="mission">مهمة</option>
+                            <option value="gallery">معرض</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">الفئة:</label>
+                        <select id="category" name="category">
+                            <option value="global">عالمي</option>
+                            <option value="local">محلي (تونس)</option>
+                            <option value="galaxies">مجرات</option>
+                            <option value="nebulae">سدم</option>
+                            <option value="planets">كواكب</option>
+                            <option value="stars">نجوم</option>
+                            <option value="tunisia">تونس</option>
+                            <option value="telescopes">تلسكوبات</option>
+                            <option value="moon">القمر</option>
+                            <option value="mars">المريخ</option>
+                            <option value="deep-space">الفضاء العميق</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="statusGroup" style="display: none;">
+                        <label for="status">الحالة:</label>
+                        <select id="status" name="status">
+                            <option value="completed">مكتمل</option>
+                            <option value="active">نشط</option>
+                            <option value="upcoming">قادم</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="agencyGroup" style="display: none;">
+                        <label for="agency">الوكالة:</label>
+                        <input type="text" id="agency" name="agency" placeholder="ناسا، وكالة الفضاء الأوروبية، إلخ.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">التاريخ:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">مسار الصورة:</label>
+                        <input type="text" id="image" name="image" placeholder="assets/images/...">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>المحتوى متعدد اللغات</h3>
+                    <div class="language-tabs">
+                        <button type="button" class="lang-tab active" onclick="showLang('en')">الإنجليزية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('fr')">الفرنسية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('ar')">العربية</button>
+                    </div>
+
+                    <div id="lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label for="en_title">العنوان (EN):</label>
+                            <input type="text" id="en_title" name="en_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_subtitle">العنوان الفرعي (EN):</label>
+                            <input type="text" id="en_subtitle" name="en_subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="en_body">النص/الوصف (EN):</label>
+                            <textarea id="en_body" name="en_body" rows="4"></textarea>
+                        </div>
+                        <div class="form-group" id="en_telescopeGroup" style="display: none;">
+                            <label for="en_telescope">التلسكوب (EN):</label>
+                            <input type="text" id="en_telescope" name="en_telescope">
+                        </div>
+                        <div class="form-group" id="en_locationGroup" style="display: none;">
+                            <label for="en_location">الموقع (EN):</label>
+                            <input type="text" id="en_location" name="en_location">
+                        </div>
+                        <div class="form-group" id="en_agencyGroup" style="display: none;">
+                            <label for="en_agency">الوكالة (EN):</label>
+                            <input type="text" id="en_agency" name="en_agency">
+                        </div>
+                    </div>
+
+                    <div id="lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label for="fr_title">العنوان (FR):</label>
+                            <input type="text" id="fr_title" name="fr_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_subtitle">العنوان الفرعي (FR):</label>
+                            <input type="text" id="fr_subtitle" name="fr_subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_body">النص/الوصف (FR):</label>
+                            <textarea id="fr_body" name="fr_body" rows="4"></textarea>
+                        </div>
+                        <div class="form-group" id="fr_telescopeGroup" style="display: none;">
+                            <label for="fr_telescope">التلسكوب (FR):</label>
+                            <input type="text" id="fr_telescope" name="fr_telescope">
+                        </div>
+                        <div class="form-group" id="fr_locationGroup" style="display: none;">
+                            <label for="fr_location">الموقع (FR):</label>
+                            <input type="text" id="fr_location" name="fr_location">
+                        </div>
+                        <div class="form-group" id="fr_agencyGroup" style="display: none;">
+                            <label for="fr_agency">الوكالة (FR):</label>
+                            <input type="text" id="fr_agency" name="fr_agency">
+                        </div>
+                    </div>
+
+                    <div id="lang-ar" class="lang-content">
+                        <div class="form-group">
+                            <label for="ar_title">العنوان (AR):</label>
+                            <input type="text" id="ar_title" name="ar_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_subtitle">العنوان الفرعي (AR):</label>
+                            <input type="text" id="ar_subtitle" name="ar_subtitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_body">النص/الوصف (AR):</label>
+                            <textarea id="ar_body" name="ar_body" rows="4"></textarea>
+                        </div>
+                        <div class="form-group" id="ar_telescopeGroup" style="display: none;">
+                            <label for="ar_telescope">التلسكوب (AR):</label>
+                            <input type="text" id="ar_telescope" name="ar_telescope">
+                        </div>
+                        <div class="form-group" id="ar_locationGroup" style="display: none;">
+                            <label for="ar_location">الموقع (AR):</label>
+                            <input type="text" id="ar_location" name="ar_location">
+                        </div>
+                        <div class="form-group" id="ar_agencyGroup" style="display: none;">
+                            <label for="ar_agency">الوكالة (AR):</label>
+                            <input type="text" id="ar_agency" name="ar_agency">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="button" class="action-btn" onclick="saveEntry()">حفظ المدخل</button>
+                    <button type="button" class="action-btn delete" onclick="closeModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة عرض تغييرات الصور -->
+    <div id="imageChangesModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeImageChangesModal()">&times;</span>
+            <h2>تغييرات الصور</h2>
+            <div id="imageChangesContent" class="image-changes-list">
+                <!-- محتوى تغييرات الصور سيظهر هنا -->
+            </div>
+            <div class="form-section">
+                <button type="button" class="action-btn" onclick="clearImageChanges()">مسح القائمة</button>
+                <button type="button" class="action-btn delete" onclick="closeImageChangesModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الإشعارات -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // البيانات الأساسية الفارغة
+        let AN_data = [];
+        let AN_missions_data = [];
+        let AN_gallery_data = [];
+        
+        // إدارة الحالة
+        let currentFile = 'data';
+        let currentData = AN_data;
+        let editingId = null;
+        let fileStatus = {
+            data: 'غير محمل',
+            missions: 'غير محمل',
+            gallery: 'غير محمل'
+        };
+
+        // Image tracking
+        let imageChanges = {
+            added: new Set(),
+            removed: new Set()
+        };
+
+        // Keep track of original images when loading data
+        let originalImages = new Set();
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData('data');
+            setupEventListeners();
+            updateCounters();
+        });
+
+        function setupEventListeners() {
+            // أزرار اختيار الملف
+            document.querySelectorAll('.file-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.file-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    loadData(this.dataset.file);
+                });
+            });
+
+            // أزرار الإجراءات
+            document.getElementById('addBtn').addEventListener('click', openAddModal);
+            document.getElementById('downloadBtn').addEventListener('click', downloadCurrentFile);
+            document.getElementById('showImageChangesBtn').addEventListener('click', showImageChanges);
+            document.getElementById('deleteAllBtn').addEventListener('click', deleteAllEntries);
+            
+            // تحميل الملفات
+            document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
+        }
+
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+            
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const content = e.target.result;
+                        const fileName = file.name.toLowerCase();
+                        
+                        if (fileName === 'data.js') {
+                            parseDataFile(content, 'data');
+                        } else if (fileName === 'data_missions.js') {
+                            parseDataFile(content, 'missions');
+                        } else if (fileName === 'data_gallery.js') {
+                            parseDataFile(content, 'gallery');
+                        } else {
+                            showNotification(`ملف ${file.name} غير معروف. يجب أن يكون اسم الملف data.js أو data_missions.js أو data_gallery.js`);
+                        }
+                    } catch (error) {
+                        showNotification(`خطأ في تحليل الملف ${file.name}: ${error.message}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function parseDataFile(content, type) {
+            try {
+                // محاولة استخراج البيانات من ملف JavaScript
+                let data = null;
+                
+                if (type === 'data') {
+                    // البحث عن AN_data في الملف
+                    const match = content.match(/const\s+AN_data\s*=\s*(\[.*\]);/s);
+                    if (match) {
+                        // تقييم مقطع JavaScript بأمان
+                        const dataStr = match[1];
+                        data = safeEval(dataStr);
+                        AN_data = data;
+                        fileStatus.data = 'محمل';
+                        
+                        // استخراج الصور من البيانات
+                        extractImagesFromData(data, type);
+                    }
+                } else if (type === 'missions') {
+                    // البحث عن AN_missions_data في الملف
+                    const match = content.match(/const\s+AN_missions_data\s*=\s*(\[.*\]);/s);
+                    if (match) {
+                        const dataStr = match[1];
+                        data = safeEval(dataStr);
+                        AN_missions_data = data;
+                        fileStatus.missions = 'محمل';
+                        
+                        // استخراج الصور من البيانات
+                        extractImagesFromData(data, type);
+                    }
+                } else if (type === 'gallery') {
+                    // البحث عن AN_gallery_data في الملف
+                    const match = content.match(/const\s+AN_gallery_data\s*=\s*(\[.*\]);/s);
+                    if (match) {
+                        const dataStr = match[1];
+                        data = safeEval(dataStr);
+                        AN_gallery_data = data;
+                        fileStatus.gallery = 'محمل';
+                        
+                        // استخراج الصور من البيانات
+                        extractImagesFromData(data, type);
+                    }
+                }
+                
+                if (data) {
+                    showNotification(`تم تحميل ${type} بنجاح! ${data.length} مدخلات`);
+                    // إذا كان الملف المحمل هو الملف الحالي المعروض، قم بتحديث العرض
+                    if (currentFile === type) {
+                        loadData(type);
+                    }
+                } else {
+                    showNotification(`لم يتم العثور على بيانات في ملف ${type}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error parsing file:', error);
+                showNotification(`خطأ في تحليل ملف ${type}: ${error.message}`, 'error');
+            }
+        }
+
+        function extractImagesFromData(data, type) {
+            data.forEach(item => {
+                if (item.image) originalImages.add(item.image);
+            });
+        }
+
+        function safeEval(dataStr) {
+            // استخدم Function constructor لتقييم السلسلة بأمان
+            try {
+                // تنظيف السلسلة من التعليقات المحتملة
+                dataStr = dataStr.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+                
+                const func = new Function(`return ${dataStr};`);
+                return func();
+            } catch (error) {
+                // إذا فشل، حاول تحويل JSON
+                try {
+                    // محاولة إصلاح JSON من JavaScript
+                    let jsonStr = dataStr
+                        .replace(/(\w+):/g, '"$1":') // إضافة اقتباس حول المفاتيح
+                        .replace(/'/g, '"') // استبدال الاقتباس المفرد بثنائي
+                        .replace(/,\s*]/g, ']') // إزالة الفواصل الزائدة
+                        .replace(/,\s*}/g, '}'); // إزالة الفواصل الزائدة
+                    
+                    return JSON.parse(jsonStr);
+                } catch (jsonError) {
+                    throw new Error('لا يمكن تحليل البيانات: ' + jsonError.message);
+                }
+            }
+        }
+
+        function loadData(file) {
+            currentFile = file;
+            switch(file) {
+                case 'data':
+                    currentData = AN_data;
+                    document.getElementById('dataViewTitle').textContent = 'بيانات الأخبار والفعاليات';
+                    document.getElementById('currentFileName').textContent = 'data.js';
+                    break;
+                case 'missions':
+                    currentData = AN_missions_data;
+                    document.getElementById('dataViewTitle').textContent = 'بيانات المهام';
+                    document.getElementById('currentFileName').textContent = 'data_missions.js';
+                    break;
+                case 'gallery':
+                    currentData = AN_gallery_data;
+                    document.getElementById('dataViewTitle').textContent = 'بيانات المعرض';
+                    document.getElementById('currentFileName').textContent = 'data_gallery.js';
+                    break;
+            }
+            renderTable();
+            updateCounters();
+        }
+
+        function renderTable() {
+            const container = document.getElementById('dataTableContainer');
+            if (currentData.length === 0) {
+                container.innerHTML = '<p class="empty-message">لا توجد مدخلات. قم بتحميل ملف أو إضافة مدخل جديد.</p>';
+                return;
+            }
+
+            let table = '<table class="data-table">';
+            
+            // رؤوس الجدول حسب نوع الملف
+            if (currentFile === 'missions') {
+                table += `
+                    <thead>
+                        <tr>
+                            <th>المعرف</th>
+                            <th>العنوان</th>
+                            <th>الحالة</th>
+                            <th>الوكالة</th>
+                            <th>التاريخ</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                currentData.forEach(item => {
+                    const statusClass = `status-${item.status}`;
+                    table += `
+                        <tr>
+                            <td><code>${item.id}</code></td>
+                            <td>${item.en?.title || 'بدون عنوان'}</td>
+                            <td><span class="status-badge ${statusClass}">${item.status}</span></td>
+                            <td>${item.agency || ''}</td>
+                            <td>${formatDate(item.date)}</td>
+                            <td>
+                                <button class="row-btn" onclick="editEntry('${item.id}')">تعديل</button>
+                                <button class="row-btn delete" onclick="deleteEntry('${item.id}')">حذف</button>
+                                <button class="row-btn" onclick="previewEntry('${item.id}')">معاينة</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else if (currentFile === 'gallery') {
+                table += `
+                    <thead>
+                        <tr>
+                            <th>المعرف</th>
+                            <th>الفئة</th>
+                            <th>العنوان</th>
+                            <th>التاريخ</th>
+                            <th>التلسكوب</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                currentData.forEach(item => {
+                    table += `
+                        <tr>
+                            <td><code>${item.id}</code></td>
+                            <td><span class="status-badge">${item.category}</span></td>
+                            <td>${item.en?.title || 'بدون عنوان'}</td>
+                            <td>${formatDate(item.date)}</td>
+                            <td>${item.en?.telescope || ''}</td>
+                            <td>
+                                <button class="row-btn" onclick="editEntry('${item.id}')">تعديل</button>
+                                <button class="row-btn delete" onclick="deleteEntry('${item.id}')">حذف</button>
+                                <button class="row-btn" onclick="previewEntry('${item.id}')">معاينة</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                table += `
+                    <thead>
+                        <tr>
+                            <th>المعرف</th>
+                            <th>النوع</th>
+                            <th>الفئة</th>
+                            <th>العنوان</th>
+                            <th>التاريخ</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                currentData.forEach(item => {
+                    table += `
+                        <tr>
+                            <td><code>${item.id}</code></td>
+                            <td><span class="status-badge">${item.type}</span></td>
+                            <td><span class="status-badge">${item.category}</span></td>
+                            <td>${item.en?.title || 'بدون عنوان'}</td>
+                            <td>${formatDate(item.date)}</td>
+                            <td>
+                                <button class="row-btn" onclick="editEntry('${item.id}')">تعديل</button>
+                                <button class="row-btn delete" onclick="deleteEntry('${item.id}')">حذف</button>
+                                <button class="row-btn" onclick="previewEntry('${item.id}')">معاينة</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+            
+            table += '</tbody></table>';
+            container.innerHTML = table;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'بدون تاريخ';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        function openAddModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'إضافة مدخل جديد';
+            document.getElementById('dataForm').reset();
+            document.getElementById('type').value = currentFile === 'missions' ? 'mission' : 
+                                                   currentFile === 'gallery' ? 'gallery' : 'news';
+            toggleFields();
+            
+            // إنشاء معرف جديد
+            const type = document.getElementById('type').value;
+            let prefix = '';
+            switch(type) {
+                case 'news': prefix = 'news-'; break;
+                case 'event': prefix = 'event-'; break;
+                case 'mission': prefix = 'mission-'; break;
+                case 'gallery': 
+                    const category = document.getElementById('category').value;
+                    prefix = category.split('-')[0] + '-'; 
+                    break;
+            }
+            
+            if (prefix) {
+                let maxNum = 0;
+                currentData.forEach(item => {
+                    if (item.id && item.id.startsWith(prefix)) {
+                        const parts = item.id.split('-');
+                        const num = parseInt(parts[parts.length - 1]);
+                        if (!isNaN(num) && num > maxNum) maxNum = num;
+                    }
+                });
+                document.getElementById('id').value = `${prefix}${(maxNum + 1).toString().padStart(3, '0')}`;
+            }
+            
+            // تعيين التاريخ الافتراضي لليوم
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function editEntry(id) {
+            editingId = id;
+            const item = currentData.find(item => item.id === id);
+            
+            if (!item) {
+                showNotification('لم يتم العثور على المدخل!', 'error');
+                return;
+            }
+            
+            document.getElementById('modalTitle').textContent = 'تعديل المدخل';
+            document.getElementById('dataForm').reset();
+            
+            document.getElementById('id').value = item.id;
+            document.getElementById('type').value = item.type || 'news';
+            document.getElementById('category').value = item.category || 'global';
+            document.getElementById('status').value = item.status || 'active';
+            document.getElementById('agency').value = item.agency || '';
+            document.getElementById('date').value = item.date || '';
+            document.getElementById('image').value = item.image || '';
+            
+            // الإنجليزية
+            document.getElementById('en_title').value = item.en?.title || '';
+            document.getElementById('en_subtitle').value = item.en?.subtitle || item.en?.description || '';
+            document.getElementById('en_body').value = item.en?.body || item.en?.description || '';
+            document.getElementById('en_telescope').value = item.en?.telescope || '';
+            document.getElementById('en_location').value = item.en?.location || '';
+            document.getElementById('en_agency').value = item.en?.agency || '';
+            
+            // الفرنسية
+            document.getElementById('fr_title').value = item.fr?.title || '';
+            document.getElementById('fr_subtitle').value = item.fr?.subtitle || item.fr?.description || '';
+            document.getElementById('fr_body').value = item.fr?.body || item.fr?.description || '';
+            document.getElementById('fr_telescope').value = item.fr?.telescope || '';
+            document.getElementById('fr_location').value = item.fr?.location || '';
+            document.getElementById('fr_agency').value = item.fr?.agency || '';
+            
+            // العربية
+            document.getElementById('ar_title').value = item.ar?.title || '';
+            document.getElementById('ar_subtitle').value = item.ar?.subtitle || item.ar?.description || '';
+            document.getElementById('ar_body').value = item.ar?.body || item.ar?.description || '';
+            document.getElementById('ar_telescope').value = item.ar?.telescope || '';
+            document.getElementById('ar_location').value = item.ar?.location || '';
+            document.getElementById('ar_agency').value = item.ar?.agency || '';
+            
+            toggleFields();
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function saveEntry() {
+            const type = document.getElementById('type').value;
+            const category = document.getElementById('category').value;
+            
+            // التحقق من الحقول المطلوبة
+            if (!document.getElementById('id').value) {
+                showNotification('المعرف مطلوب!', 'error');
+                return;
+            }
+            
+            if (!document.getElementById('en_title').value) {
+                showNotification('العنوان بالإنجليزية مطلوب!', 'error');
+                return;
+            }
+            
+            // تتبع تغييرات الصور
+            let oldImage = '';
+            if (editingId) {
+                const oldItem = currentData.find(item => item.id === editingId);
+                oldImage = oldItem ? oldItem.image : '';
+            }
+            const newImage = document.getElementById('image').value;
+            
+            // تتبع تغييرات الصور
+            if (oldImage && oldImage !== newImage) {
+                imageChanges.removed.add(oldImage);
+            }
+            if (newImage && newImage !== oldImage) {
+                imageChanges.added.add(newImage);
+            }
+            
+            let item;
+            
+            if (type === 'mission') {
+                item = {
+                    id: document.getElementById('id').value,
+                    type: 'mission',
+                    status: document.getElementById('status').value,
+                    category: category,
+                    agency: document.getElementById('agency').value,
+                    date: document.getElementById('date').value,
+                    image: newImage,
+                    en: {
+                        title: document.getElementById('en_title').value,
+                        subtitle: document.getElementById('en_subtitle').value,
+                        body: document.getElementById('en_body').value,
+                        agency: document.getElementById('en_agency').value
+                    },
+                    fr: {
+                        title: document.getElementById('fr_title').value,
+                        subtitle: document.getElementById('fr_subtitle').value,
+                        body: document.getElementById('fr_body').value,
+                        agency: document.getElementById('fr_agency').value
+                    },
+                    ar: {
+                        title: document.getElementById('ar_title').value,
+                        subtitle: document.getElementById('ar_subtitle').value,
+                        body: document.getElementById('ar_body').value,
+                        agency: document.getElementById('ar_agency').value
+                    }
+                };
+            } else if (type === 'gallery') {
+                item = {
+                    id: document.getElementById('id').value,
+                    category: category,
+                    image: newImage,
+                    date: document.getElementById('date').value,
+                    en: {
+                        title: document.getElementById('en_title').value,
+                        description: document.getElementById('en_body').value,
+                        telescope: document.getElementById('en_telescope').value,
+                        location: document.getElementById('en_location').value,
+                        category: category
+                    },
+                    fr: {
+                        title: document.getElementById('fr_title').value,
+                        description: document.getElementById('fr_body').value,
+                        telescope: document.getElementById('fr_telescope').value,
+                        location: document.getElementById('fr_location').value,
+                        category: category
+                    },
+                    ar: {
+                        title: document.getElementById('ar_title').value,
+                        description: document.getElementById('ar_body').value,
+                        telescope: document.getElementById('ar_telescope').value,
+                        location: document.getElementById('ar_location').value,
+                        category: category
+                    }
+                };
+            } else {
+                item = {
+                    id: document.getElementById('id').value,
+                    type: type,
+                    category: category,
+                    image: newImage,
+                    date: document.getElementById('date').value,
+                    en: {
+                        title: document.getElementById('en_title').value,
+                        subtitle: document.getElementById('en_subtitle').value,
+                        body: document.getElementById('en_body').value
+                    },
+                    fr: {
+                        title: document.getElementById('fr_title').value,
+                        subtitle: document.getElementById('fr_subtitle').value,
+                        body: document.getElementById('fr_body').value
+                    },
+                    ar: {
+                        title: document.getElementById('ar_title').value,
+                        subtitle: document.getElementById('ar_subtitle').value,
+                        body: document.getElementById('ar_body').value
+                    }
+                };
+            }
+            
+            if (editingId) {
+                const index = currentData.findIndex(item => item.id === editingId);
+                if (index !== -1) {
+                    currentData[index] = item;
+                    showNotification('تم تحديث المدخل بنجاح!');
+                }
+            } else {
+                currentData.push(item);
+                showNotification('تم إضافة المدخل بنجاح!');
+            }
+            
+            closeModal();
+            renderTable();
+            updateCounters();
+            
+            // تحديث حالة الملف
+            if (currentFile === 'data') fileStatus.data = 'معدل';
+            else if (currentFile === 'missions') fileStatus.missions = 'معدل';
+            else if (currentFile === 'gallery') fileStatus.gallery = 'معدل';
+        }
+
+        function deleteEntry(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا المدخل؟')) return;
+            
+            const item = currentData.find(item => item.id === id);
+            if (item && item.image) {
+                imageChanges.removed.add(item.image);
+            }
+            
+            const index = currentData.findIndex(item => item.id === id);
+            if (index !== -1) {
+                currentData.splice(index, 1);
+            }
+            
+            renderTable();
+            updateCounters();
+            showNotification('تم حذف المدخل بنجاح!');
+            
+            // تحديث حالة الملف
+            if (currentFile === 'data') fileStatus.data = 'معدل';
+            else if (currentFile === 'missions') fileStatus.missions = 'معدل';
+            else if (currentFile === 'gallery') fileStatus.gallery = 'معدل';
+        }
+
+        function deleteAllEntries() {
+            if (!confirm('تحذير: هذا سيمسح جميع المدخلات في الملف الحالي. هل تريد المتابعة؟')) return;
+            
+            // تتبع جميع الصور التي سيتم إزالتها
+            currentData.forEach(item => {
+                if (item.image) imageChanges.removed.add(item.image);
+            });
+            
+            currentData.length = 0;
+            renderTable();
+            updateCounters();
+            showNotification('تم حذف جميع المدخلات!');
+            
+            // تحديث حالة الملف
+            if (currentFile === 'data') fileStatus.data = 'معدل';
+            else if (currentFile === 'missions') fileStatus.missions = 'معدل';
+            else if (currentFile === 'gallery') fileStatus.gallery = 'معدل';
+        }
+
+        function previewEntry(id) {
+            const item = currentData.find(item => item.id === id);
+            
+            if (!item) {
+                document.getElementById('previewArea').innerHTML = '<p class="empty-message">لم يتم العثور على المدخل</p>';
+                return;
+            }
+            
+            const preview = document.getElementById('previewArea');
+            let html = '<div class="preview-content">';
+            
+            if (currentFile === 'missions') {
+                const statusClass = `status-${item.status}`;
+                html += `
+                    <h4>${item.en?.title || 'بدون عنوان'}</h4>
+                    <p><strong>المعرف:</strong> ${item.id}</p>
+                    <p><strong>الحالة:</strong> <span class="status-badge ${statusClass}">${item.status}</span></p>
+                    <p><strong>الوكالة:</strong> ${item.agency || 'غير محدد'}</p>
+                    <p><strong>التاريخ:</strong> ${formatDate(item.date)}</p>
+                    <p><strong>الصورة:</strong> ${item.image || 'غير محدد'}</p>
+                    <p><strong>الوصف (EN):</strong> ${(item.en?.body || '').substring(0, 100)}${item.en?.body && item.en.body.length > 100 ? '...' : ''}</p>
+                `;
+            } else if (currentFile === 'gallery') {
+                html += `
+                    <h4>${item.en?.title || 'بدون عنوان'}</h4>
+                    <p><strong>المعرف:</strong> ${item.id}</p>
+                    <p><strong>الفئة:</strong> ${item.category}</p>
+                    <p><strong>التاريخ:</strong> ${formatDate(item.date)}</p>
+                    <p><strong>الصورة:</strong> ${item.image || 'غير محدد'}</p>
+                    <p><strong>التلسكوب:</strong> ${item.en?.telescope || 'غير محدد'}</p>
+                    <p><strong>الموقع:</strong> ${item.en?.location || 'غير محدد'}</p>
+                    <p><strong>الوصف (EN):</strong> ${(item.en?.description || '').substring(0, 100)}${item.en?.description && item.en.description.length > 100 ? '...' : ''}</p>
+                `;
+            } else {
+                html += `
+                    <h4>${item.en?.title || 'بدون عنوان'}</h4>
+                    <p><strong>المعرف:</strong> ${item.id}</p>
+                    <p><strong>النوع:</strong> ${item.type} | <strong>الفئة:</strong> ${item.category}</p>
+                    <p><strong>التاريخ:</strong> ${formatDate(item.date)}</p>
+                    <p><strong>الصورة:</strong> ${item.image || 'غير محدد'}</p>
+                    <p><strong>العنوان الفرعي:</strong> ${item.en?.subtitle || 'غير محدد'}</p>
+                    <p><strong>النص (EN):</strong> ${(item.en?.body || '').substring(0, 150)}${item.en?.body && item.en.body.length > 150 ? '...' : ''}</p>
+                `;
+            }
+            
+            html += '</div>';
+            preview.innerHTML = html;
+        }
+
+        function downloadCurrentFile() {
+            if (currentData.length === 0) {
+                showNotification('لا توجد بيانات لتحميلها!', 'error');
+                return;
+            }
+            
+            let content = '';
+            let filename = '';
+            
+            if (currentFile === 'data') {
+                content = generateDataJS();
+                filename = 'data.js';
+            } else if (currentFile === 'missions') {
+                content = generateMissionsJS();
+                filename = 'data_missions.js';
+            } else {
+                content = generateGalleryJS();
+                filename = 'data_gallery.js';
+            }
+            
+            const blob = new Blob([content], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification(`تم تحميل الملف ${filename}!`);
+            
+            // إعادة تعيين حالة الملف
+            if (currentFile === 'data') fileStatus.data = 'محفوظ';
+            else if (currentFile === 'missions') fileStatus.missions = 'محفوظ';
+            else if (currentFile === 'gallery') fileStatus.gallery = 'محفوظ';
+            updateCounters();
+        }
+
+        function generateDataJS() {
+            const dataStr = JSON.stringify(AN_data, null, 4);
+            return `// data.js - Updated with categories and Tunisian data
+const AN_data = ${dataStr};`;
+        }
+
+        function generateMissionsJS() {
+            const dataStr = JSON.stringify(AN_missions_data, null, 4);
+            return `// data_missions.js - Mission data for Astronomy News
+const AN_missions_data = ${dataStr};`;
+        }
+
+        function generateGalleryJS() {
+            const dataStr = JSON.stringify(AN_gallery_data, null, 4);
+            return `// data_gallery.js - Gallery data for Astronomy News
+const AN_gallery_data = ${dataStr};`;
+        }
+
+        // وظائف إدارة الصور
+        function showImageChanges() {
+            // إزالة الصور التي تمت إضافتها وإزالتها (تعني أنها تم تحديثها)
+            const addedArray = Array.from(imageChanges.added);
+            const removedArray = Array.from(imageChanges.removed);
+            
+            const netAdded = addedArray.filter(img => !imageChanges.removed.has(img));
+            const netRemoved = removedArray.filter(img => !imageChanges.added.has(img));
+            
+            const addedHtml = netAdded.length > 0 ? 
+                `<h4>الصور المضافة (يجب رفعها إلى مجلد assets):</h4>
+                 <ul class="image-list added">
+                     ${netAdded.map(img => `<li>${img}</li>`).join('')}
+                 </ul>` : 
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد صور مضافة جديدة</p>';
+            
+            const removedHtml = netRemoved.length > 0 ? 
+                `<h4>الصور المحذوفة (يمكن حذفها من مجلد assets):</h4>
+                 <ul class="image-list removed">
+                     ${netRemoved.map(img => `<li>${img}</li>`).join('')}
+                 </ul>` : 
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد صور محذوفة</p>';
+            
+            const summary = netAdded.length > 0 || netRemoved.length > 0 ?
+                `<p><strong>ملخص:</strong> ${netAdded.length} صورة مضافة، ${netRemoved.length} صورة محذوفة</p>` :
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد تغييرات في الصور</p>';
+            
+            const content = summary + addedHtml + removedHtml;
+            
+            document.getElementById('imageChangesContent').innerHTML = content;
+            document.getElementById('imageChangesModal').style.display = 'block';
+        }
+
+        function closeImageChangesModal() {
+            document.getElementById('imageChangesModal').style.display = 'none';
+        }
+
+        function clearImageChanges() {
+            imageChanges.added.clear();
+            imageChanges.removed.clear();
+            showNotification('تم مسح قائمة تغييرات الصور');
+            closeImageChangesModal();
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+            editingId = null;
+        }
+
+        function showLang(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.lang-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            document.querySelector(`[onclick="showLang('${lang}')"]`).classList.add('active');
+        }
+
+        function toggleFields() {
+            const type = document.getElementById('type').value;
+            const isMission = type === 'mission';
+            const isGallery = type === 'gallery';
+            
+            // إظهار/إخفاء حقل الحالة للمهام
+            document.getElementById('statusGroup').style.display = isMission ? 'block' : 'none';
+            
+            // إظهار/إخفاء حقل الوكالة
+            document.getElementById('agencyGroup').style.display = isMission ? 'block' : 'none';
+            
+            // إظهار/إخفاء حقول التلسكوب والموقع للمعرض
+            document.getElementById('en_telescopeGroup').style.display = isGallery ? 'block' : 'none';
+            document.getElementById('fr_telescopeGroup').style.display = isGallery ? 'block' : 'none';
+            document.getElementById('ar_telescopeGroup').style.display = isGallery ? 'block' : 'none';
+            document.getElementById('en_locationGroup').style.display = isGallery ? 'block' : 'none';
+            document.getElementById('fr_locationGroup').style.display = isGallery ? 'block' : 'none';
+            document.getElementById('ar_locationGroup').style.display = isGallery ? 'block' : 'none';
+            
+            // إظهار/إخفاء حقول الوكالة للترجمة (للمهام)
+            document.getElementById('en_agencyGroup').style.display = isMission ? 'block' : 'none';
+            document.getElementById('fr_agencyGroup').style.display = isMission ? 'block' : 'none';
+            document.getElementById('ar_agencyGroup').style.display = isMission ? 'block' : 'none';
+            
+            // تحديث التسميات
+            if (isGallery) {
+                document.querySelector('label[for="en_body"]').textContent = 'الوصف (EN):';
+                document.querySelector('label[for="fr_body"]').textContent = 'الوصف (FR):';
+                document.querySelector('label[for="ar_body"]').textContent = 'الوصف (AR):';
+            } else {
+                document.querySelector('label[for="en_body"]').textContent = 'النص/الوصف (EN):';
+                document.querySelector('label[for="fr_body"]').textContent = 'النص/الوصف (FR):';
+                document.querySelector('label[for="ar_body"]').textContent = 'النص/الوصف (AR):';
+            }
+        }
+
+        function updateCounters() {
+            document.getElementById('entryCount').textContent = currentData.length;
+            document.getElementById('lastModified').textContent = new Date().toLocaleTimeString('ar-TN');
+            document.getElementById('fileStatus').textContent = fileStatus[currentFile] || 'غير محمل';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'error' ? 'rgba(244, 67, 54, 0.9)' : 'rgba(76, 175, 80, 0.9)';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // إغلاق النوافذ المنبثقة عند النقر خارجها
+        window.onclick = function(event) {
+            const editModal = document.getElementById('editModal');
+            const imageModal = document.getElementById('imageChangesModal');
+            
+            if (event.target === editModal) {
+                closeModal();
+            } else if (event.target === imageModal) {
+                closeImageChangesModal();
+            }
+        };
+    </script>
+</body>
+</html>

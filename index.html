@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomy News - Cosmic Discoveries</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#4a6fa5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Astronomy News">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+</head>
+<body class="AN-body">
+    <!-- Header Section -->
+    <header class="AN-header">
+        <div class="AN-container">
+            <div class="AN-header-content">
+                <!-- Column 1: Logo -->
+                <div class="AN-logo-section">
+                    <a href="index.html" class="AN-logo-link">
+                        <div class="AN-logo fallback-logo">
+                            <img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
+                            <i class="fas fa-star" style="display: none;"></i>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Column 2: Title -->
+                <div class="AN-title-section">
+                    <h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
+                </div>
+                
+                <!-- Column 3: Options Card -->
+                <div class="AN-options-card">
+                    <div class="AN-controls-compact">
+                        <div class="AN-control-group">
+                            <label for="AN-language-select" class="AN-control-label" data-i18n="An.index.language">Language:</label>
+                            <select id="AN-language-select" class="AN-select">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="ar">العربية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <div class="AN-theme-toggle">
+                                <input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
+                                <label for="AN-theme-switch" class="AN-theme-slider">
+                                    <span class="AN-theme-icon AN-theme-sun"><i class="fas fa-sun"></i></span>
+                                    <span class="AN-theme-icon AN-theme-moon"><i class="fas fa-moon"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <button class="AN-notification-btn" id="AN-notification-toggle">
+                                <i class="fas fa-bell"></i>
+                                <span class="AN-notification-badge" id="AN-notification-badge">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="AN-nav">
+                <ul class="AN-nav-list">
+                    <li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+                    <li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
+                    <li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
+                    <li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
+                    <li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                    <li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="AN-main">
+        <div class="AN-container">
+            <!-- Hero Section -->
+            <section class="AN-hero">
+                <div class="AN-hero-content">
+                    <h2 class="AN-hero-title" data-i18n="An.index.heroTitle">Exploring the Universe</h2>
+                    <p class="AN-hero-text" data-i18n="An.index.heroText">Latest discoveries, missions, and cosmic events from across the universe</p>
+                    <a href="AN_explore.html" class="AN-btn AN-btn-primary" data-i18n="An.index.exploreBtn">Explore News</a>
+                </div>
+                <div class="AN-hero-image">
+                    <div class="AN-planet AN-planet-1"></div>
+                    <div class="AN-planet AN-planet-2"></div>
+                    <div class="AN-planet AN-planet-3"></div>
+                    <div class="AN-stars"></div>
+                </div>
+            </section>
+            
+            <!-- Featured News Section -->
+            <section class="AN-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="AN-section-title" data-i18n="An.index.featuredNews">Featured News</h2>
+                    <div class="AN-news-categories">
+                        <button class="AN-category-btn AN-category-active" data-category="all" data-i18n="An.index.allNews">All News</button>
+                        <button class="AN-category-btn" data-category="global" data-i18n="An.index.globalNews">Global</button>
+                        <button class="AN-category-btn" data-category="local" data-i18n="An.index.localNews">Tunisia</button>
+                    </div>
+                </div>
+                
+                <div class="AN-news-grid" id="AN-news-container">
+                    <!-- News cards will be dynamically generated here -->
+                </div>
+            </section>
+            
+            <!-- Upcoming Events Section -->
+            <section class="AN-section">
+                <h2 class="AN-section-title" data-i18n="An.index.upcomingEvents">Upcoming Events</h2>
+                
+                <div class="AN-events-list" id="AN-events-container">
+                    <!-- Event items will be dynamically generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="AN-footer">
+        <div class="AN-container">
+            <div class="AN-footer-content">
+                <!-- Column 1: Information -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
+                    <p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
+                </div>
+                
+                <!-- Column 2: Developer -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
+                    <p class="AN-footer-text">Mejri Ziad</p>
+                </div>
+                
+                <!-- Column 3: Quick Links -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="index.html" data-i18n="An.index.home">Home</a></li>
+                        <li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
+                        <li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+                        <li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+                        <li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                        <li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="#" data-i18n="An.index.privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="An.index.termsOfUse">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Panel -->
+    <div class="AN-notification-panel" id="AN-notification-panel">
+        <div class="AN-notification-header">
+            <h3 data-i18n="An.index.notifications">Notifications</h3>
+            <button class="AN-close-btn" id="AN-close-notifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="AN-notification-list" id="AN-notification-list">
+            <!-- Notifications will be dynamically generated here -->
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="AN-event-modal" id="AN-event-modal">
+        <div class="AN-event-modal-content">
+            <div class="AN-event-modal-header">
+                <h2 id="AN-event-modal-title"></h2>
+                <button class="AN-event-modal-close" id="AN-event-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-event-modal-body">
+                <div class="AN-event-modal-image" id="AN-event-modal-image"></div>
+                <div class="AN-event-modal-info">
+                    <div class="AN-event-calendar" id="AN-event-calendar">
+                        <!-- Calendar will be generated here -->
+                    </div>
+                    <div class="AN-event-details">
+                        <h3 id="AN-event-modal-subtitle"></h3>
+                        <p id="AN-event-modal-body"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reaction Modal (for comments) -->
+    <div class="AN-reaction-modal" id="AN-reaction-modal">
+        <div class="AN-reaction-modal-content">
+            <div class="AN-reaction-modal-header">
+                <h3 id="AN-reaction-modal-title"></h3>
+                <button class="AN-reaction-modal-close" id="AN-reaction-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-reaction-modal-body">
+                <div class="AN-comment-form">
+                    <textarea id="AN-comment-input" placeholder="Add your comment..." rows="4"></textarea>
+                    <button id="AN-submit-comment" class="AN-btn AN-btn-primary">Post Comment</button>
+                </div>
+                <div class="AN-comments-list" id="AN-comments-list">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="pwa-main.js"></script>
+    <script src="data.js"></script>
+    <script src="data_processing.js"></script>
+    <script src="translation.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeSwitch = document.getElementById('AN-theme-switch');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('AN-theme') || 
+                              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('AN-dark-mode');
+                themeSwitch.checked = true;
+            }
+            
+            // Toggle theme
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    body.classList.add('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'dark');
+                } else {
+                    body.classList.remove('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'light');
+                }
+            });
+            
+            // Notification panel toggle
+            const notificationToggle = document.getElementById('AN-notification-toggle');
+            const notificationPanel = document.getElementById('AN-notification-panel');
+            const closeNotifications = document.getElementById('AN-close-notifications');
+            
+            notificationToggle.addEventListener('click', function() {
+                notificationPanel.classList.toggle('AN-active');
+            });
+            
+            closeNotifications.addEventListener('click', function() {
+                notificationPanel.classList.remove('AN-active');
+            });
+            
+            // Close notification panel when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!notificationToggle.contains(event.target) && 
+                    !notificationPanel.contains(event.target)) {
+                    notificationPanel.classList.remove('AN-active');
+                }
+            });
+            
+            // Initialize PWA if not already
+            if ('serviceWorker' in navigator && !window.AN_PWA) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            }
+            
+            // Initialize app
+            if (typeof AN_initializeApp === 'function') {
+                AN_initializeApp();
+            }
+        });
+    </script>
+</body>
+</html>

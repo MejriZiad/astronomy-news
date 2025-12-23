@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomy News - About</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="manifest" href="/manifest.json">
+   <meta name="theme-color" content="#4a6fa5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <meta name="apple-mobile-web-app-title" content="Astronomy News">
+   <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <style>
+        /* About Page color palette - Professional & Team-focused */
+        :root {
+            --AN-about-primary: #1a3c6e; /* Deep professional blue */
+            --AN-about-secondary: #2c5aa0; /* Lighter team blue */
+            --AN-about-accent: #4ecdc4; /* Teal for highlights */
+            --AN-about-bg: #f8f9fa; /* Light background for professional look */
+            --AN-about-card: #ffffff; /* Clean white cards */
+            --AN-about-text: #333333; /* Dark text for readability */
+            --AN-about-border: #e0e0e0; /* Subtle borders */
+            --AN-about-team: #ff7e5f; /* Warm accent for team section */
+        }
+        
+        /* Dark mode overrides for about page */
+        .AN-dark-mode {
+            --AN-about-primary: #64b5f6;
+            --AN-about-secondary: #90caf9;
+            --AN-about-accent: #80deea;
+            --AN-about-bg: #121212;
+            --AN-about-card: #1e1e1e;
+            --AN-about-text: #e0e0e0;
+            --AN-about-border: #333;
+            --AN-about-team: #ffab91;
+        }
+        
+        .AN-body-about {
+            --AN-primary-color: var(--AN-about-primary);
+            --AN-secondary-color: var(--AN-about-secondary);
+            --AN-accent-color: var(--AN-about-accent);
+            --AN-bg-color: var(--AN-about-bg);
+            --AN-card-bg: var(--AN-about-card);
+            --AN-text-color: var(--AN-about-text);
+            --AN-border-color: var(--AN-about-border);
+            --AN-header-bg: var(--AN-about-card);
+            --AN-footer-bg: #1a3c6e;
+        }
+        
+        .AN-body-about {
+            background-color: var(--AN-bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(26, 60, 110, 0.03) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.03) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        .AN-dark-mode .AN-body-about {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100, 181, 246, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(128, 222, 234, 0.05) 0%, transparent 20%);
+        }
+        
+        /* About Page Header */
+        .AN-about-header {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 var(--AN-radius) var(--AN-radius);
+            margin-bottom: 40px;
+        }
+        
+        .AN-about-header-bg {
+            height: 300px;
+            background: linear-gradient(135deg, var(--AN-about-primary), var(--AN-about-secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .AN-about-header-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .AN-about-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .AN-about-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        
+        /* Developer Section */
+        .AN-developer-section {
+            margin-bottom: 60px;
+        }
+        
+        .AN-developer-card {
+            display: flex;
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--AN-border-color);
+            transition: var(--AN-transition);
+            margin-bottom: 40px;
+        }
+        
+        .AN-dark-mode .AN-developer-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .AN-developer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .AN-dark-mode .AN-developer-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .AN-developer-image {
+            width: 300px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .AN-developer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-developer-card:hover .AN-developer-image img {
+            transform: scale(1.05);
+        }
+        
+        .AN-developer-info {
+            padding: 40px;
+            flex: 1;
+        }
+        
+        .AN-developer-name {
+            font-size: 32px;
+            color: var(--AN-primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .AN-developer-role {
+            font-size: 18px;
+            color: var(--AN-accent-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--AN-accent-color);
+            display: inline-block;
+        }
+        
+        .AN-developer-bio {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--AN-text-color);
+            margin-bottom: 30px;
+        }
+        
+        .AN-developer-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .AN-skill-tag {
+            padding: 8px 16px;
+            background-color: rgba(26, 60, 110, 0.1);
+            color: var(--AN-primary-color);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-dark-mode .AN-skill-tag {
+            background-color: rgba(100, 181, 246, 0.2);
+            color: var(--AN-primary-color);
+        }
+        
+        .AN-skill-tag:hover {
+            background-color: var(--AN-primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .AN-developer-contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .AN-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: var(--AN-primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--AN-radius);
+            transition: var(--AN-transition);
+            font-weight: 500;
+        }
+        
+        .AN-contact-link:hover {
+            background-color: var(--AN-accent-color);
+            color: var(--AN-primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .AN-discord-tag {
+            background-color: #5865F2 !important;
+            color: white !important;
+        }
+        
+        .AN-discord-tag:hover {
+            background-color: #4752C4 !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        /* Team Section */
+        .AN-team-section {
+            margin-bottom: 60px;
+        }
+        
+        .AN-team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        .AN-team-intro h2 {
+            font-size: 36px;
+            color: var(--AN-primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .AN-team-intro p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--AN-text-color);
+            opacity: 0.9;
+        }
+        
+        .AN-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .AN-team-member {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--AN-border-color);
+            transition: var(--AN-transition);
+            text-align: center;
+        }
+        
+        .AN-dark-mode .AN-team-member {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .AN-team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--AN-about-team);
+        }
+        
+        .AN-dark-mode .AN-team-member:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .AN-team-member-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .AN-team-member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-team-member:hover .AN-team-member-image img {
+            transform: scale(1.05);
+        }
+        
+        .AN-team-member-info {
+            padding: 25px;
+        }
+        
+        .AN-team-member-name {
+            font-size: 22px;
+            color: var(--AN-primary-color);
+            margin-bottom: 8px;
+        }
+        
+        .AN-team-member-role {
+            font-size: 16px;
+            color: var(--AN-accent-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--AN-border-color);
+        }
+        
+        .AN-team-member-bio {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--AN-text-color);
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        /* Mission Section */
+        .AN-mission-section {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            padding: 50px;
+            margin-bottom: 60px;
+            border: 1px solid var(--AN-border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .AN-dark-mode .AN-mission-section {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .AN-mission-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .AN-mission-icon {
+            font-size: 48px;
+            color: var(--AN-accent-color);
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: AN-mission-pulse 3s infinite;
+        }
+        
+        @keyframes AN-mission-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .AN-mission-title {
+            font-size: 32px;
+            color: var(--AN-primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .AN-mission-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--AN-text-color);
+            opacity: 0.9;
+        }
+        
+        /* Values Section */
+        .AN-values-section {
+            margin-bottom: 60px;
+        }
+        
+        .AN-values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .AN-value-card {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--AN-border-color);
+            transition: var(--AN-transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .AN-dark-mode .AN-value-card {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .AN-value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--AN-accent-color);
+        }
+        
+        .AN-dark-mode .AN-value-card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .AN-value-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgba(26, 60, 110, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--AN-primary-color);
+        }
+        
+        .AN-dark-mode .AN-value-icon {
+            background-color: rgba(100, 181, 246, 0.2);
+        }
+        
+        .AN-value-title {
+            font-size: 20px;
+            color: var(--AN-primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .AN-value-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--AN-text-color);
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .AN-developer-card {
+                flex-direction: column;
+            }
+            
+            .AN-developer-image {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .AN-team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .AN-about-title {
+                font-size: 36px;
+            }
+            
+            .AN-about-subtitle {
+                font-size: 18px;
+            }
+            
+            .AN-developer-info {
+                padding: 25px;
+            }
+            
+            .AN-developer-name {
+                font-size: 28px;
+            }
+            
+            .AN-developer-contact {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .AN-contact-link {
+                width: 100%;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .AN-mission-section {
+                padding: 30px 20px;
+            }
+            
+            .AN-mission-title {
+                font-size: 28px;
+            }
+            
+            .AN-values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .AN-about-header-bg {
+                height: 250px;
+            }
+            
+            .AN-team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .AN-developer-skills {
+                justify-content: center;
+            }
+            
+            .AN-developer-contact {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .AN-developer-contact {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* RTL support for about page */
+        .AN-rtl .AN-developer-name {
+            flex-direction: row-reverse;
+        }
+        
+        .AN-rtl .AN-developer-contact {
+            direction: rtl;
+        }
+        
+        .AN-rtl .AN-contact-link {
+            flex-direction: row-reverse;
+        }
+    </style>
+</head>
+<body class="AN-body AN-body-about">
+    <!-- Header Section -->
+    <header class="AN-header">
+        <div class="AN-container">
+            <div class="AN-header-content">
+                <!-- Column 1: Logo (1/4) -->
+                <div class="AN-logo-section">
+                    <a href="index.html" class="AN-logo-link">
+                        <div class="AN-logo fallback-logo">
+                            <img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
+                            <i class="fas fa-star" style="display: none;"></i>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Column 2: Title (2/4) -->
+                <div class="AN-title-section">
+                    <h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
+                </div>
+                
+                <!-- Column 3: Options Card (1/4) -->
+                <div class="AN-options-card">
+                    <div class="AN-controls-compact">
+                        <div class="AN-control-group">
+                            <label for="AN-language-select" class="AN-control-label" data-i18n="An.index.language">Language:</label>
+                            <select id="AN-language-select" class="AN-select">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="ar">العربية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <div class="AN-theme-toggle">
+                                <input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
+                                <label for="AN-theme-switch" class="AN-theme-slider">
+                                    <span class="AN-theme-icon AN-theme-sun"><i class="fas fa-sun"></i></span>
+                                    <span class="AN-theme-icon AN-theme-moon"><i class="fas fa-moon"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <button class="AN-notification-btn" id="AN-notification-toggle">
+                                <i class="fas fa-bell"></i>
+                                <span class="AN-notification-badge" id="AN-notification-badge">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="AN-nav">
+                <ul class="AN-nav-list">
+                    <li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+                    <li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
+                    <li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
+                    <li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
+                    <li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                    <li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link AN-active" data-i18n="An.index.about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Page Header -->
+    <div class="AN-about-header">
+        <div class="AN-about-header-bg">
+            <div class="AN-stars"></div>
+        </div>
+        <div class="AN-about-header-content">
+            <h1 class="AN-about-title">
+                <i class="fas fa-users"></i> <span data-i18n="An.about.title">About Our Team</span>
+            </h1>
+            <p class="AN-about-subtitle" data-i18n="An.about.subtitle">Meet the passionate minds behind Astronomy News - bridging astronomy with technology to bring the universe closer to everyone.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="AN-main">
+        <div class="AN-container">
+            <!-- Developer Section -->
+            <section class="AN-developer-section">
+                <div class="AN-developer-card">
+                    <div class="AN-developer-image">
+                        <img src="assets2/images/about/ziad.jpg" alt="Mejri Ziad" id="AN-developer-img">
+                        <div class="AN-image-placeholder" style="background: linear-gradient(135deg, var(--AN-primary-color), var(--AN-accent-color)); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 72px; display: none;">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                    </div>
+                    <div class="AN-developer-info">
+                        <h2 class="AN-developer-name" id="AN-developer-name">
+                            <span>Mejri Ziad</span>
+                        </h2>
+                        <div class="AN-developer-role" id="AN-developer-role">Project Lead & Developer</div>
+                        <p class="AN-developer-bio" id="AN-developer-bio">
+                            Passionate astronomer and full-stack developer with over 5 years of experience in web development and 3 years in astronomy outreach. Created Astronomy News to make astronomy accessible to everyone, combining technical expertise with a love for celestial exploration. Leads the AstroMed Club and organizes stargazing events across Tunisia. Also runs a mystery/astronomy blog at Home of Mystery.
+                        </p>
+                        
+                        <div class="AN-developer-skills" id="AN-developer-skills">
+                            <!-- Skills will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="AN-developer-contact" id="AN-developer-contact">
+                            <!-- Contact links will be dynamically generated -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Team Section -->
+            <section class="AN-team-section">
+                <div class="AN-team-intro">
+                    <h2 data-i18n="An.about.teamTitle">AstroMed Club</h2>
+                    <p data-i18n="An.about.teamSubtitle">A multidisciplinary team of astronomy enthusiasts, developers, and science communicators dedicated to making space exploration accessible to all.</p>
+                </div>
+                
+                <div class="AN-team-grid" id="AN-team-container">
+                    <!-- Team members will be dynamically generated here -->
+                </div>
+            </section>
+            
+            <!-- Mission Section -->
+            <section class="AN-mission-section">
+                <div class="AN-mission-content">
+                    <div class="AN-mission-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h2 class="AN-mission-title" data-i18n="An.about.missionTitle">Our Mission</h2>
+                    <p class="AN-mission-text" data-i18n="An.about.missionText">
+                        To democratize access to astronomical knowledge and space exploration updates through innovative digital platforms. We believe that understanding the universe should be accessible to everyone, regardless of background or location. By combining accurate scientific information with engaging digital experiences, we aim to inspire the next generation of astronomers, scientists, and space enthusiasts.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Values Section -->
+            <section class="AN-values-section">
+                <h2 class="AN-section-title" data-i18n="An.about.valuesTitle">Our Values</h2>
+                <div class="AN-values-grid" id="AN-values-container">
+                    <!-- Values will be dynamically generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="AN-footer">
+        <div class="AN-container">
+            <div class="AN-footer-content">
+                <!-- Column 1: Information -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
+                    <p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
+                </div>
+                
+                <!-- Column 2: Developer -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
+                    <p class="AN-footer-text">Mejri Ziad</p>
+                </div>
+                
+                <!-- Column 3: Quick Links -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="index.html" data-i18n="An.index.home">Home</a></li>
+                        <li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
+                        <li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+                        <li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+                        <li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                        <li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="#" data-i18n="An.index.privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="An.index.termsOfUse">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Panel -->
+    <div class="AN-notification-panel" id="AN-notification-panel">
+        <div class="AN-notification-header">
+            <h3 data-i18n="An.index.notifications">Notifications</h3>
+            <button class="AN-close-btn" id="AN-close-notifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="AN-notification-list" id="AN-notification-list">
+            <!-- Notifications will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="data_processing.js"></script>
+    <script src="translation.js"></script>
+    <script src="data_about.js"></script>
+    <script>
+        // Add about translations to the global translations object
+        const AN_about_translations = {
+            en: {
+                'An.about.title': 'About Our Team',
+                'An.about.subtitle': 'Meet the passionate minds behind Astronomy News - bridging astronomy with technology to bring the universe closer to everyone.',
+                'An.about.teamTitle': 'AstroMed Club',
+                'An.about.teamSubtitle': 'A multidisciplinary team of astronomy enthusiasts, developers, and science communicators dedicated to making space exploration accessible to all.',
+                'An.about.missionTitle': 'Our Mission',
+                'An.about.missionText': 'To democratize access to astronomical knowledge and space exploration updates through innovative digital platforms. We believe that understanding the universe should be accessible to everyone, regardless of background or location. By combining accurate scientific information with engaging digital experiences, we aim to inspire the next generation of astronomers, scientists, and space enthusiasts.',
+                'An.about.valuesTitle': 'Our Values',
+                'An.about.email': 'Email',
+                'An.about.github': 'GitHub',
+                'An.about.linkedin': 'LinkedIn',
+                'An.about.instagram': 'Instagram',
+                'An.about.facebook': 'Facebook',
+                'An.about.blog': 'Blog',
+                'An.about.discord': 'Discord',
+                'An.about.accuracy': 'Scientific Accuracy',
+                'An.about.accessibility': 'Accessibility',
+                'An.about.innovation': 'Innovation',
+                'An.about.community': 'Community',
+                'An.about.accuracyDesc': 'We prioritize factual, peer-reviewed information and collaborate with astronomers to ensure content accuracy.',
+                'An.about.accessibilityDesc': 'We design our platforms to be usable by everyone, with multilingual support and responsive design.',
+                'An.about.innovationDesc': 'We continuously explore new technologies to enhance the astronomical learning experience.',
+                'An.about.communityDesc': 'We build communities where astronomy enthusiasts can connect, share knowledge, and collaborate.'
+            },
+            fr: {
+                'An.about.title': 'À Propos de Notre Équipe',
+                'An.about.subtitle': 'Rencontrez les esprits passionnés derrière Astronomy News - reliant l\'astronomie à la technologie pour rapprocher l\'univers de chacun.',
+                'An.about.teamTitle': 'Club AstroMed',
+                'An.about.teamSubtitle': 'Une équipe multidisciplinaire d\'enthousiastes de l\'astronomie, de développeurs et de communicateurs scientifiques dédiés à rendre l\'exploration spatiale accessible à tous.',
+                'An.about.missionTitle': 'Notre Mission',
+                'An.about.missionText': 'Démocratiser l\'accès aux connaissances astronomiques et aux mises à jour de l\'exploration spatiale grâce à des plateformes numériques innovantes. Nous croyons que la compréhension de l\'univers devrait être accessible à tous, quel que soit le milieu ou l\'emplacement. En combinant des informations scientifiques précises avec des expériences numériques engageantes, nous visons à inspirer la prochaine génération d\'astronomes, de scientifiques et d\'enthousiastes de l\'espace.',
+                'An.about.valuesTitle': 'Nos Valeurs',
+                'An.about.email': 'Email',
+                'An.about.github': 'GitHub',
+                'An.about.linkedin': 'LinkedIn',
+                'An.about.instagram': 'Instagram',
+                'An.about.facebook': 'Facebook',
+                'An.about.blog': 'Blog',
+                'An.about.discord': 'Discord',
+                'An.about.accuracy': 'Exactitude Scientifique',
+                'An.about.accessibility': 'Accessibilité',
+                'An.about.innovation': 'Innovation',
+                'An.about.community': 'Communauté',
+                'An.about.accuracyDesc': 'Nous donnons la priorité aux informations factuelles et évaluées par des pairs et collaborons avec des astronomes pour garantir l\'exactitude du contenu.',
+                'An.about.accessibilityDesc': 'Nous concevons nos plateformes pour qu\'elles soient utilisables par tous, avec un support multilingue et un design adaptatif.',
+                'An.about.innovationDesc': 'Nous explorons continuellement de nouvelles technologies pour améliorer l\'expérience d\'apprentissage astronomique.',
+                'An.about.communityDesc': 'Nous construisons des communautés où les passionnés d\'astronomie peuvent se connecter, partager des connaissances et collaborer.'
+            },
+            ar: {
+                'An.about.title': 'عن فريقنا',
+                'An.about.subtitle': 'تعرف على العقول الشغوفة وراء السجلات الكونية - التي تربط علم الفلك بالتكنولوجيا لتقريب الكون للجميع.',
+                'An.about.teamTitle': 'نادي نادي علم الفلك بمجاز الباب',
+                'An.about.teamSubtitle': 'فريق متعدد التخصصات من هواة علم الفلك والمطورين ومتحدثي العلوم المكرسين لجعل استكشاف الفضاء في متناول الجميع.',
+                'An.about.missionTitle': 'مهمتنا',
+                'An.about.missionText': 'لإضفاء الطابع الديمقراطي على الوصول إلى المعرفة الفلكية وتحديثات استكشاف الفضاء من خلال المنصات الرقمية المبتكرة. نحن نعتقد أن فهم الكون يجب أن يكون في متناول الجميع، بغض النظر عن الخلفية أو الموقع. من خلال الجمع بين المعلومات العلمية الدقيقة والتجارب الرقمية الجذابة، نهدف إلى إلهام الجيل القادم من علماء الفلك والعلماء وهواة الفضاء.',
+                'An.about.valuesTitle': 'قيمنا',
+                'An.about.email': 'البريد الإلكتروني',
+                'An.about.github': 'جيت هاب',
+                'An.about.linkedin': 'لينكد إن',
+                'An.about.instagram': 'إنستغرام',
+                'An.about.facebook': 'فيسبوك',
+                'An.about.blog': 'المدونة',
+                'An.about.discord': 'ديسكورد',
+                'An.about.accuracy': 'الدقة العلمية',
+                'An.about.accessibility': 'سهولة الوصول',
+                'An.about.innovation': 'الابتكار',
+                'An.about.community': 'المجتمع',
+                'An.about.accuracyDesc': 'نعطي الأولوية للمعلومات الواقعية التي تمت مراجعتها من قبل الزملاء ونتعاون مع علماء الفلك لضمان دقة المحتوى.',
+                'An.about.accessibilityDesc': 'نصمم منصاتنا لتكون قابلة للاستخدام من قبل الجميع، مع دعم متعدد اللغات وتصميم متجاوب.',
+                'An.about.innovationDesc': 'نستكشف باستمرار التقنيات الجديدة لتعزيز تجربة التعلم الفلكية.',
+                'An.about.communityDesc': 'نبني مجتمعات حيث يمكن لهواة علم الفلك التواصل ومشاركة المعرفة والتعاون.'
+            }
+        };
+
+        // Merge about translations with existing translations
+        Object.keys(AN_about_translations).forEach(lang => {
+            if (AN_translations[lang]) {
+                Object.assign(AN_translations[lang], AN_about_translations[lang]);
+            }
+        });
+
+        // Function to get translated text
+        function AN_getTranslatedText(key, language) {
+            if (AN_translations[language] && AN_translations[language][key]) {
+                return AN_translations[language][key];
+            }
+            return AN_translations['en'][key] || key;
+        }
+
+        // Function to render developer information with enhanced contact links
+        function AN_renderDeveloperInfo(language) {
+            const developerData = AN_about_data.developer;
+            const content = developerData[language] || developerData.en;
+            
+            // Update developer name
+            const nameElement = document.getElementById('AN-developer-name');
+            if (nameElement) {
+                nameElement.innerHTML = `<span>${content.name}</span>`;
+            }
+            
+            // Update developer role
+            const roleElement = document.getElementById('AN-developer-role');
+            if (roleElement) {
+                roleElement.textContent = content.role;
+            }
+            
+            // Update developer bio
+            const bioElement = document.getElementById('AN-developer-bio');
+            if (bioElement) {
+                bioElement.textContent = content.bio;
+            }
+            
+            // Update developer skills
+            const skillsContainer = document.getElementById('AN-developer-skills');
+            if (skillsContainer && developerData.skills) {
+                skillsContainer.innerHTML = '';
+                developerData.skills.forEach(skill => {
+                    const skillElement = document.createElement('span');
+                    skillElement.className = 'AN-skill-tag';
+                    skillElement.textContent = skill;
+                    skillsContainer.appendChild(skillElement);
+                });
+            }
+            
+            // Update developer contact links
+            const contactContainer = document.getElementById('AN-developer-contact');
+            if (contactContainer) {
+                contactContainer.innerHTML = '';
+                
+                // Email
+                if (content.email) {
+                    const emailLink = document.createElement('a');
+                    emailLink.href = `mailto:${content.email}`;
+                    emailLink.className = 'AN-contact-link';
+                    emailLink.innerHTML = `<i class="fas fa-envelope"></i> <span data-i18n="An.about.email">Email</span>`;
+                    contactContainer.appendChild(emailLink);
+                }
+                
+                // GitHub
+                if (content.github) {
+                    const githubLink = document.createElement('a');
+                    githubLink.href = content.github;
+                    githubLink.className = 'AN-contact-link';
+                    githubLink.target = '_blank';
+                    githubLink.innerHTML = `<i class="fab fa-github"></i> <span data-i18n="An.about.github">GitHub</span>`;
+                    contactContainer.appendChild(githubLink);
+                }
+                
+                // LinkedIn
+                if (content.linkedin) {
+                    const linkedinLink = document.createElement('a');
+                    linkedinLink.href = content.linkedin;
+                    linkedinLink.className = 'AN-contact-link';
+                    linkedinLink.target = '_blank';
+                    linkedinLink.innerHTML = `<i class="fab fa-linkedin"></i> <span data-i18n="An.about.linkedin">LinkedIn</span>`;
+                    contactContainer.appendChild(linkedinLink);
+                }
+                
+                // Instagram
+                if (content.instagram) {
+                    const instagramLink = document.createElement('a');
+                    instagramLink.href = content.instagram;
+                    instagramLink.className = 'AN-contact-link';
+                    instagramLink.target = '_blank';
+                    instagramLink.innerHTML = `<i class="fab fa-instagram"></i> <span data-i18n="An.about.instagram">Instagram</span>`;
+                    contactContainer.appendChild(instagramLink);
+                }
+                
+                // Facebook
+                if (content.facebook) {
+                    const facebookLink = document.createElement('a');
+                    facebookLink.href = content.facebook;
+                    facebookLink.className = 'AN-contact-link';
+                    facebookLink.target = '_blank';
+                    facebookLink.innerHTML = `<i class="fab fa-facebook"></i> <span data-i18n="An.about.facebook">Facebook</span>`;
+                    contactContainer.appendChild(facebookLink);
+                }
+                
+                // Blog
+                if (content.blog) {
+                    const blogLink = document.createElement('a');
+                    blogLink.href = content.blog;
+                    blogLink.className = 'AN-contact-link';
+                    blogLink.target = '_blank';
+                    blogLink.innerHTML = `<i class="fas fa-blog"></i> <span data-i18n="An.about.blog">Blog</span>`;
+                    contactContainer.appendChild(blogLink);
+                }
+                
+                // Discord (no link, just username)
+                if (content.discord) {
+                    const discordDiv = document.createElement('div');
+                    discordDiv.className = 'AN-contact-link AN-discord-tag';
+                    discordDiv.innerHTML = `<i class="fab fa-discord"></i> <span>${content.discord}</span>`;
+                    discordDiv.title = AN_getTranslatedText('An.about.discord', language);
+                    discordDiv.style.cursor = 'default';
+                    contactContainer.appendChild(discordDiv);
+                }
+            }
+            
+            // Update developer image if available
+            const imageElement = document.getElementById('AN-developer-img');
+            if (imageElement && developerData.image) {
+                imageElement.src = developerData.image;
+                imageElement.onerror = function() {
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'flex';
+                };
+            }
+        }
+
+        // Function to render team members
+        function AN_renderTeamMembers(language) {
+            const teamContainer = document.getElementById('AN-team-container');
+            if (!teamContainer) return;
+            
+            teamContainer.innerHTML = '';
+            
+            const teamData = AN_about_data.team;
+            teamData.forEach(member => {
+                const content = member[language] || member.en;
+                const memberElement = document.createElement('div');
+                memberElement.className = 'AN-team-member';
+                
+                memberElement.innerHTML = `
+                    <div class="AN-team-member-image">
+                        <img src="${member.image || 'assets/images/about/team-default.jpg'}" alt="${content.name}">
+                        ${!member.image ? `<div class="AN-image-placeholder" style="background: linear-gradient(135deg, var(--AN-secondary-color), var(--AN-about-team)); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                            <i class="fas ${member.icon || 'fa-user'}"></i>
+                        </div>` : ''}
+                    </div>
+                    <div class="AN-team-member-info">
+                        <h3 class="AN-team-member-name">${content.name}</h3>
+                        <div class="AN-team-member-role">${content.role}</div>
+                        <p class="AN-team-member-bio">${content.bio}</p>
+                    </div>
+                `;
+                
+                teamContainer.appendChild(memberElement);
+            });
+        }
+
+        // Function to render values
+        function AN_renderValues(language) {
+            const valuesContainer = document.getElementById('AN-values-container');
+            if (!valuesContainer) return;
+            
+            valuesContainer.innerHTML = '';
+            
+            const valuesData = AN_about_data.values;
+            valuesData.forEach(value => {
+                const content = value[language] || value.en;
+                const valueElement = document.createElement('div');
+                valueElement.className = 'AN-value-card';
+                
+                valueElement.innerHTML = `
+                    <div class="AN-value-icon">
+                        <i class="fas ${value.icon}"></i>
+                    </div>
+                    <h3 class="AN-value-title">${content.title}</h3>
+                    <p class="AN-value-desc">${content.description}</p>
+                `;
+                
+                valuesContainer.appendChild(valueElement);
+            });
+        }
+
+        // Function to apply about-specific translations
+        function AN_applyAboutTranslations(language) {
+            // Apply static text translations
+            AN_applyTranslations(language);
+            
+            // Render developer info
+            AN_renderDeveloperInfo(language);
+            
+            // Render team members
+            AN_renderTeamMembers(language);
+            
+            // Render values
+            AN_renderValues(language);
+            
+            // Re-render notifications
+            if (typeof AN_renderNotifications === 'function') {
+                AN_renderNotifications(language);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeSwitch = document.getElementById('AN-theme-switch');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('AN-theme') || 
+                              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('AN-dark-mode');
+                themeSwitch.checked = true;
+            }
+            
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    body.classList.add('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'dark');
+                } else {
+                    body.classList.remove('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'light');
+                }
+            });
+            
+            // Notification panel toggle
+            const notificationToggle = document.getElementById('AN-notification-toggle');
+            const notificationPanel = document.getElementById('AN-notification-panel');
+            const closeNotifications = document.getElementById('AN-close-notifications');
+            
+            if (notificationToggle) {
+                notificationToggle.addEventListener('click', function() {
+                    notificationPanel.classList.toggle('AN-active');
+                });
+            }
+            
+            if (closeNotifications) {
+                closeNotifications.addEventListener('click', function() {
+                    notificationPanel.classList.remove('AN-active');
+                });
+            }
+            
+            // Close notification panel when clicking outside
+            document.addEventListener('click', function(event) {
+                if (notificationToggle && notificationPanel && 
+                    !notificationToggle.contains(event.target) && 
+                    !notificationPanel.contains(event.target)) {
+                    notificationPanel.classList.remove('AN-active');
+                }
+            });
+            
+            // Language selection
+            const languageSelect = document.getElementById('AN-language-select');
+            const savedLanguage = localStorage.getItem('AN-language-preference') || 'en';
+            
+            if (languageSelect) {
+                languageSelect.value = savedLanguage;
+                languageSelect.addEventListener('change', function() {
+                    AN_applyAboutTranslations(this.value);
+                    localStorage.setItem('AN-language-preference', this.value);
+                });
+            }
+            
+            // Initialize with saved language
+            AN_applyAboutTranslations(savedLanguage);
+        });
+    </script>
+</body>
+</html>

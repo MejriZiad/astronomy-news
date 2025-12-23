@@ -1,0 +1,170 @@
+{
+	"name": "Astronomy News",
+	"short_name": "AstronomyNews",
+	"description": "Latest astronomy news, space missions, and cosmic discoveries from around the world and Tunisia.",
+	"lang": "en",
+	"dir": "ltr",
+	"start_url": "/index.html",
+	"scope": "/",
+	"display": "standalone",
+	"display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+	"orientation": "any",
+	"theme_color": "#4a6fa5",
+	"background_color": "#f8f9fa",
+	"categories": [
+		"news",
+		"education",
+		"science"
+	],
+	"screenshots": [
+		{
+			"src": "assets/screenshots/screenshot1.png",
+			"sizes": "1280x720",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Homepage showing featured astronomy news"
+		},
+		{
+			"src": "assets/screenshots/screenshot2.png",
+			"sizes": "750x1334",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Mobile view of astronomy gallery"
+		},
+		{
+			"src": "assets/screenshots/screenshot3.png",
+			"sizes": "1280x720",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Dark mode showing space missions"
+		},
+		{
+			"src": "assets/screenshots/screenshot4.png",
+			"sizes": "750x1334",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "Article reading view"
+		}
+	],
+	"icons": [
+		{
+			"src": "assets/icons/icon-72x72.png",
+			"sizes": "72x72",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-96x96.png",
+			"sizes": "96x96",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-128x128.png",
+			"sizes": "128x128",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-152x152.png",
+			"sizes": "152x152",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "assets/icons/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "assets/icons/icon-384x384.png",
+			"sizes": "384x384",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "assets/icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Latest News",
+			"short_name": "News",
+			"description": "Browse the latest astronomy discoveries",
+			"url": "/AN_news.html",
+			"icons": [
+				{
+					"src": "assets/icons/news-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		},
+		{
+			"name": "Cosmic Gallery",
+			"short_name": "Gallery",
+			"description": "View stunning space images",
+			"url": "/AN_gallery.html",
+			"icons": [
+				{
+					"src": "assets/icons/gallery-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		},
+		{
+			"name": "Space Missions",
+			"short_name": "Missions",
+			"description": "Track current space missions",
+			"url": "/AN_missions.html",
+			"icons": [
+				{
+					"src": "assets/icons/mission-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			]
+		}
+	],
+	"protocol_handlers": [
+		{
+			"protocol": "web+cosmic",
+			"url": "/index.html?protocol=%s"
+		}
+	],
+	"launch_handler": {
+		"client_mode": "focus-existing"
+	},
+	"handle_links": "preferred",
+	"edge_side_panel": {},
+	"prefer_related_applications": false,
+	"related_applications": [],
+	"share_target": {
+		"action": "/share.html",
+		"method": "POST",
+		"enctype": "multipart/form-data",
+		"params": {
+			"title": "title",
+			"text": "text",
+			"url": "url"
+		}
+	},
+	"file_handlers": [
+		{
+			"action": "/view-astronomy-file.html",
+			"accept": {
+				"text/plain": [".txt"],
+				"application/json": [".json"]
+			}
+		}
+	],
+	"permissions": [
+		"notifications",
+		"clipboard-write"
+	]
+}

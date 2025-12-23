@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomy News - Space Missions</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="manifest" href="/manifest.json">
+   <meta name="theme-color" content="#4a6fa5">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <meta name="apple-mobile-web-app-title" content="Astronomy News">
+   <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+    <style>
+        /* Mission-specific color palette and styles */
+        :root {
+            --AN-mission-primary: #1565c0; /* Deep space blue */
+            --AN-mission-secondary: #00695c; /* Mission control teal */
+            --AN-mission-accent: #ff8f00; /* Launch orange */
+            --AN-mission-bg: #0a192f; /* Dark space background */
+            --AN-mission-card: #112240; /* Mission card background */
+            --AN-mission-text: #ccd6f6; /* Light text for dark background */
+            --AN-mission-border: #233554; /* Border color */
+        }
+        
+        .AN-body-missions {
+            --AN-primary-color: var(--AN-mission-primary);
+            --AN-secondary-color: var(--AN-mission-secondary);
+            --AN-accent-color: var(--AN-mission-accent);
+            --AN-bg-color: var(--AN-mission-bg);
+            --AN-card-bg: var(--AN-mission-card);
+            --AN-text-color: var(--AN-mission-text);
+            --AN-border-color: var(--AN-mission-border);
+            --AN-header-bg: var(--AN-mission-card);
+            --AN-footer-bg: #0d1b2a;
+        }
+        
+        /* Mission-specific body styles */
+        .AN-body-missions {
+            background-color: var(--AN-bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(21, 101, 192, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 143, 0, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        /* Mission Page Header */
+        .AN-mission-header {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0 0 var(--AN-radius) var(--AN-radius);
+            margin-bottom: 40px;
+        }
+        
+        .AN-mission-header-bg {
+            height: 300px;
+            background: linear-gradient(135deg, var(--AN-mission-primary), var(--AN-mission-secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .AN-mission-header-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .AN-mission-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .AN-mission-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        
+        /* Mission Timeline - Updated for chronological arrow */
+        .AN-mission-timeline {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .AN-mission-timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, var(--AN-mission-primary), var(--AN-mission-accent));
+            transform: translateX(-50%);
+            z-index: 1;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(21, 101, 192, 0.5);
+        }
+        
+        .AN-mission-timeline:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--AN-mission-accent);
+            transform: translateX(-50%) rotate(45deg);
+            z-index: 2;
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(255, 143, 0, 0.7);
+        }
+        
+        .AN-timeline-item {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .AN-timeline-item:nth-child(odd) .AN-timeline-content {
+            margin-left: 50%;
+            padding-left: 60px;
+        }
+        
+        .AN-timeline-item:nth-child(even) .AN-timeline-content {
+            margin-right: 50%;
+            padding-right: 60px;
+            text-align: right;
+        }
+        
+        .AN-timeline-content {
+            position: relative;
+            padding: 25px;
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--AN-border-color);
+            transition: var(--AN-transition);
+            width: calc(50% - 80px);
+        }
+        
+        .AN-timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-color: var(--AN-mission-accent);
+        }
+        
+        .AN-timeline-year {
+            position: absolute;
+            top: 50%;
+            width: 120px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            color: white;
+            background: linear-gradient(135deg, var(--AN-mission-primary), var(--AN-mission-secondary));
+            border-radius: 25px;
+            z-index: 3;
+            transform: translateY(-50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--AN-mission-accent);
+        }
+        
+        .AN-timeline-item:nth-child(odd) .AN-timeline-year {
+            left: calc(50% - 60px);
+        }
+        
+        .AN-timeline-item:nth-child(even) .AN-timeline-year {
+            right: calc(50% - 60px);
+        }
+        
+        .AN-timeline-icon {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--AN-mission-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            z-index: 3;
+            transform: translateY(-50%);
+            box-shadow: 0 0 15px rgba(255, 143, 0, 0.5);
+            border: 2px solid white;
+        }
+        
+        .AN-timeline-item:nth-child(odd) .AN-timeline-icon {
+            left: calc(50% - 25px);
+        }
+        
+        .AN-timeline-item:nth-child(even) .AN-timeline-icon {
+            right: calc(50% - 25px);
+        }
+        
+        .AN-timeline-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--AN-text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .AN-timeline-desc {
+            color: var(--AN-text-color);
+            opacity: 0.9;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .AN-mission-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .AN-mission-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .AN-badge-active {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .AN-badge-completed {
+            background-color: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+        
+        .AN-badge-upcoming {
+            background-color: rgba(255, 143, 0, 0.2);
+            color: #ff8f00;
+            border: 1px solid rgba(255, 143, 0, 0.3);
+        }
+        
+        /* Mission Grid */
+        .AN-mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .AN-mission-card {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--AN-transition);
+            border: 1px solid var(--AN-border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .AN-mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--AN-mission-accent);
+        }
+        
+        .AN-mission-card-header {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .AN-mission-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--AN-transition);
+        }
+        
+        .AN-mission-card:hover .AN-mission-card-image {
+            transform: scale(1.05);
+        }
+        
+        .AN-mission-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        
+        .AN-mission-card-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .AN-mission-card-body {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .AN-mission-card-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--AN-text-color);
+        }
+        
+        .AN-mission-card-agency {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--AN-text-color);
+            opacity: 0.8;
+        }
+        
+        .AN-mission-card-desc {
+            color: var(--AN-text-color);
+            opacity: 0.9;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .AN-mission-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--AN-border-color);
+        }
+        
+        .AN-mission-card-date {
+            font-size: 14px;
+            color: var(--AN-text-color);
+            opacity: 0.7;
+        }
+        
+        .AN-mission-card-link {
+            color: var(--AN-mission-accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--AN-transition);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 14px;
+            padding: 0;
+        }
+        
+        .AN-mission-card-link:hover {
+            color: var(--AN-mission-primary);
+            gap: 10px;
+        }
+        
+        /* Mission Stats */
+        .AN-mission-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .AN-stat-card {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            padding: 25px;
+            text-align: center;
+            border: 1px solid var(--AN-border-color);
+            transition: var(--AN-transition);
+        }
+        
+        .AN-stat-card:hover {
+            border-color: var(--AN-mission-accent);
+            transform: translateY(-5px);
+        }
+        
+        .AN-stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--AN-mission-accent);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .AN-stat-label {
+            font-size: 16px;
+            color: var(--AN-text-color);
+            opacity: 0.9;
+        }
+        
+        /* Mission Modal Styles */
+        .AN-mission-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .AN-mission-modal.AN-active {
+            display: flex;
+            animation: AN-modal-fade-in 0.3s ease;
+        }
+        
+        .AN-mission-modal-content {
+            background-color: var(--AN-card-bg);
+            border-radius: var(--AN-radius);
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--AN-border-color);
+            animation: AN-modal-slide-up 0.4s ease;
+        }
+        
+        .AN-mission-modal-header {
+            padding: 25px 30px 15px;
+            border-bottom: 1px solid var(--AN-border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+        
+        .AN-mission-modal-title {
+            font-size: 28px;
+            color: var(--AN-text-color);
+            margin: 0;
+            flex: 1;
+        }
+        
+        .AN-mission-modal-close {
+            background: none;
+            border: none;
+            color: var(--AN-text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--AN-transition);
+            padding: 5px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        .AN-mission-modal-close:hover {
+            color: var(--AN-mission-accent);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .AN-mission-modal-body {
+            padding: 30px;
+        }
+        
+        .AN-mission-modal-image {
+            width: 100%;
+            height: 300px;
+            border-radius: var(--AN-radius);
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        .AN-mission-modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .AN-mission-modal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--AN-border-color);
+        }
+        
+        .AN-mission-modal-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .AN-mission-modal-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--AN-mission-accent);
+            font-weight: 600;
+        }
+        
+        .AN-mission-modal-value {
+            font-size: 16px;
+            color: var(--AN-text-color);
+        }
+        
+        .AN-mission-modal-description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--AN-text-color);
+        }
+        
+        .AN-mission-modal-description p {
+            margin-bottom: 15px;
+        }
+        
+        .AN-mission-modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--AN-border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Animations */
+        @keyframes AN-modal-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes AN-modal-slide-up {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mission-specific animations */
+        @keyframes AN-rocket-launch {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .AN-rocket-icon {
+            animation: AN-rocket-launch 3s infinite;
+            display: inline-block;
+        }
+        
+        /* Mission filter buttons */
+        .AN-mission-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .AN-mission-filter-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--AN-border-color);
+            background-color: var(--AN-card-bg);
+            color: var(--AN-text-color);
+            border-radius: var(--AN-radius);
+            cursor: pointer;
+            transition: var(--AN-transition);
+            font-weight: 600;
+        }
+        
+        .AN-mission-filter-btn:hover {
+            background-color: var(--AN-mission-primary);
+            color: white;
+            border-color: var(--AN-mission-primary);
+        }
+        
+        .AN-mission-filter-btn.AN-active {
+            background-color: var(--AN-mission-accent);
+            color: white;
+            border-color: var(--AN-mission-accent);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .AN-mission-timeline:before {
+                left: 50px;
+            }
+            
+            .AN-mission-timeline:after {
+                left: 50px;
+            }
+            
+            .AN-timeline-item:nth-child(odd) .AN-timeline-content,
+            .AN-timeline-item:nth-child(even) .AN-timeline-content {
+                width: calc(100% - 100px);
+                margin-left: 100px;
+                margin-right: 0;
+                padding-left: 30px;
+                padding-right: 30px;
+                text-align: left;
+            }
+            
+            .AN-timeline-item:nth-child(odd) .AN-timeline-year,
+            .AN-timeline-item:nth-child(even) .AN-timeline-year {
+                left: 0;
+                right: auto;
+            }
+            
+            .AN-timeline-item:nth-child(odd) .AN-timeline-icon,
+            .AN-timeline-item:nth-child(even) .AN-timeline-icon {
+                left: 25px;
+                right: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .AN-mission-title {
+                font-size: 36px;
+            }
+            
+            .AN-mission-subtitle {
+                font-size: 18px;
+            }
+            
+            .AN-mission-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .AN-mission-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .AN-mission-modal-content {
+                max-width: 95%;
+            }
+            
+            .AN-mission-modal-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .AN-mission-modal-title {
+                font-size: 24px;
+            }
+            
+            .AN-mission-modal-image {
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .AN-mission-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .AN-mission-header-bg {
+                height: 250px;
+            }
+            
+            .AN-mission-filter {
+                gap: 5px;
+            }
+            
+            .AN-mission-filter-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+        
+        /* RTL support for missions page */
+        .AN-rtl .AN-mission-filter {
+            direction: rtl;
+        }
+        
+        .AN-rtl .AN-mission-card-status {
+            right: auto;
+            left: 15px;
+        }
+        
+        .AN-rtl .AN-mission-card-footer {
+            direction: rtl;
+        }
+        
+        .AN-rtl .AN-mission-card-link {
+            flex-direction: row-reverse;
+        }
+        
+        @media (max-width: 992px) {
+            .AN-rtl .AN-mission-timeline:before {
+                left: auto;
+                right: 50px;
+            }
+            
+            .AN-rtl .AN-mission-timeline:after {
+                left: auto;
+                right: 50px;
+            }
+            
+            .AN-rtl .AN-timeline-item:nth-child(odd) .AN-timeline-content,
+            .AN-rtl .AN-timeline-item:nth-child(even) .AN-timeline-content {
+                margin-left: 0;
+                margin-right: 100px;
+                padding-left: 30px;
+                padding-right: 30px;
+                text-align: right;
+            }
+            
+            .AN-rtl .AN-timeline-item:nth-child(odd) .AN-timeline-year,
+            .AN-rtl .AN-timeline-item:nth-child(even) .AN-timeline-year {
+                left: auto;
+                right: 0;
+            }
+            
+            .AN-rtl .AN-timeline-item:nth-child(odd) .AN-timeline-icon,
+            .AN-rtl .AN-timeline-item:nth-child(even) .AN-timeline-icon {
+                left: auto;
+                right: 25px;
+            }
+        }
+    </style>
+</head>
+<body class="AN-body AN-body-missions">
+    <!-- Header Section -->
+    <header class="AN-header">
+        <div class="AN-container">
+            <div class="AN-header-content">
+                <!-- Column 1: Logo (1/4) -->
+                <div class="AN-logo-section">
+                    <a href="index.html" class="AN-logo-link">
+                        <div class="AN-logo fallback-logo">
+                            <img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
+                            <i class="fas fa-star" style="display: none;"></i>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Column 2: Title (2/4) -->
+                <div class="AN-title-section">
+                    <h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
+                </div>
+                
+                <!-- Column 3: Options Card (1/4) -->
+                <div class="AN-options-card">
+                    <div class="AN-controls-compact">
+                        <div class="AN-control-group">
+                            <label for="AN-language-select" class="AN-control-label" data-i18n="An.index.language">Language:</label>
+                            <select id="AN-language-select" class="AN-select">
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="ar">العربية</option>
+                            </select>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <div class="AN-theme-toggle">
+                                <input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
+                                <label for="AN-theme-switch" class="AN-theme-slider">
+                                    <span class="AN-theme-icon AN-theme-sun"><i class="fas fa-sun"></i></span>
+                                    <span class="AN-theme-icon AN-theme-moon"><i class="fas fa-moon"></i></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="AN-control-group">
+                            <button class="AN-notification-btn" id="AN-notification-toggle">
+                                <i class="fas fa-bell"></i>
+                                <span class="AN-notification-badge" id="AN-notification-badge">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="AN-nav">
+                <ul class="AN-nav-list">
+                    <li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+                    <li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link" data-i18n="An.index.news">News</a></li>
+                    <li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link AN-active" data-i18n="An.index.missions">Missions</a></li>
+                    <li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
+                    <li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                    <li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mission Page Header -->
+    <div class="AN-mission-header">
+        <div class="AN-mission-header-bg">
+            <div class="AN-stars"></div>
+        </div>
+        <div class="AN-mission-header-content">
+            <h1 class="AN-mission-title">
+                <i class="fas fa-rocket AN-rocket-icon"></i> <span data-i18n="An.missions.title">Space Missions</span>
+            </h1>
+            <p class="AN-mission-subtitle" data-i18n="An.missions.subtitle">Explore historic, ongoing, and future space exploration missions from around the world. From lunar landings to Mars rovers and deep space probes.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="AN-main">
+        <div class="AN-container">
+            <!-- Mission Stats -->
+            <section class="AN-section">
+                <h2 class="AN-section-title" data-i18n="An.missions.missionStatistics">Mission Statistics</h2>
+                <div class="AN-mission-stats">
+                    <div class="AN-stat-card">
+                        <div class="AN-stat-number" id="AN-total-missions">42</div>
+                        <div class="AN-stat-label" data-i18n="An.missions.totalMissions">Total Missions Tracked</div>
+                    </div>
+                    <div class="AN-stat-card">
+                        <div class="AN-stat-number" id="AN-active-missions">8</div>
+                        <div class="AN-stat-label" data-i18n="An.missions.currentlyActive">Currently Active</div>
+                    </div>
+                    <div class="AN-stat-card">
+                        <div class="AN-stat-number" id="AN-countries">14</div>
+                        <div class="AN-stat-label" data-i18n="An.missions.participatingCountries">Participating Countries</div>
+                    </div>
+                    <div class="AN-stat-card">
+                        <div class="AN-stat-number" id="AN-upcoming">6</div>
+                        <div class="AN-stat-label" data-i18n="An.missions.upcomingLaunches">Upcoming Launches</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Mission Filter -->
+            <section class="AN-section">
+                <h2 class="AN-section-title" data-i18n="An.missions.exploreMissions">Explore Missions</h2>
+                <div class="AN-mission-filter">
+                    <button class="AN-mission-filter-btn AN-active" data-filter="all" data-i18n="An.missions.allMissions">All Missions</button>
+                    <button class="AN-mission-filter-btn" data-filter="active" data-i18n="An.missions.active">Active</button>
+                    <button class="AN-mission-filter-btn" data-filter="completed" data-i18n="An.missions.completed">Completed</button>
+                    <button class="AN-mission-filter-btn" data-filter="upcoming" data-i18n="An.missions.upcoming">Upcoming</button>
+                    <button class="AN-mission-filter-btn" data-filter="moon" data-i18n="An.missions.moonMissions">Moon Missions</button>
+                    <button class="AN-mission-filter-btn" data-filter="mars" data-i18n="An.missions.marsMissions">Mars Missions</button>
+                    <button class="AN-mission-filter-btn" data-filter="tunisia" data-i18n="An.missions.tunisiaRelated">Tunisia Related</button>
+                </div>
+                
+                <!-- Mission Grid -->
+                <div class="AN-mission-grid" id="AN-mission-container">
+                    <!-- Mission cards will be dynamically generated here -->
+                </div>
+            </section>
+            
+            <!-- Mission Timeline -->
+            <section class="AN-section">
+                <h2 class="AN-section-title" data-i18n="An.missions.spaceExplorationTimeline">Space Exploration Timeline</h2>
+                <div class="AN-mission-timeline" id="AN-mission-timeline">
+                    <!-- Timeline items will be dynamically generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Mission Details Modal -->
+    <div class="AN-mission-modal" id="AN-mission-modal">
+        <div class="AN-mission-modal-content">
+            <div class="AN-mission-modal-header">
+                <h2 class="AN-mission-modal-title" id="AN-modal-title">Mission Title</h2>
+                <button class="AN-mission-modal-close" id="AN-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="AN-mission-modal-body" id="AN-modal-body">
+                <!-- Modal content will be inserted here -->
+            </div>
+            <div class="AN-mission-modal-footer">
+                <button class="AN-btn AN-btn-primary" id="AN-modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="AN-footer">
+        <div class="AN-container">
+            <div class="AN-footer-content">
+                <!-- Column 1: Information -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
+                    <p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
+                </div>
+                
+                <!-- Column 2: Developer -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
+                    <p class="AN-footer-text">Mejri Ziad</p>
+                </div>
+                
+                <!-- Column 3: Quick Links -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="index.html" data-i18n="An.index.home">Home</a></li>
+                        <li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
+                        <li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+                        <li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+                        <li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+                        <li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div class="AN-footer-section">
+                    <h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
+                    <ul class="AN-footer-links">
+                        <li><a href="#" data-i18n="An.index.privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="An.index.termsOfUse">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Panel -->
+    <div class="AN-notification-panel" id="AN-notification-panel">
+        <div class="AN-notification-header">
+            <h3 data-i18n="An.index.notifications">Notifications</h3>
+            <button class="AN-close-btn" id="AN-close-notifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="AN-notification-list" id="AN-notification-list">
+            <!-- Notifications will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+<script src="data_processing.js"></script>
+    <script src="translation.js"></script>
+    <script src="data_missions.js"></script>
+    <script>
+        // Add missions translations to the global translations object
+        const AN_missions_translations = {
+            en: {
+                'An.missions.title': 'Space Missions',
+                'An.missions.subtitle': 'Explore historic, ongoing, and future space exploration missions from around the world. From lunar landings to Mars rovers and deep space probes.',
+                'An.missions.missionStatistics': 'Mission Statistics',
+                'An.missions.totalMissions': 'Total Missions Tracked',
+                'An.missions.currentlyActive': 'Currently Active',
+                'An.missions.participatingCountries': 'Participating Countries',
+                'An.missions.upcomingLaunches': 'Upcoming Launches',
+                'An.missions.exploreMissions': 'Explore Missions',
+                'An.missions.allMissions': 'All Missions',
+                'An.missions.active': 'Active',
+                'An.missions.completed': 'Completed',
+                'An.missions.upcoming': 'Upcoming',
+                'An.missions.moonMissions': 'Moon Missions',
+                'An.missions.marsMissions': 'Mars Missions',
+                'An.missions.tunisiaRelated': 'Tunisia Related',
+                'An.missions.spaceExplorationTimeline': 'Space Exploration Timeline',
+                'An.missions.historic': 'Historic',
+                'An.missions.learnMore': 'Learn More',
+                'An.missions.noMissionsFound': 'No missions found',
+                'An.missions.tryDifferentFilter': 'Try a different filter',
+                'An.missions.missionDetails': 'Mission Details',
+                'An.missions.launchDate': 'Launch Date',
+                'An.missions.status': 'Status',
+                'An.missions.agency': 'Agency',
+                'An.missions.category': 'Category',
+                'An.missions.description': 'Description'
+            },
+            fr: {
+                'An.missions.title': 'Missions Spatiales',
+                'An.missions.subtitle': 'Explorez les missions d\'exploration spatiale historiques, en cours et futures du monde entier. Des alunissages aux rovers martiens et aux sondes spatiales lointaines.',
+                'An.missions.missionStatistics': 'Statistiques des Missions',
+                'An.missions.totalMissions': 'Missions Suivies',
+                'An.missions.currentlyActive': 'Actuellement Actives',
+                'An.missions.participatingCountries': 'Pays Participants',
+                'An.missions.upcomingLaunches': 'Lancements à Venir',
+                'An.missions.exploreMissions': 'Explorer les Missions',
+                'An.missions.allMissions': 'Toutes les Missions',
+                'An.missions.active': 'Actives',
+                'An.missions.completed': 'Terminées',
+                'An.missions.upcoming': 'À Venir',
+                'An.missions.moonMissions': 'Missions Lunaires',
+                'An.missions.marsMissions': 'Missions Martiennes',
+                'An.missions.tunisiaRelated': 'Liées à la Tunisie',
+                'An.missions.spaceExplorationTimeline': 'Chronologie de l\'Exploration Spatiale',
+                'An.missions.historic': 'Historique',
+                'An.missions.learnMore': 'En savoir plus',
+                'An.missions.noMissionsFound': 'Aucune mission trouvée',
+                'An.missions.tryDifferentFilter': 'Essayez un autre filtre',
+                'An.missions.missionDetails': 'Détails de la Mission',
+                'An.missions.launchDate': 'Date de Lancement',
+                'An.missions.status': 'Statut',
+                'An.missions.agency': 'Agence',
+                'An.missions.category': 'Catégorie',
+                'An.missions.description': 'Description'
+            },
+            ar: {
+                'An.missions.title': 'البعثات الفضائية',
+                'An.missions.subtitle': 'استكشف بعثات استكشاف الفضاء التاريخية والحالية والمستقبلية من جميع أنحاء العالم. من الهبوط على القمر إلى مركبات المريخ والمسبارات الفضائية البعيدة.',
+                'An.missions.missionStatistics': 'إحصائيات البعثات',
+                'An.missions.totalMissions': 'إجمالي البعثات المتابعة',
+                'An.missions.currentlyActive': 'نشطة حالياً',
+                'An.missions.participatingCountries': 'الدول المشاركة',
+                'An.missions.upcomingLaunches': 'الإطلاقات القادمة',
+                'An.missions.exploreMissions': 'استكشاف البعثات',
+                'An.missions.allMissions': 'جميع البعثات',
+                'An.missions.active': 'نشطة',
+                'An.missions.completed': 'مكتملة',
+                'An.missions.upcoming': 'قادمة',
+                'An.missions.moonMissions': 'بعثات القمر',
+                'An.missions.marsMissions': 'بعثات المريخ',
+                'An.missions.tunisiaRelated': 'مرتبطة بتونس',
+                'An.missions.spaceExplorationTimeline': 'الخط الزمني لاستكشاف الفضاء',
+                'An.missions.historic': 'تاريخية',
+                'An.missions.learnMore': 'المزيد',
+                'An.missions.noMissionsFound': 'لا توجد بعثات',
+                'An.missions.tryDifferentFilter': 'جرب فلتراً مختلفاً',
+                'An.missions.missionDetails': 'تفاصيل البعثة',
+                'An.missions.launchDate': 'تاريخ الإطلاق',
+                'An.missions.status': 'الحالة',
+                'An.missions.agency': 'الوكالة',
+                'An.missions.category': 'الفئة',
+                'An.missions.description': 'الوصف'
+            }
+        };
+
+        // Merge missions translations with existing translations
+        Object.keys(AN_missions_translations).forEach(lang => {
+            if (AN_translations[lang]) {
+                Object.assign(AN_translations[lang], AN_missions_translations[lang]);
+            }
+        });
+
+        // Function to get translated text
+        function AN_getTranslatedText(key, language) {
+            if (AN_translations[language] && AN_translations[language][key]) {
+                return AN_translations[language][key];
+            }
+            // Fallback to English if translation not found
+            return AN_translations['en'][key] || key;
+        }
+
+        // Function to update mission statistics dynamically
+        function AN_updateMissionStats() {
+            // Calculate total missions
+            const totalMissions = AN_missions_data.length;
+            
+            // Calculate active missions
+            const activeMissions = AN_missions_data.filter(mission => mission.status === 'active').length;
+            
+            // Calculate upcoming missions
+            const upcomingMissions = AN_missions_data.filter(mission => mission.status === 'upcoming').length;
+            
+            // Calculate unique agencies (as a proxy for countries)
+            const agencies = [];
+            AN_missions_data.forEach(mission => {
+                if (mission.agency && !agencies.includes(mission.agency)) {
+                    agencies.push(mission.agency);
+                }
+            });
+            const uniqueAgencies = agencies.length;
+            
+            // Update the DOM elements
+            document.getElementById('AN-total-missions').textContent = totalMissions;
+            document.getElementById('AN-active-missions').textContent = activeMissions;
+            document.getElementById('AN-countries').textContent = uniqueAgencies;
+            document.getElementById('AN-upcoming').textContent = upcomingMissions;
+        }
+
+        // Function to render mission cards
+        function AN_renderMissions(language, filter = 'all') {
+            const container = document.getElementById('AN-mission-container');
+            if (!container) return;
+            
+            // Clear existing content
+            container.innerHTML = '';
+            
+            // Filter missions
+            let missions = AN_missions_data;
+            if (filter !== 'all') {
+                if (filter === 'active' || filter === 'completed' || filter === 'upcoming') {
+                    missions = missions.filter(mission => mission.status === filter);
+                } else if (filter === 'tunisia') {
+                    missions = missions.filter(mission => mission.category === 'tunisia');
+                } else {
+                    missions = missions.filter(mission => mission.category === filter);
+                }
+            }
+            
+            // Update statistics
+            AN_updateMissionStats();
+            
+            // Render missions
+            missions.forEach(mission => {
+                const content = mission[language] || mission.en;
+                const card = document.createElement('div');
+                card.className = 'AN-mission-card';
+                card.setAttribute('data-id', mission.id);
+                card.setAttribute('data-status', mission.status);
+                card.setAttribute('data-category', mission.category);
+                
+                // Status badge text
+                let statusClass = '';
+                let statusText = '';
+                if (mission.status === 'active') {
+                    statusClass = 'AN-badge-active';
+                    statusText = AN_getTranslatedText('An.missions.active', language);
+                } else if (mission.status === 'completed') {
+                    statusClass = 'AN-badge-completed';
+                    statusText = AN_getTranslatedText('An.missions.completed', language);
+                } else {
+                    statusClass = 'AN-badge-upcoming';
+                    statusText = AN_getTranslatedText('An.missions.upcoming', language);
+                }
+                
+                card.innerHTML = `
+                    <div class="AN-mission-card-header">
+                        <img src="${mission.image || 'assets/images/missions/default.jpg'}" alt="${content.title}" class="AN-mission-card-image">
+                        <div class="AN-mission-card-overlay">
+                            <h3 class="AN-mission-card-title">${content.title}</h3>
+                        </div>
+                        <div class="AN-mission-card-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="AN-mission-card-body">
+                        <p class="AN-mission-card-agency">
+                            <i class="fas fa-building"></i> ${content.agency}
+                        </p>
+                        <p class="AN-mission-card-desc">${content.subtitle}</p>
+                        <div class="AN-mission-badges">
+                            <span class="AN-mission-badge ${statusClass}">${statusText}</span>
+                            ${mission.category === 'tunisia' ? '<span class="AN-mission-badge" style="background-color: rgba(255,0,0,0.2); color: #ff4444; border-color: rgba(255,0,0,0.3);">Tunisia</span>' : ''}
+                        </div>
+                        <div class="AN-mission-card-footer">
+                            <span class="AN-mission-card-date">
+                                <i class="far fa-calendar"></i> ${AN_formatDate(mission.date, language)}
+                            </span>
+                            <button class="AN-mission-card-link AN-learn-more-btn" data-id="${mission.id}">
+                                ${AN_getTranslatedText('An.missions.learnMore', language)}
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // If no missions found
+            if (missions.length === 0) {
+                container.innerHTML = `
+                    <div class="AN-no-missions" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-rocket" style="font-size: 64px; opacity: 0.5; margin-bottom: 20px;"></i>
+                        <h3 style="color: var(--AN-text-color); margin-bottom: 10px;">
+                            ${AN_getTranslatedText('An.missions.noMissionsFound', language)}
+                        </h3>
+                        <p style="color: var(--AN-text-color); opacity: 0.7;">
+                            ${AN_getTranslatedText('An.missions.tryDifferentFilter', language)}
+                        </p>
+                    </div>
+                `;
+            }
+            
+            // Add event listeners to "Learn More" buttons
+            document.querySelectorAll('.AN-learn-more-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const missionId = this.getAttribute('data-id');
+                    const language = document.getElementById('AN-language-select')?.value || 'en';
+                    const mission = AN_missions_data.find(m => m.id === missionId);
+                    if (mission) {
+                        AN_showMissionModal(mission, language);
+                    }
+                });
+            });
+        }
+        
+        // Function to show mission modal
+        function AN_showMissionModal(mission, language) {
+            const modal = document.getElementById('AN-mission-modal');
+            const modalTitle = document.getElementById('AN-modal-title');
+            const modalBody = document.getElementById('AN-modal-body');
+            const content = mission[language] || mission.en;
+            
+            // Set modal title
+            modalTitle.textContent = content.title;
+            
+            // Determine status text
+            let statusText = '';
+            if (mission.status === 'active') {
+                statusText = AN_getTranslatedText('An.missions.active', language);
+            } else if (mission.status === 'completed') {
+                statusText = AN_getTranslatedText('An.missions.completed', language);
+            } else {
+                statusText = AN_getTranslatedText('An.missions.upcoming', language);
+            }
+            
+            // Determine category text
+            let categoryText = '';
+            if (mission.category === 'moon') {
+                categoryText = AN_getTranslatedText('An.missions.moonMissions', language);
+            } else if (mission.category === 'mars') {
+                categoryText = AN_getTranslatedText('An.missions.marsMissions', language);
+            } else if (mission.category === 'tunisia') {
+                categoryText = AN_getTranslatedText('An.missions.tunisiaRelated', language);
+            } else if (mission.category === 'deep-space') {
+                categoryText = 'Deep Space';
+            }
+            
+            // Build modal content
+            modalBody.innerHTML = `
+                <div class="AN-mission-modal-image">
+                    <img src="${mission.image || 'assets/images/missions/default.jpg'}" alt="${content.title}">
+                </div>
+                
+                <div class="AN-mission-modal-info">
+                    <div class="AN-mission-modal-info-item">
+                        <span class="AN-mission-modal-label">${AN_getTranslatedText('An.missions.launchDate', language)}</span>
+                        <span class="AN-mission-modal-value">${AN_formatDate(mission.date, language)}</span>
+                    </div>
+                    <div class="AN-mission-modal-info-item">
+                        <span class="AN-mission-modal-label">${AN_getTranslatedText('An.missions.status', language)}</span>
+                        <span class="AN-mission-modal-value">${statusText}</span>
+                    </div>
+                    <div class="AN-mission-modal-info-item">
+                        <span class="AN-mission-modal-label">${AN_getTranslatedText('An.missions.agency', language)}</span>
+                        <span class="AN-mission-modal-value">${content.agency}</span>
+                    </div>
+                    <div class="AN-mission-modal-info-item">
+                        <span class="AN-mission-modal-label">${AN_getTranslatedText('An.missions.category', language)}</span>
+                        <span class="AN-mission-modal-value">${categoryText}</span>
+                    </div>
+                </div>
+                
+                <div class="AN-mission-modal-description">
+                    <h3>${AN_getTranslatedText('An.missions.description', language)}</h3>
+                    <p>${content.body}</p>
+                </div>
+            `;
+            
+            // Show modal
+            modal.classList.add('AN-active');
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close mission modal
+        function AN_closeMissionModal() {
+            const modal = document.getElementById('AN-mission-modal');
+            modal.classList.remove('AN-active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Function to render timeline - Now chronological with arrow
+        function AN_renderTimeline(language) {
+            const timeline = document.getElementById('AN-mission-timeline');
+            if (!timeline) return;
+            
+            // Clear existing timeline items
+            timeline.innerHTML = '';
+            
+            // Sort timeline data by year (chronological)
+            const sortedTimelineData = [...AN_timeline_data].sort((a, b) => parseInt(a.year) - parseInt(b.year));
+            
+            // Add timeline items
+            sortedTimelineData.forEach((item, index) => {
+                const content = item[language] || item.en;
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'AN-timeline-item';
+                
+                timelineItem.innerHTML = `
+                    <div class="AN-timeline-content">
+                        <h3 class="AN-timeline-title">
+                            <i class="fas ${item.icon}"></i> ${content.title}
+                        </h3>
+                        <p class="AN-timeline-desc">${content.desc}</p>
+                        <div class="AN-mission-badges">
+                            <span class="AN-mission-badge AN-badge-completed">${AN_getTranslatedText('An.missions.historic', language)}</span>
+                        </div>
+                    </div>
+                    <div class="AN-timeline-year">${item.year}</div>
+                    <div class="AN-timeline-icon">
+                        <i class="fas ${item.icon}"></i>
+                    </div>
+                `;
+                
+                timeline.appendChild(timelineItem);
+            });
+        }
+        
+        // Function to apply mission-specific translations
+        function AN_applyMissionTranslations(language) {
+            // Apply static text translations
+            AN_applyTranslations(language);
+            
+            // Update filter button texts
+            const filterButtons = document.querySelectorAll('.AN-mission-filter-btn');
+            filterButtons.forEach(button => {
+                const key = button.getAttribute('data-i18n');
+                if (key) {
+                    button.textContent = AN_getTranslatedText(key, language);
+                }
+            });
+            
+            // Update stat labels
+            const statLabels = document.querySelectorAll('.AN-stat-label[data-i18n]');
+            statLabels.forEach(label => {
+                const key = label.getAttribute('data-i18n');
+                if (key) {
+                    label.textContent = AN_getTranslatedText(key, language);
+                }
+            });
+            
+            // Update statistics
+            AN_updateMissionStats();
+            
+            // Render missions and timeline
+            const activeFilter = document.querySelector('.AN-mission-filter-btn.AN-active')?.getAttribute('data-filter') || 'all';
+            AN_renderMissions(language, activeFilter);
+            AN_renderTimeline(language);
+            
+            // Re-render notifications
+            AN_renderNotifications(language);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeSwitch = document.getElementById('AN-theme-switch');
+            const body = document.body;
+            
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('AN-theme') || 
+                              (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            if (savedTheme === 'dark') {
+                body.classList.add('AN-dark-mode');
+                themeSwitch.checked = true;
+            }
+            
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    body.classList.add('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'dark');
+                } else {
+                    body.classList.remove('AN-dark-mode');
+                    localStorage.setItem('AN-theme', 'light');
+                }
+            });
+            
+            // Notification panel toggle
+            const notificationToggle = document.getElementById('AN-notification-toggle');
+            const notificationPanel = document.getElementById('AN-notification-panel');
+            const closeNotifications = document.getElementById('AN-close-notifications');
+            
+            notificationToggle.addEventListener('click', function() {
+                notificationPanel.classList.toggle('AN-active');
+            });
+            
+            closeNotifications.addEventListener('click', function() {
+                notificationPanel.classList.remove('AN-active');
+            });
+            
+            // Close notification panel when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!notificationToggle.contains(event.target) && 
+                    !notificationPanel.contains(event.target)) {
+                    notificationPanel.classList.remove('AN-active');
+                }
+            });
+            
+            // Language selection
+            const languageSelect = document.getElementById('AN-language-select');
+            const savedLanguage = localStorage.getItem('AN-language-preference') || 'en';
+            
+            if (languageSelect) {
+                languageSelect.value = savedLanguage;
+                languageSelect.addEventListener('change', function() {
+                    AN_applyMissionTranslations(this.value);
+                    localStorage.setItem('AN-language-preference', this.value);
+                });
+            }
+            
+            // Mission filter button functionality
+            const filterButtons = document.querySelectorAll('.AN-mission-filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all filter buttons
+                    filterButtons.forEach(btn => btn.classList.remove('AN-active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('AN-active');
+                    
+                    // Get filter value
+                    const filter = this.getAttribute('data-filter');
+                    const language = languageSelect ? languageSelect.value : 'en';
+                    
+                    // Apply filter
+                    AN_renderMissions(language, filter);
+                });
+            });
+            
+            // Modal functionality
+            const missionModal = document.getElementById('AN-mission-modal');
+            const modalCloseBtn = document.getElementById('AN-modal-close');
+            const modalCloseBtn2 = document.getElementById('AN-modal-close-btn');
+            
+            // Close modal when clicking close button
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', AN_closeMissionModal);
+            }
+            
+            if (modalCloseBtn2) {
+                modalCloseBtn2.addEventListener('click', AN_closeMissionModal);
+            }
+            
+            // Close modal when clicking outside the content
+            missionModal.addEventListener('click', function(event) {
+                if (event.target === missionModal) {
+                    AN_closeMissionModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && missionModal.classList.contains('AN-active')) {
+                    AN_closeMissionModal();
+                }
+            });
+            
+            // Initialize with saved language
+            AN_applyMissionTranslations(savedLanguage);
+        });
+    </script>
+</body>
+</html>

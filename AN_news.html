@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Astronomy News - Astronomy News</title>
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="theme-color" content="#4a6fa5">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Astronomy News">
+		<link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+		
+		<!-- Open Graph Meta Tags for Social Sharing -->
+<meta id="og-title" property="og:title" content="Astronomy News - Astronomy News">
+<meta id="og-description" property="og:description" content="Latest discoveries and updates from the universe">
+<meta id="og-image" property="og:image" content="/assets/icons/icon-512x512.png">
+<meta id="og-url" property="og:url" content="https://astronomy-news.netlify.app/AN_news.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Astronomy News">
+<meta name="twitter:card" content="summary_large_image">
+<meta id="twitter-title" name="twitter:title" content="Astronomy News - Astronomy News">
+<meta id="twitter-description" name="twitter:description" content="Latest discoveries and updates from the universe">
+<meta id="twitter-image" name="twitter:image" content="/assets/icons/icon-512x512.png">
+<meta property="article:author" content="Astronomy News">
+<meta property="article:published_time" id="article-published-time">
+<meta property="article:modified_time" id="article-modified-time">
+	</head>
+	<body class="AN-body">
+		<!-- Header Section -->
+		<header class="AN-header">
+			<div class="AN-container">
+				<div class="AN-header-content">
+					<!-- Column 1: Logo (1/4) -->
+					<div class="AN-logo-section">
+						<a href="index.html" class="AN-logo-link">
+							<div class="AN-logo fallback-logo">
+								<img src="assets/icons/icon-96x96.png" alt="Astronomy News Logo" onerror="this.style.display='none'; this.parentElement.classList.add('fallback-logo')">
+								<i class="fas fa-star" style="display: none;"></i>
+							</div>
+						</a>
+					</div>
+					
+					<!-- Column 2: Title (2/4) -->
+					<div class="AN-title-section">
+						<h1 class="AN-title" data-i18n="An.index.title">Astronomy News</h1>
+					</div>
+					
+					<!-- Column 3: Options Card (1/4) -->
+					<div class="AN-options-card">
+						<div class="AN-controls-compact">
+							<div class="AN-control-group">
+								<label for="AN-language-select" class="AN-control-label" data-i18n="An.index.language">Language:</label>
+								<select id="AN-language-select" class="AN-select">
+									<option value="en">English</option>
+									<option value="fr">Français</option>
+									<option value="ar">العربية</option>
+								</select>
+							</div>
+							
+							<div class="AN-control-group">
+								<div class="AN-theme-toggle">
+									<input type="checkbox" id="AN-theme-switch" class="AN-theme-checkbox">
+									<label for="AN-theme-switch" class="AN-theme-slider">
+										<span class="AN-theme-icon AN-theme-sun"><i class="fas fa-sun"></i></span>
+										<span class="AN-theme-icon AN-theme-moon"><i class="fas fa-moon"></i></span>
+									</label>
+								</div>
+							</div>
+							
+							<div class="AN-control-group">
+								<button class="AN-notification-btn" id="AN-notification-toggle">
+									<i class="fas fa-bell"></i>
+									<span class="AN-notification-badge" id="AN-notification-badge">0</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Navigation -->
+				<nav class="AN-nav">
+					<ul class="AN-nav-list">
+						<li class="AN-nav-item"><a href="index.html" class="AN-nav-link" data-i18n="An.index.home">Home</a></li>
+						<li class="AN-nav-item"><a href="AN_news.html" class="AN-nav-link AN-active" data-i18n="An.index.news">News</a></li>
+						<li class="AN-nav-item"><a href="AN_missions.html" class="AN-nav-link" data-i18n="An.index.missions">Missions</a></li>
+						<li class="AN-nav-item"><a href="AN_gallery.html" class="AN-nav-link" data-i18n="An.index.gallery">Gallery</a></li>
+						<li class="AN-nav-item"><a href="AN_explore.html" class="AN-nav-link" data-i18n="An.index.explore">Explore Astronomy</a></li>
+						<li class="AN-nav-item"><a href="AN_about.html" class="AN-nav-link" data-i18n="An.index.about">About</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		
+		<!-- Main Content - News Page Layout -->
+		<main class="AN-main">
+			<div class="AN-container">
+				<!-- Page Header -->
+				<div class="AN-page-header">
+					<h2 class="AN-page-title" data-i18n="An.news.title">Astronomy News</h2>
+					<p class="AN-page-subtitle" data-i18n="An.news.subtitle">Latest discoveries and updates from the universe</p>
+					
+					<!-- Filter Options -->
+					<div class="AN-news-filter">
+						<button class="AN-filter-btn AN-filter-active" data-filter="all" data-i18n="An.index.allNews">All News</button>
+						<button class="AN-filter-btn" data-filter="global" data-i18n="An.index.globalNews">Global News</button>
+						<button class="AN-filter-btn" data-filter="local" data-i18n="An.index.localNews">Tunisia News</button>
+						<button class="AN-filter-btn" data-filter="latest" data-i18n="An.news.latest">Latest First</button>
+						<button class="AN-filter-btn" data-filter="oldest" data-i18n="An.news.oldest">Oldest First</button>
+					</div>
+				</div>
+				
+				<!-- 3-Column News Layout -->
+				<div class="AN-news-layout">
+					<!-- Column 1: News List (1/3) -->
+					<div class="AN-news-sidebar">
+						<div class="AN-news-list-header">
+							<h3 data-i18n="An.news.recentNews">Recent News</h3>
+							<span class="AN-news-count" id="AN-news-count">6 articles</span>
+						</div>
+						
+						<div class="AN-news-list" id="AN-news-list">
+							<!-- News list items will be dynamically generated here -->
+						</div>
+					</div>
+					
+					<!-- Column 2 & 3: Main Article (2/3) -->
+					<div class="AN-main-article" id="AN-main-article">
+						<!-- Main article will be dynamically generated here -->
+						<!-- Default content shows the latest news -->
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<!-- Footer -->
+		<footer class="AN-footer">
+			<div class="AN-container">
+				<div class="AN-footer-content">
+					<!-- Column 1: Information -->
+					<div class="AN-footer-section">
+						<h3 class="AN-footer-title" data-i18n="An.index.aboutUs">About Us</h3>
+						<p class="AN-footer-text" data-i18n="An.index.aboutText">Astronomy News brings you the latest news and discoveries from the world of astronomy and space exploration.</p>
+					</div>
+					
+					<!-- Column 2: Developer -->
+					<div class="AN-footer-section">
+						<h3 class="AN-footer-title" data-i18n="An.index.developer">Developer</h3>
+						<p class="AN-footer-text">Mejri Ziad</p>
+					</div>
+					
+					<!-- Column 3: Quick Links -->
+					<div class="AN-footer-section">
+						<h3 class="AN-footer-title" data-i18n="An.index.quickLinks">Quick Links</h3>
+						<ul class="AN-footer-links">
+							<li><a href="index.html" data-i18n="An.index.home">Home</a></li>
+							<li><a href="AN_news.html" data-i18n="An.index.news">News</a></li>
+							<li><a href="AN_missions.html" data-i18n="An.index.missions">Missions</a></li>
+							<li><a href="AN_gallery.html" data-i18n="An.index.gallery">Gallery</a></li>
+							<li><a href="AN_explore.html" data-i18n="An.index.explore">Explore Astronomy</a></li>
+							<li><a href="AN_about.html" data-i18n="An.index.about">About</a></li>
+						</ul>
+					</div>
+					
+					<!-- Column 4: Legal -->
+					<div class="AN-footer-section">
+						<h3 class="AN-footer-title" data-i18n="An.index.legal">Legal</h3>
+						<ul class="AN-footer-links">
+							<li><a href="#" data-i18n="An.index.privacyPolicy">Privacy Policy</a></li>
+							<li><a href="#" data-i18n="An.index.termsOfUse">Terms of Use</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<!-- Notification Panel -->
+		<div class="AN-notification-panel" id="AN-notification-panel">
+			<div class="AN-notification-header">
+				<h3 data-i18n="An.index.notifications">Notifications</h3>
+				<button class="AN-close-btn" id="AN-close-notifications">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+			<div class="AN-notification-list" id="AN-notification-list">
+				<!-- Notifications will be dynamically generated here -->
+			</div>
+		</div>
+		
+		<script src="data.js"></script>
+<script src="data_processing.js"></script>
+<script src="translation.js"></script>
+<script>
+    // Add news-specific translations
+    const AN_news_translations = {
+        en: {
+            'An.news.title': 'Astronomy News',
+            'An.news.subtitle': 'Latest discoveries and updates from the universe',
+            'An.news.latest': 'Latest First',
+            'An.news.oldest': 'Oldest First',
+            'An.news.recentNews': 'Recent News',
+            'An.news.readTime': 'min read',
+            'An.news.tunisiaNews': 'Tunisia News',
+            'An.news.globalNews': 'Global News',
+            'An.news.readMore': 'Read more',
+            'An.news.category': 'Category',
+            'An.news.author': 'Author',
+            'An.news.share': 'Share',
+            'An.news.related': 'Related News',
+            'An.news.backToList': 'Back to News List'
+        },
+        fr: {
+            'An.news.title': 'Actualités Astronomiques',
+            'An.news.subtitle': 'Dernières découvertes et mises à jour de l\'univers',
+            'An.news.latest': 'Plus récent',
+            'An.news.oldest': 'Plus ancien',
+            'An.news.recentNews': 'Actualités Récentes',
+            'An.news.readTime': 'min de lecture',
+            'An.index.localNews': 'Actualités Tunisie',
+            'An.index.globalNews': 'Actualités Mondiales',
+            'An.index.readMore': 'Lire la suite',
+            'An.news.category': 'Catégorie',
+            'An.news.author': 'Auteur',
+            'An.news.share': 'Partager',
+            'An.news.related': 'Actualités Similaires',
+            'An.news.backToList': 'Retour à la liste'
+        },
+        ar: {
+            'An.news.title': 'أخبار الفلك',
+            'An.news.subtitle': 'أحدث الاكتشافات والتحديثات من الكون',
+            'An.news.latest': 'الأحدث أولاً',
+            'An.news.oldest': 'الأقدم أولاً',
+            'An.news.recentNews': 'الأخبار الحديثة',
+            'An.news.readTime': 'دقيقة للقراءة',
+            'An.index.localNews': 'أخبار تونس',
+            'An.index.globalNews': 'الأخبار العالمية',
+            'An.index.readMore': 'اقرأ المزيد',
+            'An.news.category': 'الفئة',
+            'An.news.author': 'الكاتب',
+            'An.news.share': 'مشاركة',
+            'An.news.related': 'أخبار ذات صلة',
+            'An.news.backToList': 'العودة إلى قائمة الأخبار'
+        }
+    };
+
+    // Merge news translations with existing translations
+    Object.keys(AN_news_translations).forEach(lang => {
+        if (AN_translations[lang]) {
+            Object.assign(AN_translations[lang], AN_news_translations[lang]);
+        }
+    });
+
+    // Function to render news list (left column)
+    function AN_renderNewsList(language, filter = 'all', sort = 'latest') {
+        const newsList = document.getElementById('AN-news-list');
+        const newsCount = document.getElementById('AN-news-count');
+        
+        if (!newsList) return;
+        
+        // Clear existing content
+        newsList.innerHTML = '';
+        
+        // Get news data
+        let newsData = AN_data.filter(item => item.type === 'news');
+        
+        // Apply filter
+        if (filter !== 'all') {
+            newsData = newsData.filter(item => item.category === filter);
+        }
+        
+        // Apply sorting
+        if (sort === 'latest') {
+            newsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else if (sort === 'oldest') {
+            newsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+        }
+        
+        // Update news count
+        if (newsCount) {
+            newsCount.textContent = `${newsData.length} ${newsData.length === 1 ? 'article' : 'articles'}`;
+        }
+        
+        // If no news found
+        if (newsData.length === 0) {
+            newsList.innerHTML = `
+                <div class="AN-no-news">
+                    <i class="fas fa-newspaper"></i>
+                    <p>No news found for this filter.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Render each news item
+        newsData.forEach((item, index) => {
+            const content = item[language] || item.en;
+            const isActive = index === 0 ? 'AN-news-item-active' : '';
+            
+            const newsItem = document.createElement('div');
+            newsItem.className = `AN-news-item ${isActive}`;
+            newsItem.setAttribute('data-id', item.id);
+            newsItem.setAttribute('data-category', item.category);
+            
+            // Calculate read time (approx 200 words per minute)
+            const wordCount = content.body.split(' ').length;
+            const readTime = Math.ceil(wordCount / 200);
+            
+            newsItem.innerHTML = `
+                <div class="AN-news-item-image">
+                    <div class="AN-news-item-image-inner" style="background-image: url('${item.image}')">
+                        ${!item.image ? `<div class="AN-image-placeholder ${item.category === 'local' ? 'AN-mars-rover' : 'AN-james-webb'}"></div>` : ''}
+                    </div>
+                    <span class="AN-news-item-badge ${item.category === 'local' ? 'AN-local-badge' : 'AN-global-badge'}" title="${item.category === 'local' ? AN_translations[language]['An.index.localNews'] : AN_translations[language]['An.index.globalNews']}">
+                        ${item.category === 'local' ? 'TN' : '🌍'}
+                    </span>
+                </div>
+                <div class="AN-news-item-content">
+                    <h4 class="AN-news-item-title">${content.title}</h4>
+                    <p class="AN-news-item-excerpt">${content.subtitle || content.body.substring(0, 80)}...</p>
+                    <div class="AN-news-item-meta">
+                        <span class="AN-news-item-date">${AN_formatDate(item.date, language)}</span>
+                        <span class="AN-news-item-readtime">${readTime} ${AN_translations[language]['An.news.readTime'] || 'min read'}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event
+            newsItem.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.AN-news-item').forEach(item => {
+                    item.classList.remove('AN-news-item-active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('AN-news-item-active');
+                
+                // Load the article
+                AN_loadArticle(item.id, language);
+            });
+            
+            newsList.appendChild(newsItem);
+        });
+        
+        // Load the first article by default
+        if (newsData.length > 0) {
+            AN_loadArticle(newsData[0].id, language);
+        }
+    }
+
+    // Function to load and display an article
+    function AN_loadArticle(articleId, language) {
+    const mainArticle = document.getElementById('AN-main-article');
+    const articleData = AN_getDataById(articleId);
+    
+    if (!mainArticle || !articleData) return;
+    
+    const content = articleData[language] || articleData.en;
+    
+    // Get related articles (same category, excluding current)
+    const relatedArticles = AN_data
+        .filter(item => item.type === 'news' && 
+                       item.category === articleData.category && 
+                       item.id !== articleId)
+        .slice(0, 3);
+    
+    // Calculate read time
+    const wordCount = content.body.split(' ').length;
+    const readTime = Math.ceil(wordCount / 200);
+    
+    // Create the article HTML
+    mainArticle.innerHTML = `
+        <article class="AN-article" data-article-id="${articleId}">
+            <div class="AN-article-header">
+                <div class="AN-article-category">
+                    <span class="AN-article-badge ${articleData.category === 'local' ? 'AN-local-badge' : 'AN-global-badge'}">
+                        ${articleData.category === 'local' ? AN_translations[language]['An.index.localNews'] : AN_translations[language]['An.index.globalNews']}
+                    </span>
+                    <span class="AN-article-date">${AN_formatDate(articleData.date, language)}</span>
+                </div>
+                <h1 class="AN-article-title">${content.title}</h1>
+                <p class="AN-article-subtitle">${content.subtitle}</p>
+                <div class="AN-article-meta">
+                    <span class="AN-article-readtime">
+                        <i class="far fa-clock"></i> ${readTime} ${AN_translations[language]['An.news.readTime'] || 'min read'}
+                    </span>
+                    <button class="AN-article-share" onclick="shareArticle('${articleId}', '${language}')">
+                        <i class="fas fa-share-alt"></i> ${AN_translations[language]['An.news.share'] || 'Share'}
+                    </button>
+                </div>
+            </div>
+            
+            <div class="AN-article-image">
+                <div class="AN-article-image-inner" style="background-image: url('${articleData.image}')">
+                    ${!articleData.image ? `<div class="AN-image-placeholder ${articleData.category === 'local' ? 'AN-mars-rover' : 'AN-james-webb'}"></div>` : ''}
+                </div>
+            </div>
+            
+            <div class="AN-article-content">
+                <div class="AN-article-body">
+                    ${content.body.split('\n').map(paragraph => `<p>${paragraph}</p>`).join('')}
+                </div>
+                
+                ${relatedArticles.length > 0 ? `
+                <div class="AN-article-related">
+                    <h3 class="AN-article-related-title">
+                        <i class="fas fa-newspaper"></i> ${AN_translations[language]['An.news.related'] || 'Related News'}
+                    </h3>
+                    <div class="AN-article-related-grid">
+                        ${relatedArticles.map(related => {
+                            const relatedContent = related[language] || related.en;
+                            return `
+                                <div class="AN-related-article" data-id="${related.id}">
+                                    <div class="AN-related-image" style="background-image: url('${related.image}')"></div>
+                                    <h4>${relatedContent.title}</h4>
+                                    <p>${relatedContent.subtitle || relatedContent.body.substring(0, 60)}...</p>
+                                    <a href="#" class="AN-related-link">${AN_translations[language]['An.index.readMore']} →</a>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+        </article>
+    `;
+    
+    // Update Open Graph meta tags for social sharing
+    updateMetaTags(articleData, content, language);
+    
+    // Add click events to related articles
+    document.querySelectorAll('.AN-related-article').forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const relatedId = this.getAttribute('data-id');
+            
+            // Update active state in list
+            document.querySelectorAll('.AN-news-item').forEach(listItem => {
+                listItem.classList.remove('AN-news-item-active');
+                if (listItem.getAttribute('data-id') === relatedId) {
+                    listItem.classList.add('AN-news-item-active');
+                }
+            });
+            
+            // Load the related article
+            AN_loadArticle(relatedId, language);
+            
+            // Scroll to top of article on mobile
+            if (window.innerWidth < 768) {
+                mainArticle.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+    
+    // Update browser URL for sharing (without reloading page)
+    if (history.pushState) {
+        const newUrl = `${window.location.origin}${window.location.pathname}?article=${articleId}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
+    }
+}
+
+// Function to update meta tags for social sharing
+function updateMetaTags(articleData, content, language) {
+    // Get full image URL
+    const imageUrl = articleData.image ? 
+        `${window.location.origin}${window.location.pathname.replace('AN_news.html', '')}${articleData.image}` : 
+        `${window.location.origin}/assets/icons/icon-512x512.png`;
+    
+    // Get current page URL
+    const pageUrl = `${window.location.origin}${window.location.pathname}?article=${articleData.id}`;
+    
+    // Update Open Graph meta tags
+    const ogTitle = document.getElementById('og-title');
+    const ogDesc = document.getElementById('og-description');
+    const ogImg = document.getElementById('og-image');
+    const ogUrl = document.getElementById('og-url');
+    const twitterTitle = document.getElementById('twitter-title');
+    const twitterDesc = document.getElementById('twitter-description');
+    const twitterImg = document.getElementById('twitter-image');
+    const articlePublishedTime = document.getElementById('article-published-time');
+    const articleModifiedTime = document.getElementById('article-modified-time');
+    
+    if (ogTitle) ogTitle.setAttribute('content', `${content.title} | Astronomy News`);
+    if (ogDesc) ogDesc.setAttribute('content', content.subtitle || content.body.substring(0, 150));
+    if (ogImg) ogImg.setAttribute('content', imageUrl);
+    if (ogUrl) ogUrl.setAttribute('content', pageUrl);
+    
+    if (twitterTitle) twitterTitle.setAttribute('content', `${content.title} | Astronomy News`);
+    if (twitterDesc) twitterDesc.setAttribute('content', content.subtitle || content.body.substring(0, 150));
+    if (twitterImg) twitterImg.setAttribute('content', imageUrl);
+    
+    if (articlePublishedTime) {
+        articlePublishedTime.setAttribute('content', articleData.date);
+    }
+    if (articleModifiedTime) {
+        articleModifiedTime.setAttribute('content', new Date().toISOString());
+    }
+    
+    // Update page title
+    document.title = `${content.title} | Astronomy News`;
+    
+    // Update canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+        canonicalLink = document.createElement('link');
+        canonicalLink.rel = 'canonical';
+        document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.href = pageUrl;
+}
+// Function to handle article sharing
+function shareArticle(articleId, language) {
+    const articleData = AN_getDataById(articleId);
+    const content = articleData[language] || articleData.en;
+    
+    // Create article URL
+    const articleUrl = `${window.location.origin}${window.location.pathname}?article=${articleId}`;
+    
+    if (navigator.share) {
+        // Use Web Share API if available
+        navigator.share({
+            title: content.title,
+            text: content.subtitle || content.body.substring(0, 100),
+            url: articleUrl
+        }).catch(err => {
+            console.log('Error sharing:', err);
+            fallbackShare(articleUrl);
+        });
+    } else {
+        fallbackShare(articleUrl);
+    }
+}
+
+
+// Fallback share function
+function fallbackShare(url) {
+    // Copy URL to clipboard
+    navigator.clipboard.writeText(url).then(() => {
+        // Show toast notification
+        showToast('Link copied to clipboard!');
+    }).catch(err => {
+        // Fallback to prompt
+        prompt('Copy this link to share:', url);
+    });
+}
+
+// Function to show toast notification
+function showToast(message) {
+    // Remove existing toast
+    const existingToast = document.querySelector('.AN-toast');
+    if (existingToast) existingToast.remove();
+    
+    // Create toast
+    const toast = document.createElement('div');
+    toast.className = 'AN-toast';
+    toast.innerHTML = `
+        <div class="AN-toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Show toast
+    setTimeout(() => toast.classList.add('AN-toast-show'), 10);
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('AN-toast-show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Initialize meta tags on page load
+function initializeMetaTags() {
+    const articleId = AN_getQueryParam('article');
+    if (articleId) {
+        const articleData = AN_getDataById(articleId);
+        if (articleData) {
+            const language = document.getElementById('AN-language-select')?.value || 'en';
+            const content = articleData[language] || articleData.en;
+            updateMetaTags(articleData, content, language);
+        }
+    }
+}
+        
+// Function to update Open Graph tags
+function updateOpenGraphTags(articleData, language, articleUrl) {
+    const content = articleData[language] || articleData.en;
+    const imageUrl = articleData.image ? 
+        `${window.location.origin}${window.location.pathname.replace('AN_news.html', '')}${articleData.image}` : 
+        `${window.location.origin}/assets/icons/icon-192x192.png`;
+    
+    // Update meta tags in the head
+    const ogTitle = document.getElementById('og-title');
+    const ogDesc = document.getElementById('og-description');
+    const ogImg = document.getElementById('og-image');
+    const ogUrl = document.getElementById('og-url');
+    const twTitle = document.getElementById('twitter-title');
+    const twDesc = document.getElementById('twitter-description');
+    const twImg = document.getElementById('twitter-image');
+    
+    if (ogTitle) ogTitle.setAttribute('content', content.title);
+    if (ogDesc) ogDesc.setAttribute('content', content.subtitle || content.body.substring(0, 150));
+    if (ogImg) ogImg.setAttribute('content', imageUrl);
+    if (ogUrl) ogUrl.setAttribute('content', articleUrl);
+    
+    if (twTitle) twTitle.setAttribute('content', content.title);
+    if (twDesc) twDesc.setAttribute('content', content.subtitle || content.body.substring(0, 150));
+    if (twImg) twImg.setAttribute('content', imageUrl);
+}
+    // Function to apply translations for news page
+    function AN_applyNewsTranslations(language) {
+    
+    // Initialize meta tags for the current article
+    initializeMetaTags();
+        AN_applyTranslations(language);
+        
+        // Get current filter and sort
+        const activeFilter = document.querySelector('.AN-filter-active')?.getAttribute('data-filter') || 'all';
+        const activeSort = document.querySelector('.AN-filter-active[data-filter="latest"], .AN-filter-active[data-filter="oldest"]')?.getAttribute('data-filter') || 'latest';
+        
+        // Render news list with current settings
+        AN_renderNewsList(language, activeFilter, activeSort);
+        
+        // Check for article ID in URL
+        const articleIdFromUrl = AN_getQueryParam('article');
+        if (articleIdFromUrl) {
+            // Small delay to ensure DOM is rendered
+            setTimeout(() => {
+                const newsItem = document.querySelector(`.AN-news-item[data-id="${articleIdFromUrl}"]`);
+                if (newsItem) {
+                    // Remove active class from all items
+                    document.querySelectorAll('.AN-news-item').forEach(item => {
+                        item.classList.remove('AN-news-item-active');
+                    });
+                    
+                    // Add active class to the target item
+                    newsItem.classList.add('AN-news-item-active');
+                    
+                    // Load the article
+                    AN_loadArticle(articleIdFromUrl, language);
+                }
+            }, 50);
+        }
+        
+        // Re-render notifications
+        AN_renderNotifications(language);
+    }
+
+    // Helper function to get URL query parameters
+    function AN_getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // DOMContentLoaded event listener
+    document.addEventListener('DOMContentLoaded', function() {
+// Initialize meta tags on page load
+initializeMetaTags();
+        // Theme toggle functionality
+        const themeSwitch = document.getElementById('AN-theme-switch');
+        const body = document.body;
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('AN-theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        if (savedTheme === 'dark') {
+            body.classList.add('AN-dark-mode');
+            themeSwitch.checked = true;
+        }
+        
+        themeSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('AN-dark-mode');
+                localStorage.setItem('AN-theme', 'dark');
+            } else {
+                body.classList.remove('AN-dark-mode');
+                localStorage.setItem('AN-theme', 'light');
+            }
+        });
+        
+        // Notification panel toggle
+        const notificationToggle = document.getElementById('AN-notification-toggle');
+        const notificationPanel = document.getElementById('AN-notification-panel');
+        const closeNotifications = document.getElementById('AN-close-notifications');
+        
+        notificationToggle.addEventListener('click', function() {
+            notificationPanel.classList.toggle('AN-active');
+        });
+        
+        closeNotifications.addEventListener('click', function() {
+            notificationPanel.classList.remove('AN-active');
+        });
+        
+        // Close notification panel when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!notificationToggle.contains(event.target) && 
+                !notificationPanel.contains(event.target)) {
+                notificationPanel.classList.remove('AN-active');
+            }
+        });
+
+        // Language selection
+        const languageSelect = document.getElementById('AN-language-select');
+        const savedLanguage = localStorage.getItem('AN-language-preference') || 'en';
+        
+        if (languageSelect) {
+            languageSelect.value = savedLanguage;
+            languageSelect.addEventListener('change', function() {
+                AN_applyNewsTranslations(this.value);
+            });
+        }
+        
+        // Get article ID from URL parameter
+        const articleIdFromUrl = AN_getQueryParam('article');
+        
+        // Filter button functionality
+        const filterButtons = document.querySelectorAll('.AN-filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all filter buttons
+                filterButtons.forEach(btn => btn.classList.remove('AN-filter-active'));
+                
+                // Add active class to clicked button
+                this.classList.add('AN-filter-active');
+                
+                // Get filter and sort values
+                const filter = this.getAttribute('data-filter');
+                const language = languageSelect ? languageSelect.value : 'en';
+                
+                // Determine if this is a sort button
+                const isSort = filter === 'latest' || filter === 'oldest';
+                
+                // Get current active filter (excluding sort)
+                let activeFilter = 'all';
+                filterButtons.forEach(btn => {
+                    const btnFilter = btn.getAttribute('data-filter');
+                    if (btn.classList.contains('AN-filter-active') && 
+                        btnFilter !== 'latest' && btnFilter !== 'oldest') {
+                        activeFilter = btnFilter;
+                    }
+                });
+                
+                // Get current sort
+                let activeSort = 'latest';
+                filterButtons.forEach(btn => {
+                    const btnFilter = btn.getAttribute('data-filter');
+                    if (btn.classList.contains('AN-filter-active') && 
+                        (btnFilter === 'latest' || btnFilter === 'oldest')) {
+                        activeSort = btnFilter;
+                    }
+                });
+                
+                // Apply the appropriate action
+                if (isSort) {
+                    // This is a sort button, keep current filter
+                    AN_renderNewsList(language, activeFilter, filter);
+                } else {
+                    // This is a filter button, keep current sort
+                    AN_renderNewsList(language, filter, activeSort);
+                }
+            });
+        });
+        
+        // Initialize with saved language and check for article ID
+        AN_applyNewsTranslations(savedLanguage);
+        
+        // If there's an article ID in the URL, load it after a short delay
+        if (articleIdFromUrl) {
+            setTimeout(() => {
+                const newsItem = document.querySelector(`.AN-news-item[data-id="${articleIdFromUrl}"]`);
+                if (newsItem) {
+                    newsItem.click();
+                    
+                    // Remove active class from all items first
+                    document.querySelectorAll('.AN-news-item').forEach(item => {
+                        item.classList.remove('AN-news-item-active');
+                    });
+                    
+                    // Add active class to the clicked item
+                    newsItem.classList.add('AN-news-item-active');
+                    
+                    // Scroll to the article on mobile
+                    if (window.innerWidth < 768) {
+                        const mainArticle = document.getElementById('AN-main-article');
+                        if (mainArticle) {
+                            mainArticle.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            }, 100);
+        }
+        
+        // Add CSS for news page
+        const newsPageStyles = `
+            /* News Page Specific Styles */
+            .AN-page-header {
+                margin-bottom: 40px;
+            }
+            
+            .AN-page-title {
+                font-size: 36px;
+                color: var(--AN-primary-color);
+                margin-bottom: 10px;
+            }
+            
+            .AN-page-subtitle {
+                font-size: 18px;
+                color: var(--AN-text-color);
+                opacity: 0.8;
+                margin-bottom: 30px;
+            }
+            
+            .AN-news-filter {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+            
+            .AN-filter-btn {
+                padding: 8px 16px;
+                border: 1px solid var(--AN-border-color);
+                background-color: var(--AN-card-bg);
+                color: var(--AN-text-color);
+                border-radius: var(--AN-radius);
+                cursor: pointer;
+                transition: var(--AN-transition);
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            .AN-filter-btn:hover {
+                background-color: var(--AN-primary-color);
+                color: white;
+                border-color: var(--AN-primary-color);
+            }
+            
+            .AN-filter-active {
+                background-color: var(--AN-primary-color);
+                color: white;
+                border-color: var(--AN-primary-color);
+            }
+            
+            /* 3-Column Layout */
+            .AN-news-layout {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 40px;
+                margin-bottom: 60px;
+            }
+            
+            /* Left Column: News List */
+            .AN-news-sidebar {
+                background-color: var(--AN-card-bg);
+                border-radius: var(--AN-radius);
+                box-shadow: var(--AN-shadow);
+                overflow: hidden;
+                height: fit-content;
+                max-height: 800px;
+                overflow-y: auto;
+            }
+            
+            .AN-news-list-header {
+                padding: 20px;
+                border-bottom: 1px solid var(--AN-border-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .AN-news-list-header h3 {
+                margin: 0;
+                color: var(--AN-primary-color);
+                font-size: 18px;
+            }
+            
+            .AN-news-count {
+                font-size: 12px;
+                color: var(--AN-text-color);
+                opacity: 0.7;
+                background-color: rgba(0,0,0,0.05);
+                padding: 4px 8px;
+                border-radius: 12px;
+            }
+            
+            .AN-dark-mode .AN-news-count {
+                background-color: rgba(255,255,255,0.05);
+            }
+            
+            .AN-news-list {
+                padding: 10px;
+            }
+            
+            .AN-news-item {
+                display: flex;
+                gap: 15px;
+                padding: 15px;
+                border-radius: var(--AN-radius);
+                margin-bottom: 10px;
+                cursor: pointer;
+                transition: var(--AN-transition);
+                border: 1px solid transparent;
+            }
+            
+            .AN-news-item:hover {
+                background-color: rgba(0,0,0,0.03);
+                border-color: var(--AN-border-color);
+            }
+            
+            .AN-dark-mode .AN-news-item:hover {
+                background-color: rgba(255,255,255,0.03);
+            }
+            
+            .AN-news-item-active {
+                background-color: var(--AN-primary-color) !important;
+                border-color: var(--AN-primary-color) !important;
+            }
+            
+            .AN-news-item-active .AN-news-item-title,
+            .AN-news-item-active .AN-news-item-excerpt,
+            .AN-news-item-active .AN-news-item-date,
+            .AN-news-item-active .AN-news-item-readtime {
+                color: white !important;
+            }
+            
+            .AN-news-item-image {
+                width: 80px;
+                height: 80px;
+                border-radius: var(--AN-radius);
+                overflow: hidden;
+                position: relative;
+                flex-shrink: 0;
+            }
+            
+            .AN-news-item-image-inner {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                background-color: #f0f0f0;
+            }
+            
+            .AN-news-item-content {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .AN-news-item-title {
+                font-size: 16px;
+                margin-bottom: 5px;
+                color: var(--AN-text-color);
+                line-height: 1.3;
+            }
+            
+            .AN-news-item-excerpt {
+                font-size: 13px;
+                color: var(--AN-text-color);
+                opacity: 0.8;
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+            
+            .AN-news-item-meta {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+            }
+            
+            .AN-news-item-date,
+            .AN-news-item-readtime {
+                color: var(--AN-text-color);
+                opacity: 0.6;
+            }
+            
+            /* Right Column: Main Article */
+            .AN-main-article {
+                background-color: var(--AN-card-bg);
+                border-radius: var(--AN-radius);
+                box-shadow: var(--AN-shadow);
+                overflow: hidden;
+            }
+            
+            .AN-article {
+                padding: 0;
+            }
+            
+            .AN-article-header {
+                padding: 30px;
+                border-bottom: 1px solid var(--AN-border-color);
+            }
+            
+            .AN-article-category {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .AN-article-badge {
+                padding: 6px 12px;
+                border-radius: var(--AN-radius);
+                font-size: 12px;
+                font-weight: 600;
+            }
+            
+            .AN-article-date {
+                font-size: 14px;
+                color: var(--AN-text-color);
+                opacity: 0.7;
+            }
+            
+            .AN-article-title {
+                font-size: 32px;
+                color: var(--AN-text-color);
+                margin-bottom: 15px;
+                line-height: 1.3;
+            }
+            
+            .AN-article-subtitle {
+                font-size: 18px;
+                color: var(--AN-text-color);
+                opacity: 0.8;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+            
+            .AN-article-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .AN-article-readtime {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 14px;
+                color: var(--AN-text-color);
+                opacity: 0.7;
+            }
+            
+            .AN-article-share {
+                background: none;
+                border: 1px solid var(--AN-border-color);
+                color: var(--AN-text-color);
+                padding: 8px 16px;
+                border-radius: var(--AN-radius);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: var(--AN-transition);
+            }
+            
+            .AN-article-share:hover {
+                background-color: var(--AN-primary-color);
+                color: white;
+                border-color: var(--AN-primary-color);
+            }
+            
+            .AN-article-image {
+                height: 400px;
+                overflow: hidden;
+            }
+            
+            .AN-article-image-inner {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                background-color: #f0f0f0;
+            }
+            
+            .AN-article-content {
+                padding: 30px;
+            }
+            
+            .AN-article-body {
+                font-size: 18px;
+                line-height: 1.8;
+                color: var(--AN-text-color);
+            }
+            
+            .AN-article-body p {
+                margin-bottom: 20px;
+            }
+            
+            .AN-article-related {
+                margin-top: 60px;
+                padding-top: 30px;
+                border-top: 1px solid var(--AN-border-color);
+            }
+            
+            .AN-article-related-title {
+                font-size: 24px;
+                color: var(--AN-primary-color);
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .AN-article-related-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .AN-related-article {
+                background-color: var(--AN-bg-color);
+                border-radius: var(--AN-radius);
+                overflow: hidden;
+                cursor: pointer;
+                transition: var(--AN-transition);
+            }
+            
+            .AN-related-article:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .AN-related-image {
+                height: 150px;
+                background-size: cover;
+                background-position: center;
+                background-color: #f0f0f0;
+            }
+            
+            .AN-related-article h4 {
+                padding: 15px 15px 10px;
+                font-size: 16px;
+                color: var(--AN-text-color);
+            }
+            
+            .AN-related-article p {
+                padding: 0 15px 10px;
+                font-size: 14px;
+                color: var(--AN-text-color);
+                opacity: 0.8;
+            }
+            
+            .AN-related-link {
+                display: block;
+                padding: 10px 15px 15px;
+                color: var(--AN-primary-color);
+                text-decoration: none;
+                font-weight: 500;
+            }
+            
+            .AN-no-news {
+                text-align: center;
+                padding: 40px 20px;
+                color: var(--AN-text-color);
+                opacity: 0.7;
+            }
+            
+            .AN-no-news i {
+                font-size: 48px;
+                margin-bottom: 20px;
+                display: block;
+            }
+            
+            /* RTL Support for News Page */
+            .AN-rtl .AN-news-filter {
+                direction: rtl;
+            }
+            
+            .AN-rtl .AN-article-related-title {
+                direction: rtl;
+            }
+            
+            .AN-rtl .AN-news-item {
+                direction: rtl;
+            }
+            
+            .AN-rtl .AN-news-item-meta {
+                direction: rtl;
+            }
+            
+            /* Responsive Design */
+            @media (max-width: 1024px) {
+                .AN-news-layout {
+                    grid-template-columns: 1fr;
+                    gap: 30px;
+                }
+                
+                .AN-news-sidebar {
+                    max-height: 500px;
+                }
+                
+                .AN-article-related-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .AN-page-title {
+                    font-size: 28px;
+                }
+                
+                .AN-news-filter {
+                    justify-content: center;
+                }
+                
+                .AN-article-title {
+                    font-size: 24px;
+                }
+                
+                .AN-article-subtitle {
+                    font-size: 16px;
+                }
+                
+                .AN-article-image {
+                    height: 250px;
+                }
+                
+                .AN-article-body {
+                    font-size: 16px;
+                }
+                
+                .AN-article-related-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .AN-article-related-title {
+                    font-size: 20px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .AN-news-filter {
+                    gap: 5px;
+                }
+                
+                .AN-filter-btn {
+                    padding: 6px 12px;
+                    font-size: 12px;
+                }
+                
+                .AN-news-item {
+                    flex-direction: column;
+                }
+                
+                .AN-news-item-image {
+                    width: 100%;
+                    height: 150px;
+                }
+            }
+        `;
+        
+        // Add the styles to the document
+        const style = document.createElement('style');
+        style.textContent = newsPageStyles;
+        document.head.appendChild(style);
+    });
+
+// Add event listener for URL changes (when using back/forward buttons)
+window.addEventListener('popstate', function() {
+    setTimeout(initializeMetaTags, 100);
+});
+</script>
+</body>
+</html>

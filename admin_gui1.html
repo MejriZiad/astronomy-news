@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرر بيانات Astronomy News - حول واستكشاف</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            color: #4cc9f0;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+
+        .subtitle {
+            color: #9d9d9d;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-y: auto;
+        }
+
+        .content-area {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 25px;
+        }
+
+        .data-view {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-y: auto;
+        }
+
+        .file-selector {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .file-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(76, 201, 240, 0.1);
+            border: 2px solid #4cc9f0;
+            color: #4cc9f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: right;
+        }
+
+        .file-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .file-btn.active {
+            background: rgba(76, 201, 240, 0.3);
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .section-title {
+            color: #4cc9f0;
+            margin: 20px 0 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            margin: 10px 0;
+            background: rgba(76, 201, 240, 0.15);
+            border: 2px solid #4cc9f0;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            background: rgba(76, 201, 240, 0.3);
+            transform: scale(1.05);
+        }
+
+        .action-btn.delete {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: #f44336;
+            margin-top: 20px;
+        }
+
+        .action-btn.delete:hover {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+        .action-btn.download {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: #4caf50;
+        }
+
+        .action-btn.download:hover {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .action-btn.upload {
+            background: rgba(255, 152, 0, 0.15);
+            border-color: #ff9800;
+        }
+
+        .action-btn.upload:hover {
+            background: rgba(255, 152, 0, 0.3);
+        }
+
+        .action-btn.images {
+            background: rgba(156, 39, 176, 0.15);
+            border-color: #9c27b0;
+        }
+
+        .action-btn.images:hover {
+            background: rgba(156, 39, 176, 0.3);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .data-table th {
+            background: rgba(76, 201, 240, 0.2);
+            color: #4cc9f0;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .row-btn {
+            padding: 6px 12px;
+            margin: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .row-btn:hover {
+            background: rgba(76, 201, 240, 0.3);
+        }
+
+        .row-btn.delete {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.4);
+        }
+
+        .row-btn.delete:hover {
+            background: rgba(244, 67, 54, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #4cc9f0;
+        }
+
+        .form-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4cc9f0;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            text-align: right;
+            direction: rtl;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .language-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 10px;
+            justify-content: flex-end;
+        }
+
+        .lang-tab {
+            padding: 8px 20px;
+            background: rgba(76, 201, 240, 0.1);
+            border: none;
+            color: #4cc9f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-tab.active {
+            background: rgba(76, 201, 240, 0.3);
+            color: white;
+        }
+
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .file-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #9d9d9d;
+            text-align: right;
+        }
+
+        .counter {
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+
+        .preview-area {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .preview-title {
+            color: #4cc9f0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #9d9d9d;
+            padding: 40px 20px;
+            font-style: italic;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            color: #ff6b6b;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .sub-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 3px solid #4cc9f0;
+        }
+
+        .sub-section-title {
+            color: #4cc9f0;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .skills-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .skills-input input {
+            flex: 1;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(76, 201, 240, 0.2);
+            color: #4cc9f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .remove-skill {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .remove-skill:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .source-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .add-source-btn, .add-member-btn, .add-value-btn {
+            background: rgba(76, 201, 240, 0.1);
+            border: 1px dashed #4cc9f0;
+            color: #4cc9f0;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .add-source-btn:hover, .add-member-btn:hover, .add-value-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+        }
+
+        .image-changes-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+
+        .image-changes-list h4 {
+            color: #4cc9f0;
+            margin: 15px 0 10px 0;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .image-list {
+            list-style: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .image-list.added {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .image-list.removed {
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .image-list li {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .image-list li:last-child {
+            border-bottom: none;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            border-radius: 8px;
+            z-index: 10000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .sidebar {
+                max-height: 400px;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>محرر بيانات Astronomy News - حول واستكشاف</h1>
+            <p class="subtitle">تعديل وإدارة بيانات صفحة حول الموقع والمقالات الاستكشافية</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="file-selector">
+                    <h3 class="section-title">ملفات البيانات</h3>
+                    <button class="file-btn active" data-file="about">👨‍💼 data_about.js (حول الموقع)</button>
+                    <button class="file-btn" data-file="explore">📚 data_explore.js (مقالات استكشافية)</button>
+                </div>
+
+                <div class="upload-section">
+                    <h3 class="section-title">تحميل الملفات</h3>
+                    <input type="file" id="fileUpload" class="file-input" accept=".js" multiple>
+                    <button class="action-btn upload" onclick="document.getElementById('fileUpload').click()">
+                        <span>📁</span> تحميل ملفات JS
+                    </button>
+                    <p style="font-size: 0.8rem; color: #9d9d9d; margin-top: 10px;">
+                        اختر ملفات data_about.js و data_explore.js
+                    </p>
+                </div>
+
+                <h3 class="section-title">الإجراءات</h3>
+                <button class="action-btn" id="addBtn">
+                    <span>+</span> إضافة مدخل جديد
+                </button>
+                <button class="action-btn" id="editDeveloperBtn" style="display: none;">
+                    <span>👤</span> تعديل بيانات المطور
+                </button>
+                <button class="action-btn download" id="downloadBtn">
+                    <span>⬇️</span> تحميل الملف الحالي
+                </button>
+                <button class="action-btn images" id="showImageChangesBtn">
+                    <span>🖼️</span> عرض تغييرات الصور
+                </button>
+                <button class="action-btn delete" id="deleteAllBtn">
+                    <span>🗑️</span> حذف جميع المدخلات
+                </button>
+
+                <div class="file-info">
+                    <p>الملف الحالي: <span id="currentFileName" class="counter">data_about.js</span></p>
+                    <p>عدد المدخلات: <span id="entryCount" class="counter">0</span></p>
+                    <p>آخر تعديل: <span id="lastModified" class="counter">الآن</span></p>
+                    <p>الحالة: <span id="fileStatus" class="counter">جديد</span></p>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="data-view">
+                    <h3 id="dataViewTitle">بيانات صفحة حول الموقع</h3>
+                    <div id="dataTableContainer">
+                        <!-- سيتم إدخال جدول البيانات هنا -->
+                    </div>
+                </div>
+
+                <div class="preview-area">
+                    <h4 class="preview-title">معاينة سريعة</h4>
+                    <div id="previewArea">
+                        <p class="empty-message">انقر على "معاينة" بجانب أي مدخل لرؤية تفاصيله هنا</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة التعديل/الإضافة للبيانات الاستكشافية -->
+    <div id="editExploreModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeExploreModal()">&times;</span>
+            <h2 id="modalTitle">إضافة مقال استكشافي جديد</h2>
+            <form id="exploreForm" dir="rtl">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="explore_id">المعرف:</label>
+                        <input type="text" id="explore_id" name="id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="explore_category">الفئة:</label>
+                        <select id="explore_category" name="category">
+                            <option value="cosmology">علم الكونيات</option>
+                            <option value="astrophysics">فيزياء فلكية</option>
+                            <option value="solar-system">النظام الشمسي</option>
+                            <option value="exoplanets">الكواكب الخارجية</option>
+                            <option value="telescopes">تلسكوبات</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="explore_date">التاريخ:</label>
+                        <input type="date" id="explore_date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="explore_image">مسار الصورة:</label>
+                        <input type="text" id="explore_image" name="image" placeholder="assets/images/explore/...">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>المحتوى متعدد اللغات</h3>
+                    <div class="language-tabs">
+                        <button type="button" class="lang-tab active" onclick="showLang('en', 'explore')">الإنجليزية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('fr', 'explore')">الفرنسية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('ar', 'explore')">العربية</button>
+                    </div>
+
+                    <div id="explore-lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label for="en_explore_title">العنوان (EN):</label>
+                            <input type="text" id="en_explore_title" name="en_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_explore_author">المؤلف (EN):</label>
+                            <input type="text" id="en_explore_author" name="en_author" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_explore_introduction">المقدمة (EN):</label>
+                            <textarea id="en_explore_introduction" name="en_introduction" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_explore_excerpt">مقتطف (EN):</label>
+                            <textarea id="en_explore_excerpt" name="en_excerpt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_explore_body">النص الكامل (EN):</label>
+                            <textarea id="en_explore_body" name="en_body" rows="8"></textarea>
+                        </div>
+                        
+                        <div class="sub-section">
+                            <h4 class="sub-section-title">المصادر (EN)</h4>
+                            <div id="en_sources_container">
+                                <!-- المصادر ستضاف هنا -->
+                            </div>
+                            <button type="button" class="add-source-btn" onclick="addSourceField('en')">
+                                <span>+</span> إضافة مصدر
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="explore-lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label for="fr_explore_title">العنوان (FR):</label>
+                            <input type="text" id="fr_explore_title" name="fr_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_explore_author">المؤلف (FR):</label>
+                            <input type="text" id="fr_explore_author" name="fr_author" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_explore_introduction">المقدمة (FR):</label>
+                            <textarea id="fr_explore_introduction" name="fr_introduction" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_explore_excerpt">مقتطف (FR):</label>
+                            <textarea id="fr_explore_excerpt" name="fr_excerpt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_explore_body">النص الكامل (FR):</label>
+                            <textarea id="fr_explore_body" name="fr_body" rows="8"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="explore-lang-ar" class="lang-content">
+                        <div class="form-group">
+                            <label for="ar_explore_title">العنوان (AR):</label>
+                            <input type="text" id="ar_explore_title" name="ar_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_explore_author">المؤلف (AR):</label>
+                            <input type="text" id="ar_explore_author" name="ar_author" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_explore_introduction">المقدمة (AR):</label>
+                            <textarea id="ar_explore_introduction" name="ar_introduction" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_explore_excerpt">مقتطف (AR):</label>
+                            <textarea id="ar_explore_excerpt" name="ar_excerpt" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_explore_body">النص الكامل (AR):</label>
+                            <textarea id="ar_explore_body" name="ar_body" rows="8"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="button" class="action-btn" onclick="saveExploreEntry()">حفظ المقال</button>
+                    <button type="button" class="action-btn delete" onclick="closeExploreModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة التعديل/الإضافة للبيانات الشخصية -->
+    <div id="editAboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAboutModal()">&times;</span>
+            <h2 id="aboutModalTitle">إضافة مدخل جديد</h2>
+            
+            <div class="form-section">
+                <h3>اختر نوع المدخل</h3>
+                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                    <button type="button" class="action-btn" onclick="openMemberForm()">👥 عضو فريق</button>
+                    <button type="button" class="action-btn" onclick="openValueForm()">💡 قيمة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تعديل بيانات المطور -->
+    <div id="editDeveloperModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeDeveloperModal()">&times;</span>
+            <h2>تعديل بيانات المطور</h2>
+            <form id="developerForm" dir="rtl">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="dev_name">الاسم:</label>
+                        <input type="text" id="dev_name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dev_image">مسار الصورة:</label>
+                        <input type="text" id="dev_image" name="image" placeholder="assets/images/about/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dev_role">الدور:</label>
+                        <input type="text" id="dev_role" name="role" required>
+                    </div>
+
+                    <div class="sub-section">
+                        <h4 class="sub-section-title">المهارات</h4>
+                        <div class="skills-input">
+                            <input type="text" id="newSkill" placeholder="أضف مهارة جديدة">
+                            <button type="button" class="action-btn" onclick="addSkill()">إضافة</button>
+                        </div>
+                        <div id="skillsList" class="skills-list">
+                            <!-- المهارات ستظهر هنا -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>المحتوى متعدد اللغات</h3>
+                    <div class="language-tabs">
+                        <button type="button" class="lang-tab active" onclick="showLang('en', 'dev')">الإنجليزية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('fr', 'dev')">الفرنسية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('ar', 'dev')">العربية</button>
+                    </div>
+
+                    <div id="dev-lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label for="en_dev_name">الاسم (EN):</label>
+                            <input type="text" id="en_dev_name" name="en_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_dev_role">الدور (EN):</label>
+                            <input type="text" id="en_dev_role" name="en_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_dev_bio">السيرة الذاتية (EN):</label>
+                            <textarea id="en_dev_bio" name="en_bio" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_dev_email">البريد الإلكتروني (EN):</label>
+                            <input type="email" id="en_dev_email" name="en_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="en_dev_github">جيتهاب (EN):</label>
+                            <input type="text" id="en_dev_github" name="en_github">
+                        </div>
+                        <div class="form-group">
+                            <label for="en_dev_linkedin">لينكدإن (EN):</label>
+                            <input type="text" id="en_dev_linkedin" name="en_linkedin">
+                        </div>
+                    </div>
+
+                    <div id="dev-lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label for="fr_dev_name">الاسم (FR):</label>
+                            <input type="text" id="fr_dev_name" name="fr_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_dev_role">الدور (FR):</label>
+                            <input type="text" id="fr_dev_role" name="fr_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_dev_bio">السيرة الذاتية (FR):</label>
+                            <textarea id="fr_dev_bio" name="fr_bio" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_dev_email">البريد الإلكتروني (FR):</label>
+                            <input type="email" id="fr_dev_email" name="fr_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_dev_github">جيتهاب (FR):</label>
+                            <input type="text" id="fr_dev_github" name="fr_github">
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_dev_linkedin">لينكدإن (FR):</label>
+                            <input type="text" id="fr_dev_linkedin" name="fr_linkedin">
+                        </div>
+                    </div>
+
+                    <div id="dev-lang-ar" class="lang-content">
+                        <div class="form-group">
+                            <label for="ar_dev_name">الاسم (AR):</label>
+                            <input type="text" id="ar_dev_name" name="ar_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_dev_role">الدور (AR):</label>
+                            <input type="text" id="ar_dev_role" name="ar_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_dev_bio">السيرة الذاتية (AR):</label>
+                            <textarea id="ar_dev_bio" name="ar_bio" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_dev_email">البريد الإلكتروني (AR):</label>
+                            <input type="email" id="ar_dev_email" name="ar_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_dev_github">جيتهاب (AR):</label>
+                            <input type="text" id="ar_dev_github" name="ar_github">
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_dev_linkedin">لينكدإن (AR):</label>
+                            <input type="text" id="ar_dev_linkedin" name="ar_linkedin">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="button" class="action-btn" onclick="saveDeveloper()">حفظ بيانات المطور</button>
+                    <button type="button" class="action-btn delete" onclick="closeDeveloperModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة/تعديل عضو فريق -->
+    <div id="editMemberModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeMemberModal()">&times;</span>
+            <h2 id="memberModalTitle">إضافة عضو فريق</h2>
+            <form id="memberForm" dir="rtl">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="member_id">المعرف:</label>
+                        <input type="text" id="member_id" name="id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member_name">الاسم:</label>
+                        <input type="text" id="member_name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member_role">الدور:</label>
+                        <input type="text" id="member_role" name="role" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member_image">مسار الصورة:</label>
+                        <input type="text" id="member_image" name="image" placeholder="assets/images/about/...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member_icon">الأيقونة:</label>
+                        <select id="member_icon" name="icon">
+                            <option value="fa-star">نجمة</option>
+                            <option value="fa-code">كود</option>
+                            <option value="fa-language">لغة</option>
+                            <option value="fa-chart-line">رسم بياني</option>
+                            <option value="fa-telescope">تلسكوب</option>
+                            <option value="fa-rocket">صاروخ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>المحتوى متعدد اللغات</h3>
+                    <div class="language-tabs">
+                        <button type="button" class="lang-tab active" onclick="showLang('en', 'member')">الإنجليزية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('fr', 'member')">الفرنسية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('ar', 'member')">العربية</button>
+                    </div>
+
+                    <div id="member-lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label for="en_member_name">الاسم (EN):</label>
+                            <input type="text" id="en_member_name" name="en_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_member_role">الدور (EN):</label>
+                            <input type="text" id="en_member_role" name="en_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_member_bio">السيرة الذاتية (EN):</label>
+                            <textarea id="en_member_bio" name="en_bio" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="member-lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label for="fr_member_name">الاسم (FR):</label>
+                            <input type="text" id="fr_member_name" name="fr_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_member_role">الدور (FR):</label>
+                            <input type="text" id="fr_member_role" name="fr_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_member_bio">السيرة الذاتية (FR):</label>
+                            <textarea id="fr_member_bio" name="fr_bio" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="member-lang-ar" class="lang-content">
+                        <div class="form-group">
+                            <label for="ar_member_name">الاسم (AR):</label>
+                            <input type="text" id="ar_member_name" name="ar_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_member_role">الدور (AR):</label>
+                            <input type="text" id="ar_member_role" name="ar_role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_member_bio">السيرة الذاتية (AR):</label>
+                            <textarea id="ar_member_bio" name="ar_bio" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="button" class="action-btn" onclick="saveMember()">حفظ العضو</button>
+                    <button type="button" class="action-btn delete" onclick="closeMemberModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة/تعديل قيمة -->
+    <div id="editValueModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeValueModal()">&times;</span>
+            <h2 id="valueModalTitle">إضافة قيمة</h2>
+            <form id="valueForm" dir="rtl">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="value_id">المعرف:</label>
+                        <input type="text" id="value_id" name="id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="value_icon">الأيقونة:</label>
+                        <select id="value_icon" name="icon">
+                            <option value="fa-check-circle">علامة صح</option>
+                            <option value="fa-universal-access">إمكانية الوصول</option>
+                            <option value="fa-lightbulb">فكرة</option>
+                            <option value="fa-users">أشخاص</option>
+                            <option value="fa-globe">عالم</option>
+                            <option value="fa-heart">قلب</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>المحتوى متعدد اللغات</h3>
+                    <div class="language-tabs">
+                        <button type="button" class="lang-tab active" onclick="showLang('en', 'value')">الإنجليزية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('fr', 'value')">الفرنسية</button>
+                        <button type="button" class="lang-tab" onclick="showLang('ar', 'value')">العربية</button>
+                    </div>
+
+                    <div id="value-lang-en" class="lang-content active">
+                        <div class="form-group">
+                            <label for="en_value_title">العنوان (EN):</label>
+                            <input type="text" id="en_value_title" name="en_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="en_value_description">الوصف (EN):</label>
+                            <textarea id="en_value_description" name="en_description" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="value-lang-fr" class="lang-content">
+                        <div class="form-group">
+                            <label for="fr_value_title">العنوان (FR):</label>
+                            <input type="text" id="fr_value_title" name="fr_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fr_value_description">الوصف (FR):</label>
+                            <textarea id="fr_value_description" name="fr_description" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="value-lang-ar" class="lang-content">
+                        <div class="form-group">
+                            <label for="ar_value_title">العنوان (AR):</label>
+                            <input type="text" id="ar_value_title" name="ar_title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ar_value_description">الوصف (AR):</label>
+                            <textarea id="ar_value_description" name="ar_description" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <button type="button" class="action-btn" onclick="saveValue()">حفظ القيمة</button>
+                    <button type="button" class="action-btn delete" onclick="closeValueModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة عرض تغييرات الصور -->
+    <div id="imageChangesModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeImageChangesModal()">&times;</span>
+            <h2>تغييرات الصور</h2>
+            <div id="imageChangesContent" class="image-changes-list">
+                <!-- محتوى تغييرات الصور سيظهر هنا -->
+            </div>
+            <div class="form-section">
+                <button type="button" class="action-btn" onclick="clearImageChanges()">مسح القائمة</button>
+                <button type="button" class="action-btn delete" onclick="closeImageChangesModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الإشعارات -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // البيانات الأساسية الفارغة
+        let AN_about_data = {
+            developer: null,
+            team: [],
+            values: []
+        };
+        
+        let AN_explore_data = [];
+        
+        // إدارة الحالة
+        let currentFile = 'about';
+        let currentData = AN_about_data;
+        let editingId = null;
+        let currentSkills = [];
+        let currentSources = { en: [] };
+        let fileStatus = {
+            about: 'غير محمل',
+            explore: 'غير محمل'
+        };
+
+        // Image tracking
+        let imageChanges = {
+            added: new Set(),
+            removed: new Set()
+        };
+
+        // Keep track of original images when loading data
+        let originalImages = new Set();
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData('about');
+            setupEventListeners();
+            updateCounters();
+        });
+
+        function setupEventListeners() {
+            // أزرار اختيار الملف
+            document.querySelectorAll('.file-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.file-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    loadData(this.dataset.file);
+                });
+            });
+
+            // أزرار الإجراءات
+            document.getElementById('addBtn').addEventListener('click', openAddModal);
+            document.getElementById('editDeveloperBtn').addEventListener('click', openDeveloperModal);
+            document.getElementById('downloadBtn').addEventListener('click', downloadCurrentFile);
+            document.getElementById('deleteAllBtn').addEventListener('click', deleteAllEntries);
+            document.getElementById('showImageChangesBtn').addEventListener('click', showImageChanges);
+            
+            // تحميل الملفات
+            document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
+        }
+
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+            
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const content = e.target.result;
+                        const fileName = file.name.toLowerCase();
+                        
+                        if (fileName === 'data_about.js') {
+                            parseAboutFile(content);
+                        } else if (fileName === 'data_explore.js') {
+                            parseExploreFile(content);
+                        } else {
+                            showNotification(`ملف ${file.name} غير معروف. يجب أن يكون اسم الملف data_about.js أو data_explore.js`);
+                        }
+                    } catch (error) {
+                        showNotification(`خطأ في تحليل الملف ${file.name}: ${error.message}`, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function parseAboutFile(content) {
+            try {
+                // البحث عن AN_about_data في الملف
+                const match = content.match(/const\s+AN_about_data\s*=\s*(\{[^]*?\});/s);
+                if (match) {
+                    const dataStr = match[1];
+                    const data = safeEval(dataStr);
+                    AN_about_data = data;
+                    fileStatus.about = 'محمل';
+                    
+                    // استخراج الصور من بيانات about
+                    extractImagesFromAboutData(data);
+                    
+                    showNotification(`تم تحميل بيانات about بنجاح!`);
+                    
+                    // إذا كان الملف الحالي هو about، قم بتحديث العرض
+                    if (currentFile === 'about') {
+                        loadData('about');
+                    }
+                } else {
+                    showNotification(`لم يتم العثور على بيانات about في الملف`, 'error');
+                }
+            } catch (error) {
+                console.error('Error parsing about file:', error);
+                showNotification(`خطأ في تحليل ملف about: ${error.message}`, 'error');
+            }
+        }
+
+        function parseExploreFile(content) {
+            try {
+                // البحث عن AN_explore_data في الملف
+                const match = content.match(/const\s+AN_explore_data\s*=\s*(\[.*\]);/s);
+                if (match) {
+                    const dataStr = match[1];
+                    const data = safeEval(dataStr);
+                    AN_explore_data = data;
+                    fileStatus.explore = 'محمل';
+                    
+                    // استخراج الصور من بيانات explore
+                    extractImagesFromExploreData(data);
+                    
+                    showNotification(`تم تحميل بيانات explore بنجاح! ${data.length} مقال`);
+                    
+                    // إذا كان الملف الحالي هو explore، قم بتحديث العرض
+                    if (currentFile === 'explore') {
+                        loadData('explore');
+                    }
+                } else {
+                    showNotification(`لم يتم العثور على بيانات explore في الملف`, 'error');
+                }
+            } catch (error) {
+                console.error('Error parsing explore file:', error);
+                showNotification(`خطأ في تحليل ملف explore: ${error.message}`, 'error');
+            }
+        }
+
+        function safeEval(dataStr) {
+            try {
+                // تنظيف السلسلة من التعليقات المحتملة
+                dataStr = dataStr.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+                
+                const func = new Function(`return ${dataStr};`);
+                return func();
+            } catch (error) {
+                try {
+                    let jsonStr = dataStr
+                        .replace(/(\w+):/g, '"$1":')
+                        .replace(/'/g, '"')
+                        .replace(/,\s*]/g, ']')
+                        .replace(/,\s*}/g, '}');
+                    
+                    return JSON.parse(jsonStr);
+                } catch (jsonError) {
+                    throw new Error('لا يمكن تحليل البيانات: ' + jsonError.message);
+                }
+            }
+        }
+
+        function extractImagesFromAboutData(data) {
+            originalImages.clear();
+            
+            // Developer image
+            if (data.developer && data.developer.image) {
+                originalImages.add(data.developer.image);
+            }
+            
+            // Team member images
+            if (data.team) {
+                data.team.forEach(member => {
+                    if (member.image) originalImages.add(member.image);
+                });
+            }
+        }
+
+        function extractImagesFromExploreData(data) {
+            data.forEach(article => {
+                if (article.image) originalImages.add(article.image);
+            });
+        }
+
+        function loadData(file) {
+            currentFile = file;
+            
+            const editDeveloperBtn = document.getElementById('editDeveloperBtn');
+            
+            switch(file) {
+                case 'about':
+                    currentData = AN_about_data;
+                    document.getElementById('dataViewTitle').textContent = 'بيانات صفحة حول الموقع';
+                    document.getElementById('currentFileName').textContent = 'data_about.js';
+                    editDeveloperBtn.style.display = AN_about_data.developer ? 'flex' : 'none';
+                    renderAboutTable();
+                    break;
+                case 'explore':
+                    currentData = AN_explore_data;
+                    document.getElementById('dataViewTitle').textContent = 'بيانات المقالات الاستكشافية';
+                    document.getElementById('currentFileName').textContent = 'data_explore.js';
+                    editDeveloperBtn.style.display = 'none';
+                    renderExploreTable();
+                    break;
+            }
+            updateCounters();
+        }
+
+        function renderAboutTable() {
+            const container = document.getElementById('dataTableContainer');
+            let content = '';
+            
+            // عرض بيانات المطور
+            if (AN_about_data.developer) {
+                content += `
+                    <div class="sub-section">
+                        <h4 class="sub-section-title">👨‍💼 المطور</h4>
+                        <p><strong>الاسم:</strong> ${AN_about_data.developer.name}</p>
+                        <p><strong>الدور:</strong> ${AN_about_data.developer.role}</p>
+                        <div style="margin-top: 10px;">
+                            <button class="row-btn" onclick="previewDeveloper()">معاينة</button>
+                            <button class="row-btn delete" onclick="deleteDeveloper()">حذف</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="sub-section">
+                        <p class="empty-message">لا توجد بيانات للمطور. أضف بيانات المطور أولاً.</p>
+                        <button class="action-btn" onclick="openDeveloperModal()" style="margin-top: 10px;">
+                            <span>+</span> إضافة بيانات المطور
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // عرض أعضاء الفريق
+            if (AN_about_data.team && AN_about_data.team.length > 0) {
+                content += `
+                    <div class="sub-section">
+                        <h4 class="sub-section-title">👥 أعضاء الفريق (${AN_about_data.team.length})</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>الدور</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                AN_about_data.team.forEach(member => {
+                    content += `
+                        <tr>
+                            <td>${member.name}</td>
+                            <td>${member.role}</td>
+                            <td>
+                                <button class="row-btn" onclick="editMember('${member.id}')">تعديل</button>
+                                <button class="row-btn delete" onclick="deleteMember('${member.id}')">حذف</button>
+                                <button class="row-btn" onclick="previewMember('${member.id}')">معاينة</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                content += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="sub-section">
+                        <p class="empty-message">لا توجد أعضاء في الفريق بعد.</p>
+                    </div>
+                `;
+            }
+            
+            // عرض القيم
+            if (AN_about_data.values && AN_about_data.values.length > 0) {
+                content += `
+                    <div class="sub-section">
+                        <h4 class="sub-section-title">💡 القيم (${AN_about_data.values.length})</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>العنوان</th>
+                                    <th>الوصف</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                AN_about_data.values.forEach(value => {
+                    const title = value.en?.title || value.ar?.title || value.fr?.title || 'بدون عنوان';
+                    content += `
+                        <tr>
+                            <td>${title}</td>
+                            <td>${(value.en?.description || '').substring(0, 50)}...</td>
+                            <td>
+                                <button class="row-btn" onclick="editValue('${value.id}')">تعديل</button>
+                                <button class="row-btn delete" onclick="deleteValue('${value.id}')">حذف</button>
+                                <button class="row-btn" onclick="previewValue('${value.id}')">معاينة</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                content += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="sub-section">
+                        <p class="empty-message">لا توجد قيم محددة بعد.</p>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = content;
+        }
+
+        function renderExploreTable() {
+            const container = document.getElementById('dataTableContainer');
+            
+            if (AN_explore_data.length === 0) {
+                container.innerHTML = '<p class="empty-message">لا توجد مقالات استكشافية. قم بتحميل ملف أو إضافة مقال جديد.</p>';
+                return;
+            }
+
+            let table = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>المعرف</th>
+                            <th>الفئة</th>
+                            <th>العنوان</th>
+                            <th>المؤلف</th>
+                            <th>التاريخ</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            AN_explore_data.forEach(article => {
+                const categoryMap = {
+                    'cosmology': 'علم الكونيات',
+                    'astrophysics': 'فيزياء فلكية',
+                    'solar-system': 'النظام الشمسي',
+                    'exoplanets': 'الكواكب الخارجية',
+                    'telescopes': 'تلسكوبات'
+                };
+                
+                table += `
+                    <tr>
+                        <td><code>${article.id}</code></td>
+                        <td><span class="status-badge">${categoryMap[article.category] || article.category}</span></td>
+                        <td>${article.en?.title || 'بدون عنوان'}</td>
+                        <td>${article.en?.author || ''}</td>
+                        <td>${formatDate(article.date)}</td>
+                        <td>
+                            <button class="row-btn" onclick="editExplore('${article.id}')">تعديل</button>
+                            <button class="row-btn delete" onclick="deleteExplore('${article.id}')">حذف</button>
+                            <button class="row-btn" onclick="previewExplore('${article.id}')">معاينة</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            table += '</tbody></table>';
+            container.innerHTML = table;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'بدون تاريخ';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        // وظائف فتح النوافذ المنبثقة
+        function openAddModal() {
+            if (currentFile === 'about') {
+                document.getElementById('editAboutModal').style.display = 'block';
+            } else if (currentFile === 'explore') {
+                openExploreModal();
+            }
+        }
+
+        function openExploreModal() {
+            editingId = null;
+            currentSources = { en: [] };
+            document.getElementById('modalTitle').textContent = 'إضافة مقال استكشافي جديد';
+            document.getElementById('exploreForm').reset();
+            document.getElementById('en_sources_container').innerHTML = '';
+            
+            // إنشاء معرف جديد
+            let maxNum = 0;
+            AN_explore_data.forEach(item => {
+                if (item.id && item.id.startsWith('article-')) {
+                    const parts = item.id.split('-');
+                    const num = parseInt(parts[parts.length - 1]);
+                    if (!isNaN(num) && num > maxNum) maxNum = num;
+                }
+            });
+            document.getElementById('explore_id').value = `article-${(maxNum + 1).toString().padStart(3, '0')}`;
+            
+            // تعيين التاريخ الافتراضي لليوم
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('explore_date').value = today;
+            
+            // إضافة مصدر فارغ أولي
+            addSourceField('en');
+            
+            document.getElementById('editExploreModal').style.display = 'block';
+        }
+
+        function openDeveloperModal() {
+            document.getElementById('aboutModalTitle').textContent = 'تعديل بيانات المطور';
+            document.getElementById('developerForm').reset();
+            
+            if (AN_about_data.developer) {
+                // تعبئة البيانات الحالية
+                const dev = AN_about_data.developer;
+                
+                document.getElementById('dev_name').value = dev.name || '';
+                document.getElementById('dev_image').value = dev.image || '';
+                document.getElementById('dev_role').value = dev.role || '';
+                
+                // المهارات
+                currentSkills = dev.skills || [];
+                renderSkills();
+                
+                // الإنجليزية
+                document.getElementById('en_dev_name').value = dev.en?.name || '';
+                document.getElementById('en_dev_role').value = dev.en?.role || '';
+                document.getElementById('en_dev_bio').value = dev.en?.bio || '';
+                document.getElementById('en_dev_email').value = dev.en?.email || '';
+                document.getElementById('en_dev_github').value = dev.en?.github || '';
+                document.getElementById('en_dev_linkedin').value = dev.en?.linkedin || '';
+                
+                // الفرنسية
+                document.getElementById('fr_dev_name').value = dev.fr?.name || '';
+                document.getElementById('fr_dev_role').value = dev.fr?.role || '';
+                document.getElementById('fr_dev_bio').value = dev.fr?.bio || '';
+                document.getElementById('fr_dev_email').value = dev.fr?.email || '';
+                document.getElementById('fr_dev_github').value = dev.fr?.github || '';
+                document.getElementById('fr_dev_linkedin').value = dev.fr?.linkedin || '';
+                
+                // العربية
+                document.getElementById('ar_dev_name').value = dev.ar?.name || '';
+                document.getElementById('ar_dev_role').value = dev.ar?.role || '';
+                document.getElementById('ar_dev_bio').value = dev.ar?.bio || '';
+                document.getElementById('ar_dev_email').value = dev.ar?.email || '';
+                document.getElementById('ar_dev_github').value = dev.ar?.github || '';
+                document.getElementById('ar_dev_linkedin').value = dev.ar?.linkedin || '';
+            } else {
+                // إنشاء معرف جديد
+                document.getElementById('dev_name').value = 'Mejri Ziad';
+                document.getElementById('dev_image').value = 'assets/images/about/ziad.jpg';
+                document.getElementById('dev_role').value = 'Project Lead & Developer';
+                
+                currentSkills = ['JavaScript', 'HTML/CSS', 'Astronomy', 'Data Visualization', 'UI/UX Design', 'Science Communication'];
+                renderSkills();
+                
+                // تعيين القيم الافتراضية
+                const today = new Date().toISOString().split('T')[0];
+            }
+            
+            document.getElementById('editDeveloperModal').style.display = 'block';
+        }
+
+        function openMemberForm() {
+            closeAboutModal();
+            editingId = null;
+            document.getElementById('memberModalTitle').textContent = 'إضافة عضو فريق';
+            document.getElementById('memberForm').reset();
+            
+            // إنشاء معرف جديد
+            let maxNum = 0;
+            if (AN_about_data.team) {
+                AN_about_data.team.forEach(member => {
+                    if (member.id && member.id.startsWith('team-')) {
+                        const parts = member.id.split('-');
+                        const num = parseInt(parts[parts.length - 1]);
+                        if (!isNaN(num) && num > maxNum) maxNum = num;
+                    }
+                });
+            }
+            document.getElementById('member_id').value = `team-${(maxNum + 1).toString().padStart(3, '0')}`;
+            
+            document.getElementById('editMemberModal').style.display = 'block';
+        }
+
+        function openValueForm() {
+            closeAboutModal();
+            editingId = null;
+            document.getElementById('valueModalTitle').textContent = 'إضافة قيمة';
+            document.getElementById('valueForm').reset();
+            
+            // إنشاء معرف جديد
+            let maxNum = 0;
+            if (AN_about_data.values) {
+                AN_about_data.values.forEach(value => {
+                    if (value.id && value.id.startsWith('value-')) {
+                        const parts = value.id.split('-');
+                        const num = parseInt(parts[parts.length - 1]);
+                        if (!isNaN(num) && num > maxNum) maxNum = num;
+                    }
+                });
+            }
+            document.getElementById('value_id').value = `value-${(maxNum + 1).toString().padStart(3, '0')}`;
+            
+            document.getElementById('editValueModal').style.display = 'block';
+        }
+
+        // وظائف الحفظ
+        function saveDeveloper() {
+            const oldImage = AN_about_data.developer ? AN_about_data.developer.image : null;
+            const newImage = document.getElementById('dev_image').value;
+            
+            // تتبع تغييرات الصور
+            if (oldImage && oldImage !== newImage) {
+                imageChanges.removed.add(oldImage);
+            }
+            if (newImage && newImage !== oldImage) {
+                imageChanges.added.add(newImage);
+            }
+            
+            const developer = {
+                id: 'dev-001',
+                name: document.getElementById('dev_name').value,
+                image: newImage,
+                role: document.getElementById('dev_role').value,
+                skills: currentSkills,
+                en: {
+                    name: document.getElementById('en_dev_name').value,
+                    role: document.getElementById('en_dev_role').value,
+                    bio: document.getElementById('en_dev_bio').value,
+                    email: document.getElementById('en_dev_email').value,
+                    github: document.getElementById('en_dev_github').value,
+                    linkedin: document.getElementById('en_dev_linkedin').value
+                },
+                fr: {
+                    name: document.getElementById('fr_dev_name').value,
+                    role: document.getElementById('fr_dev_role').value,
+                    bio: document.getElementById('fr_dev_bio').value,
+                    email: document.getElementById('fr_dev_email').value,
+                    github: document.getElementById('fr_dev_github').value,
+                    linkedin: document.getElementById('fr_dev_linkedin').value
+                },
+                ar: {
+                    name: document.getElementById('ar_dev_name').value,
+                    role: document.getElementById('ar_dev_role').value,
+                    bio: document.getElementById('ar_dev_bio').value,
+                    email: document.getElementById('ar_dev_email').value,
+                    github: document.getElementById('ar_dev_github').value,
+                    linkedin: document.getElementById('ar_dev_linkedin').value
+                }
+            };
+            
+            AN_about_data.developer = developer;
+            showNotification('تم حفظ بيانات المطور بنجاح!');
+            closeDeveloperModal();
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+            
+            // إظهار زر تعديل المطور
+            document.getElementById('editDeveloperBtn').style.display = 'flex';
+        }
+
+        function saveMember() {
+            let oldImage = '';
+            if (editingId) {
+                const oldMember = AN_about_data.team.find(m => m.id === editingId);
+                oldImage = oldMember ? oldMember.image : '';
+            }
+            
+            const newImage = document.getElementById('member_image').value;
+            
+            // تتبع تغييرات الصور
+            if (oldImage && oldImage !== newImage) {
+                imageChanges.removed.add(oldImage);
+            }
+            if (newImage && newImage !== oldImage) {
+                imageChanges.added.add(newImage);
+            }
+            
+            const member = {
+                id: document.getElementById('member_id').value,
+                name: document.getElementById('member_name').value,
+                role: document.getElementById('member_role').value,
+                image: newImage,
+                icon: document.getElementById('member_icon').value,
+                en: {
+                    name: document.getElementById('en_member_name').value,
+                    role: document.getElementById('en_member_role').value,
+                    bio: document.getElementById('en_member_bio').value
+                },
+                fr: {
+                    name: document.getElementById('fr_member_name').value,
+                    role: document.getElementById('fr_member_role').value,
+                    bio: document.getElementById('fr_member_bio').value
+                },
+                ar: {
+                    name: document.getElementById('ar_member_name').value,
+                    role: document.getElementById('ar_member_role').value,
+                    bio: document.getElementById('ar_member_bio').value
+                }
+            };
+            
+            if (editingId) {
+                // تحديث العضو الحالي
+                const index = AN_about_data.team.findIndex(m => m.id === editingId);
+                if (index !== -1) {
+                    AN_about_data.team[index] = member;
+                }
+            } else {
+                // إضافة عضو جديد
+                if (!AN_about_data.team) {
+                    AN_about_data.team = [];
+                }
+                AN_about_data.team.push(member);
+            }
+            
+            showNotification(editingId ? 'تم تحديث العضو بنجاح!' : 'تم إضافة العضو بنجاح!');
+            closeMemberModal();
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+        }
+
+        function saveValue() {
+            const value = {
+                id: document.getElementById('value_id').value,
+                icon: document.getElementById('value_icon').value,
+                en: {
+                    title: document.getElementById('en_value_title').value,
+                    description: document.getElementById('en_value_description').value
+                },
+                fr: {
+                    title: document.getElementById('fr_value_title').value,
+                    description: document.getElementById('fr_value_description').value
+                },
+                ar: {
+                    title: document.getElementById('ar_value_title').value,
+                    description: document.getElementById('ar_value_description').value
+                }
+            };
+            
+            if (editingId) {
+                // تحديث القيمة الحالية
+                const index = AN_about_data.values.findIndex(v => v.id === editingId);
+                if (index !== -1) {
+                    AN_about_data.values[index] = value;
+                }
+            } else {
+                // إضافة قيمة جديدة
+                if (!AN_about_data.values) {
+                    AN_about_data.values = [];
+                }
+                AN_about_data.values.push(value);
+            }
+            
+            showNotification(editingId ? 'تم تحديث القيمة بنجاح!' : 'تم إضافة القيمة بنجاح!');
+            closeValueModal();
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+        }
+
+        function saveExploreEntry() {
+            let oldImage = '';
+            if (editingId) {
+                const oldArticle = AN_explore_data.find(item => item.id === editingId);
+                oldImage = oldArticle ? oldArticle.image : '';
+            }
+            
+            const newImage = document.getElementById('explore_image').value;
+            
+            // تتبع تغييرات الصور
+            if (oldImage && oldImage !== newImage) {
+                imageChanges.removed.add(oldImage);
+            }
+            if (newImage && newImage !== oldImage) {
+                imageChanges.added.add(newImage);
+            }
+            
+            // جمع المصادر من الحقول
+            const sources = [];
+            const sourceElements = document.querySelectorAll('#en_sources_container .source-item');
+            sourceElements.forEach(sourceEl => {
+                const title = sourceEl.querySelector('input[name="source_title"]')?.value;
+                const author = sourceEl.querySelector('input[name="source_author"]')?.value;
+                const journal = sourceEl.querySelector('input[name="source_journal"]')?.value;
+                const year = sourceEl.querySelector('input[name="source_year"]')?.value;
+                
+                if (title || author) {
+                    const source = {};
+                    if (title) source.title = title;
+                    if (author) source.author = author;
+                    if (journal) source.journal = journal;
+                    if (year) source.year = parseInt(year);
+                    sources.push(source);
+                }
+            });
+            
+            const article = {
+                id: document.getElementById('explore_id').value,
+                category: document.getElementById('explore_category').value,
+                image: newImage,
+                date: document.getElementById('explore_date').value,
+                en: {
+                    title: document.getElementById('en_explore_title').value,
+                    author: document.getElementById('en_explore_author').value,
+                    introduction: document.getElementById('en_explore_introduction').value,
+                    excerpt: document.getElementById('en_explore_excerpt').value,
+                    body: document.getElementById('en_explore_body').value,
+                    sources: sources
+                },
+                fr: {
+                    title: document.getElementById('fr_explore_title').value,
+                    author: document.getElementById('fr_explore_author').value,
+                    introduction: document.getElementById('fr_explore_introduction').value,
+                    excerpt: document.getElementById('fr_explore_excerpt').value,
+                    body: document.getElementById('fr_explore_body').value
+                },
+                ar: {
+                    title: document.getElementById('ar_explore_title').value,
+                    author: document.getElementById('ar_explore_author').value,
+                    introduction: document.getElementById('ar_explore_introduction').value,
+                    excerpt: document.getElementById('ar_explore_excerpt').value,
+                    body: document.getElementById('ar_explore_body').value
+                }
+            };
+            
+            if (editingId) {
+                const index = AN_explore_data.findIndex(item => item.id === editingId);
+                if (index !== -1) {
+                    AN_explore_data[index] = article;
+                    showNotification('تم تحديث المقال بنجاح!');
+                }
+            } else {
+                AN_explore_data.push(article);
+                showNotification('تم إضافة المقال بنجاح!');
+            }
+            
+            closeExploreModal();
+            renderExploreTable();
+            updateCounters();
+            fileStatus.explore = 'معدل';
+        }
+
+        // وظائف التعديل
+        function editExplore(id) {
+            editingId = id;
+            const article = AN_explore_data.find(item => item.id === id);
+            
+            if (!article) {
+                showNotification('لم يتم العثور على المقال!', 'error');
+                return;
+            }
+            
+            document.getElementById('modalTitle').textContent = 'تعديل المقال';
+            document.getElementById('exploreForm').reset();
+            
+            // تعبئة البيانات الأساسية
+            document.getElementById('explore_id').value = article.id;
+            document.getElementById('explore_category').value = article.category || 'cosmology';
+            document.getElementById('explore_date').value = article.date || '';
+            document.getElementById('explore_image').value = article.image || '';
+            
+            // الإنجليزية
+            document.getElementById('en_explore_title').value = article.en?.title || '';
+            document.getElementById('en_explore_author').value = article.en?.author || '';
+            document.getElementById('en_explore_introduction').value = article.en?.introduction || '';
+            document.getElementById('en_explore_excerpt').value = article.en?.excerpt || '';
+            document.getElementById('en_explore_body').value = article.en?.body || '';
+            
+            // المصادر الإنجليزية
+            currentSources.en = article.en?.sources || [];
+            renderSources('en');
+            
+            // الفرنسية
+            document.getElementById('fr_explore_title').value = article.fr?.title || '';
+            document.getElementById('fr_explore_author').value = article.fr?.author || '';
+            document.getElementById('fr_explore_introduction').value = article.fr?.introduction || '';
+            document.getElementById('fr_explore_excerpt').value = article.fr?.excerpt || '';
+            document.getElementById('fr_explore_body').value = article.fr?.body || '';
+            
+            // العربية
+            document.getElementById('ar_explore_title').value = article.ar?.title || '';
+            document.getElementById('ar_explore_author').value = article.ar?.author || '';
+            document.getElementById('ar_explore_introduction').value = article.ar?.introduction || '';
+            document.getElementById('ar_explore_excerpt').value = article.ar?.excerpt || '';
+            document.getElementById('ar_explore_body').value = article.ar?.body || '';
+            
+            document.getElementById('editExploreModal').style.display = 'block';
+        }
+
+        function editMember(id) {
+            editingId = id;
+            const member = AN_about_data.team.find(m => m.id === id);
+            
+            if (!member) {
+                showNotification('لم يتم العثور على العضو!', 'error');
+                return;
+            }
+            
+            document.getElementById('memberModalTitle').textContent = 'تعديل عضو الفريق';
+            document.getElementById('memberForm').reset();
+            
+            document.getElementById('member_id').value = member.id;
+            document.getElementById('member_name').value = member.name || '';
+            document.getElementById('member_role').value = member.role || '';
+            document.getElementById('member_image').value = member.image || '';
+            document.getElementById('member_icon').value = member.icon || 'fa-star';
+            
+            // الإنجليزية
+            document.getElementById('en_member_name').value = member.en?.name || '';
+            document.getElementById('en_member_role').value = member.en?.role || '';
+            document.getElementById('en_member_bio').value = member.en?.bio || '';
+            
+            // الفرنسية
+            document.getElementById('fr_member_name').value = member.fr?.name || '';
+            document.getElementById('fr_member_role').value = member.fr?.role || '';
+            document.getElementById('fr_member_bio').value = member.fr?.bio || '';
+            
+            // العربية
+            document.getElementById('ar_member_name').value = member.ar?.name || '';
+            document.getElementById('ar_member_role').value = member.ar?.role || '';
+            document.getElementById('ar_member_bio').value = member.ar?.bio || '';
+            
+            document.getElementById('editMemberModal').style.display = 'block';
+        }
+
+        function editValue(id) {
+            editingId = id;
+            const value = AN_about_data.values.find(v => v.id === id);
+            
+            if (!value) {
+                showNotification('لم يتم العثور على القيمة!', 'error');
+                return;
+            }
+            
+            document.getElementById('valueModalTitle').textContent = 'تعديل القيمة';
+            document.getElementById('valueForm').reset();
+            
+            document.getElementById('value_id').value = value.id;
+            document.getElementById('value_icon').value = value.icon || 'fa-check-circle';
+            
+            // الإنجليزية
+            document.getElementById('en_value_title').value = value.en?.title || '';
+            document.getElementById('en_value_description').value = value.en?.description || '';
+            
+            // الفرنسية
+            document.getElementById('fr_value_title').value = value.fr?.title || '';
+            document.getElementById('fr_value_description').value = value.fr?.description || '';
+            
+            // العربية
+            document.getElementById('ar_value_title').value = value.ar?.title || '';
+            document.getElementById('ar_value_description').value = value.ar?.description || '';
+            
+            document.getElementById('editValueModal').style.display = 'block';
+        }
+
+        // وظائف الحذف
+        function deleteDeveloper() {
+            if (!confirm('هل أنت متأكد من حذف بيانات المطور؟')) return;
+            
+            const image = AN_about_data.developer.image;
+            if (image) {
+                imageChanges.removed.add(image);
+            }
+            
+            AN_about_data.developer = null;
+            showNotification('تم حذف بيانات المطور بنجاح!');
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+            
+            // إخفاء زر تعديل المطور
+            document.getElementById('editDeveloperBtn').style.display = 'none';
+        }
+
+        function deleteMember(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا العضو؟')) return;
+            
+            const member = AN_about_data.team.find(m => m.id === id);
+            if (member && member.image) {
+                imageChanges.removed.add(member.image);
+            }
+            
+            AN_about_data.team = AN_about_data.team.filter(m => m.id !== id);
+            showNotification('تم حذف العضو بنجاح!');
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+        }
+
+        function deleteValue(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه القيمة؟')) return;
+            
+            AN_about_data.values = AN_about_data.values.filter(v => v.id !== id);
+            showNotification('تم حذف القيمة بنجاح!');
+            renderAboutTable();
+            updateCounters();
+            fileStatus.about = 'معدل';
+        }
+
+        function deleteExplore(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
+            
+            const article = AN_explore_data.find(item => item.id === id);
+            if (article && article.image) {
+                imageChanges.removed.add(article.image);
+            }
+            
+            AN_explore_data = AN_explore_data.filter(item => item.id !== id);
+            showNotification('تم حذف المقال بنجاح!');
+            renderExploreTable();
+            updateCounters();
+            fileStatus.explore = 'معدل';
+        }
+
+        function deleteAllEntries() {
+            if (currentFile === 'about') {
+                if (!confirm('تحذير: هذا سيمسح جميع بيانات صفحة حول الموقع. هل تريد المتابعة؟')) return;
+                
+                // تتبع جميع الصور التي سيتم إزالتها
+                if (AN_about_data.developer && AN_about_data.developer.image) {
+                    imageChanges.removed.add(AN_about_data.developer.image);
+                }
+                if (AN_about_data.team) {
+                    AN_about_data.team.forEach(member => {
+                        if (member.image) imageChanges.removed.add(member.image);
+                    });
+                }
+                
+                AN_about_data = { developer: null, team: [], values: [] };
+                showNotification('تم حذف جميع البيانات بنجاح!');
+                renderAboutTable();
+                document.getElementById('editDeveloperBtn').style.display = 'none';
+            } else if (currentFile === 'explore') {
+                if (!confirm('تحذير: هذا سيمسح جميع المقالات الاستكشافية. هل تريد المتابعة؟')) return;
+                
+                // تتبع جميع الصور التي سيتم إزالتها
+                AN_explore_data.forEach(article => {
+                    if (article.image) imageChanges.removed.add(article.image);
+                });
+                
+                AN_explore_data = [];
+                showNotification('تم حذف جميع المقالات بنجاح!');
+                renderExploreTable();
+            }
+            
+            updateCounters();
+            fileStatus[currentFile] = 'معدل';
+        }
+
+        // وظائف المعاينة
+        function previewDeveloper() {
+            const dev = AN_about_data.developer;
+            if (!dev) return;
+            
+            const preview = document.getElementById('previewArea');
+            let html = `
+                <div class="preview-content">
+                    <h4>${dev.name}</h4>
+                    <p><strong>الدور:</strong> ${dev.role}</p>
+                    <p><strong>المهارات:</strong> ${dev.skills ? dev.skills.join(', ') : 'لا توجد'}</p>
+                    <p><strong>الصورة:</strong> ${dev.image || 'غير محدد'}</p>
+                    <p><strong>البريد الإلكتروني:</strong> ${dev.en?.email || 'غير محدد'}</p>
+                    <p><strong>السيرة (EN):</strong> ${(dev.en?.bio || '').substring(0, 100)}${dev.en?.bio && dev.en.bio.length > 100 ? '...' : ''}</p>
+                </div>
+            `;
+            preview.innerHTML = html;
+        }
+
+        function previewMember(id) {
+            const member = AN_about_data.team.find(m => m.id === id);
+            if (!member) return;
+            
+            const preview = document.getElementById('previewArea');
+            let html = `
+                <div class="preview-content">
+                    <h4>${member.name}</h4>
+                    <p><strong>الدور:</strong> ${member.role}</p>
+                    <p><strong>الأيقونة:</strong> ${member.icon}</p>
+                    <p><strong>الصورة:</strong> ${member.image || 'غير محدد'}</p>
+                    <p><strong>السيرة (EN):</strong> ${(member.en?.bio || '').substring(0, 100)}${member.en?.bio && member.en.bio.length > 100 ? '...' : ''}</p>
+                </div>
+            `;
+            preview.innerHTML = html;
+        }
+
+        function previewValue(id) {
+            const value = AN_about_data.values.find(v => v.id === id);
+            if (!value) return;
+            
+            const preview = document.getElementById('previewArea');
+            let html = `
+                <div class="preview-content">
+                    <h4>${value.en?.title || value.ar?.title || value.fr?.title || 'بدون عنوان'}</h4>
+                    <p><strong>الأيقونة:</strong> ${value.icon}</p>
+                    <p><strong>الوصف (EN):</strong> ${(value.en?.description || '').substring(0, 100)}${value.en?.description && value.en.description.length > 100 ? '...' : ''}</p>
+                </div>
+            `;
+            preview.innerHTML = html;
+        }
+
+        function previewExplore(id) {
+            const article = AN_explore_data.find(item => item.id === id);
+            if (!article) return;
+            
+            const preview = document.getElementById('previewArea');
+            let html = `
+                <div class="preview-content">
+                    <h4>${article.en?.title || 'بدون عنوان'}</h4>
+                    <p><strong>الفئة:</strong> ${article.category}</p>
+                    <p><strong>الصورة:</strong> ${article.image || 'غير محدد'}</p>
+                    <p><strong>المؤلف:</strong> ${article.en?.author || 'غير محدد'}</p>
+                    <p><strong>التاريخ:</strong> ${formatDate(article.date)}</p>
+                    <p><strong>المقدمة:</strong> ${(article.en?.introduction || '').substring(0, 150)}${article.en?.introduction && article.en.introduction.length > 150 ? '...' : ''}</p>
+                    <p><strong>عدد المصادر:</strong> ${article.en?.sources?.length || 0}</p>
+                </div>
+            `;
+            preview.innerHTML = html;
+        }
+
+        // وظائف إضافية
+        function addSkill() {
+            const skillInput = document.getElementById('newSkill');
+            const skill = skillInput.value.trim();
+            
+            if (skill && !currentSkills.includes(skill)) {
+                currentSkills.push(skill);
+                renderSkills();
+                skillInput.value = '';
+            }
+        }
+
+        function renderSkills() {
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = '';
+            
+            currentSkills.forEach((skill, index) => {
+                const skillElement = document.createElement('div');
+                skillElement.className = 'skill-tag';
+                skillElement.innerHTML = `
+                    ${skill}
+                    <button type="button" class="remove-skill" onclick="removeSkill(${index})">×</button>
+                `;
+                skillsList.appendChild(skillElement);
+            });
+        }
+
+        function removeSkill(index) {
+            currentSkills.splice(index, 1);
+            renderSkills();
+        }
+
+        function addSourceField(lang) {
+            const container = document.getElementById(`${lang}_sources_container`);
+            if (!container) return;
+            
+            const sourceIndex = container.children.length;
+            const sourceDiv = document.createElement('div');
+            sourceDiv.className = 'source-item';
+            sourceDiv.innerHTML = `
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <input type="text" name="source_title" placeholder="عنوان المصدر" style="flex: 1;">
+                    <input type="text" name="source_author" placeholder="المؤلف" style="flex: 1;">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" name="source_journal" placeholder="المجلة/الناشر" style="flex: 1;">
+                    <input type="number" name="source_year" placeholder="السنة" style="width: 100px;">
+                    <button type="button" class="row-btn delete" onclick="this.parentElement.parentElement.remove()">حذف</button>
+                </div>
+            `;
+            container.appendChild(sourceDiv);
+        }
+
+        function renderSources(lang) {
+            const container = document.getElementById(`${lang}_sources_container`);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            currentSources[lang] = currentSources[lang] || [];
+            currentSources[lang].forEach(source => {
+                const sourceDiv = document.createElement('div');
+                sourceDiv.className = 'source-item';
+                sourceDiv.innerHTML = `
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" name="source_title" placeholder="عنوان المصدر" style="flex: 1;" value="${source.title || ''}">
+                        <input type="text" name="source_author" placeholder="المؤلف" style="flex: 1;" value="${source.author || ''}">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" name="source_journal" placeholder="المجلة/الناشر" style="flex: 1;" value="${source.journal || ''}">
+                        <input type="number" name="source_year" placeholder="السنة" style="width: 100px;" value="${source.year || ''}">
+                        <button type="button" class="row-btn delete" onclick="this.parentElement.parentElement.remove()">حذف</button>
+                    </div>
+                `;
+                container.appendChild(sourceDiv);
+            });
+            
+            // إضافة زر إضافة مصدر جديد
+            const addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'add-source-btn';
+            addButton.innerHTML = '<span>+</span> إضافة مصدر';
+            addButton.onclick = () => addSourceField(lang);
+            container.appendChild(addButton);
+        }
+
+        // وظائف إدارة الصور
+        function showImageChanges() {
+            // إزالة الصور التي تمت إضافتها وإزالتها (تعني أنها تم تحديثها)
+            const addedArray = Array.from(imageChanges.added);
+            const removedArray = Array.from(imageChanges.removed);
+            
+            const netAdded = addedArray.filter(img => !imageChanges.removed.has(img));
+            const netRemoved = removedArray.filter(img => !imageChanges.added.has(img));
+            
+            const addedHtml = netAdded.length > 0 ? 
+                `<h4>الصور المضافة (يجب رفعها إلى مجلد assets):</h4>
+                 <ul class="image-list added">
+                     ${netAdded.map(img => `<li>${img}</li>`).join('')}
+                 </ul>` : 
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد صور مضافة جديدة</p>';
+            
+            const removedHtml = netRemoved.length > 0 ? 
+                `<h4>الصور المحذوفة (يمكن حذفها من مجلد assets):</h4>
+                 <ul class="image-list removed">
+                     ${netRemoved.map(img => `<li>${img}</li>`).join('')}
+                 </ul>` : 
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد صور محذوفة</p>';
+            
+            const summary = netAdded.length > 0 || netRemoved.length > 0 ?
+                `<p><strong>ملخص:</strong> ${netAdded.length} صورة مضافة، ${netRemoved.length} صورة محذوفة</p>` :
+                '<p style="color: #9d9d9d; font-style: italic;">لا توجد تغييرات في الصور</p>';
+            
+            const content = summary + addedHtml + removedHtml;
+            
+            // إنشاء أو تحديث النافذة المنبثقة
+            let modal = document.getElementById('imageChangesModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'imageChangesModal';
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content" style="max-width: 600px;">
+                        <span class="close-modal" onclick="closeImageChangesModal()">&times;</span>
+                        <h2>تغييرات الصور</h2>
+                        <div id="imageChangesContent" class="image-changes-list"></div>
+                        <div class="form-section">
+                            <button type="button" class="action-btn" onclick="clearImageChanges()">مسح القائمة</button>
+                            <button type="button" class="action-btn delete" onclick="closeImageChangesModal()">إغلاق</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            
+            document.getElementById('imageChangesContent').innerHTML = content;
+            modal.style.display = 'block';
+        }
+
+        function closeImageChangesModal() {
+            const modal = document.getElementById('imageChangesModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function clearImageChanges() {
+            imageChanges.added.clear();
+            imageChanges.removed.clear();
+            showNotification('تم مسح قائمة تغييرات الصور');
+            closeImageChangesModal();
+        }
+
+        // وظائف التنزيل
+        function downloadCurrentFile() {
+            let content = '';
+            let filename = '';
+            
+            if (currentFile === 'about') {
+                content = generateAboutJS();
+                filename = 'data_about.js';
+            } else if (currentFile === 'explore') {
+                content = generateExploreJS();
+                filename = 'data_explore.js';
+            }
+            
+            if (!content) {
+                showNotification('لا توجد بيانات لتحميلها!', 'error');
+                return;
+            }
+            
+            const blob = new Blob([content], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification(`تم تحميل الملف ${filename}!`);
+            
+            // إعادة تعيين حالة الملف
+            fileStatus[currentFile] = 'محفوظ';
+            updateCounters();
+        }
+
+        function generateAboutJS() {
+            const dataStr = JSON.stringify(AN_about_data, null, 4);
+            return `// data_about.js - Data for About Page
+const AN_about_data = ${dataStr};`;
+        }
+
+        function generateExploreJS() {
+            const dataStr = JSON.stringify(AN_explore_data, null, 4);
+            return `// data_explore.js - Astronomy and Cosmology Articles Data
+
+const AN_explore_data = ${dataStr};`;
+        }
+
+        // وظائف إغلاق النوافذ
+        function closeExploreModal() {
+            document.getElementById('editExploreModal').style.display = 'none';
+            editingId = null;
+        }
+
+        function closeAboutModal() {
+            document.getElementById('editAboutModal').style.display = 'none';
+        }
+
+        function closeDeveloperModal() {
+            document.getElementById('editDeveloperModal').style.display = 'none';
+        }
+
+        function closeMemberModal() {
+            document.getElementById('editMemberModal').style.display = 'none';
+            editingId = null;
+        }
+
+        function closeValueModal() {
+            document.getElementById('editValueModal').style.display = 'none';
+            editingId = null;
+        }
+
+        // وظائف مساعدة
+        function showLang(lang, type = 'explore') {
+            // إخفاء جميع محتويات اللغات
+            document.querySelectorAll(`#${type === 'dev' ? 'dev' : type === 'member' ? 'member' : type === 'value' ? 'value' : 'explore'}-lang-en, 
+                                      #${type === 'dev' ? 'dev' : type === 'member' ? 'member' : type === 'value' ? 'value' : 'explore'}-lang-fr, 
+                                      #${type === 'dev' ? 'dev' : type === 'member' ? 'member' : type === 'value' ? 'value' : 'explore'}-lang-ar`)
+                .forEach(el => el.classList.remove('active'));
+            
+            // إخفاء جميع أزرار اللغات
+            document.querySelectorAll(`[onclick*="showLang('en', '${type}')"], 
+                                      [onclick*="showLang('fr', '${type}')"], 
+                                      [onclick*="showLang('ar', '${type}')"]`)
+                .forEach(el => el.classList.remove('active'));
+            
+            // إظهار المحتوى المطلوب
+            document.getElementById(`${type === 'dev' ? 'dev' : type === 'member' ? 'member' : type === 'value' ? 'value' : 'explore'}-lang-${lang}`).classList.add('active');
+            
+            // تفعيل الزر المطلوب
+            const button = document.querySelector(`[onclick="showLang('${lang}', '${type}')"]`);
+            if (button) button.classList.add('active');
+        }
+
+        function updateCounters() {
+            let count = 0;
+            
+            if (currentFile === 'about') {
+                count = (AN_about_data.team ? AN_about_data.team.length : 0) + 
+                        (AN_about_data.values ? AN_about_data.values.length : 0);
+                if (AN_about_data.developer) count++;
+            } else if (currentFile === 'explore') {
+                count = AN_explore_data.length;
+            }
+            
+            document.getElementById('entryCount').textContent = count;
+            document.getElementById('lastModified').textContent = new Date().toLocaleTimeString('ar-TN');
+            document.getElementById('fileStatus').textContent = fileStatus[currentFile] || 'غير محمل';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'error' ? 'rgba(244, 67, 54, 0.9)' : 'rgba(76, 175, 80, 0.9)';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // إغلاق النوافذ المنبثقة عند النقر خارجها
+        window.onclick = function(event) {
+            const modals = ['editExploreModal', 'editAboutModal', 'editDeveloperModal', 'editMemberModal', 'editValueModal', 'imageChangesModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    if (modalId === 'editExploreModal') closeExploreModal();
+                    else if (modalId === 'editAboutModal') closeAboutModal();
+                    else if (modalId === 'editDeveloperModal') closeDeveloperModal();
+                    else if (modalId === 'editMemberModal') closeMemberModal();
+                    else if (modalId === 'editValueModal') closeValueModal();
+                    else if (modalId === 'imageChangesModal') closeImageChangesModal();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
