@@ -22,7 +22,32 @@ const AN_app = {
     
     // Initialize app
     initialize: async function() {
-        console.log('Initializing Astronomy News App...');
+    console.log('Initializing Astronomy News App...');
+    
+    // TEST: Add a test user for development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        localStorage.setItem('AN_test_mode', 'true');
+        
+        // Create a test user if none exists
+        if (!localStorage.getItem('AN_user')) {
+            const testUser = {
+                user_id: 'test-user-123',
+                name: 'Test User',
+                user_name: 'testuser',
+                email: 'test@example.com',
+                token: 'test-token-123',
+                preferences: {
+                    language: 'en',
+                    theme: 'light',
+                    notifications: true,
+                    email_updates: false,
+                    default_category: 'all'
+                }
+            };
+            localStorage.setItem('AN_user', JSON.stringify(testUser));
+            console.log('Test user created for development');
+        }
+    }
         
         // Load user state
         await this.loadUserState();
@@ -613,129 +638,200 @@ const AN_app = {
     },
     
     // Authentication methods
-    login: async function(email, password) {
-        try {
-            // Using Supabase Auth REST API
-            const response = await fetch(`${this.config.supabaseUrl}/auth/v1/token?grant_type=password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': this.config.supabaseKey
-                },
-                body: JSON.stringify({ email, password })
-            });
-            
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.error_description || 'Login failed');
-            }
-            
-            const data = await response.json();
-            
-            // Get user profile from users table
-            const userResponse = await fetch(`${this.config.supabaseUrl}/rest/v1/users?email=eq.${encodeURIComponent(email)}`, {
-                headers: {
-                    'apikey': this.config.supabaseKey,
-                    'Authorization': `Bearer ${data.access_token}`
-                }
-            });
-            
-            const userData = await userResponse.json();
-            
-            if (userData && userData.length > 0) {
-                this.state.user = {
-                    ...userData[0],
-                    token: data.access_token,
-                    refresh_token: data.refresh_token
-                };
-                
-                this.saveUserState();
-                this.updateUserUI();
-                
-                // Load user interactions
-                await this.loadUserInteractions();
-                
-                return true;
-            }
-            
-            throw new Error('User profile not found');
-            
-        } catch (error) {
-            console.error('Login error:', error);
-            this.showMessage(error.message || 'An.message.error');
-            return false;
-        }
-    },
+    	login: async function(email, password) {
+		try {
+			// Using Supabase Auth REST API
+			const response = await fetch(`${this.config.supabaseUrl}/auth/v1/token?grant_type=password`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'apikey': this.config.supabaseKey
+				},
+				body: JSON.stringify({ email, password })
+			});
+			
+			if (!response.ok) {
+				const error = await response.json();
+				throw new Error(error.error_description || 'Login failed');
+			}
+			
+			const data = await response.json();
+			
+			// Get user profile from users table
+			const userResponse = await fetch(
+				`${this.config.supabaseUrl}/rest/v1/users?user_id=eq.${data.user.id}&select=*`,
+				{
+					headers: {
+						'apikey': this.config.supabaseKey,
+						'Authorization': `Bearer ${data.access_token}`
+					}
+				}
+			);
+			
+			let userData;
+			if (userResponse.ok) {
+				const userProfile = await userResponse.json();
+				userData = userProfile.length > 0 ? userProfile[0] : null;
+			}
+			
+			// If user profile doesn't exist, create it
+			if (!userData) {
+				const createProfileResponse = await fetch(`${this.config.supabaseUrl}/rest/v1/users`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'apikey': this.config.supabaseKey,
+						'Prefer': 'return=representation',
+						'Authorization': `Bearer ${data.access_token}`
+					},
+					body: JSON.stringify({
+						user_id: data.user.id,
+						name: data.user.user_metadata?.name || 'New User',
+						user_name: data.user.email.split('@')[0],
+						email: data.user.email,
+						preferences: {
+							language: this.state.currentLanguage,
+							theme: this.state.currentTheme,
+							notifications: true,
+							email_updates: false,
+							default_category: 'all'
+						}
+					})
+				});
+				
+				if (createProfileResponse.ok) {
+					const createdProfile = await createProfileResponse.json();
+					userData = createdProfile[0];
+				}
+			}
+			
+			if (userData) {
+				this.state.user = {
+					...userData,
+					token: data.access_token,
+					refresh_token: data.refresh_token
+				};
+				this.saveUserState();
+				this.updateUserUI();
+				// Load user interactions
+				await this.loadUserInteractions();
+				return true;
+			}
+			
+			throw new Error('User profile not found');
+		} catch (error) {
+			console.error('Login error:', error);
+			this.showMessage(error.message || 'An.message.error', 'error');
+			return false;
+		}
+	},
+
     
-    register: async function(userData) {
-        try {
-            // First, create auth user with Supabase
-            const authResponse = await fetch(`${this.config.supabaseUrl}/auth/v1/signup`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': this.config.supabaseKey
-                },
-                body: JSON.stringify({
-                    email: userData.email,
-                    password: userData.password
-                })
-            });
-            
-            if (!authResponse.ok) {
-                const error = await authResponse.json();
-                throw new Error(error.message || 'Registration failed');
-            }
-            
-            const authData = await authResponse.json();
-            
-            // Then create user profile in users table
-            const profileResponse = await fetch(`${this.config.supabaseUrl}/rest/v1/users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': this.config.supabaseKey,
-                    'Prefer': 'return=representation',
-                    'Authorization': `Bearer ${authData.access_token}`
-                },
-                body: JSON.stringify({
-                    name: userData.name,
-                    user_name: userData.username,
-                    email: userData.email,
-                    preferences: {
-                        language: this.state.currentLanguage,
-                        theme: this.state.currentTheme,
-                        notifications: true,
-                        email_updates: false,
-                        default_category: 'all'
-                    }
-                })
-            });
-            
-            if (!profileResponse.ok) {
-                throw new Error('Profile creation failed');
-            }
-            
-            const profileData = await profileResponse.json();
-            
-            // Auto-login after registration
-            this.state.user = {
-                ...profileData[0],
-                token: authData.access_token,
-                refresh_token: authData.refresh_token
-            };
-            
-            this.saveUserState();
-            this.updateUserUI();
-            
-            return true;
-            
-        } catch (error) {
-            console.error('Registration error:', error);
-            this.showMessage(error.message || 'An.message.error');
-            return false;
-        }
-    },
+    	register: async function(userData) {
+		try {
+			// First, create auth user with Supabase
+			const authResponse = await fetch(`${this.config.supabaseUrl}/auth/v1/signup`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'apikey': this.config.supabaseKey
+				},
+				body: JSON.stringify({
+					email: userData.email,
+					password: userData.password,
+					options: {
+						data: {
+							name: userData.name,
+							user_name: userData.username
+						}
+					}
+				})
+			});
+
+			if (!authResponse.ok) {
+				const error = await authResponse.json();
+				console.error('Auth signup error:', error);
+				throw new Error(error.message || 'Registration failed');
+			}
+
+			const authData = await authResponse.json();
+			
+			// Log the auth response to debug
+			console.log('Auth response:', authData);
+			
+			// Login immediately after registration to get access token
+			const loginResponse = await fetch(`${this.config.supabaseUrl}/auth/v1/token?grant_type=password`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'apikey': this.config.supabaseKey
+				},
+				body: JSON.stringify({
+					email: userData.email,
+					password: userData.password
+				})
+			});
+
+			if (!loginResponse.ok) {
+				const error = await loginResponse.json();
+				console.error('Login after registration error:', error);
+				throw new Error('Failed to login after registration');
+			}
+
+			const loginData = await loginResponse.json();
+			
+			// Then create user profile in users table
+			const profileResponse = await fetch(`${this.config.supabaseUrl}/rest/v1/users`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'apikey': this.config.supabaseKey,
+					'Prefer': 'return=representation',
+					'Authorization': `Bearer ${loginData.access_token}`
+				},
+				body: JSON.stringify({
+					user_id: loginData.user.id,
+					name: userData.name,
+					user_name: userData.username,
+					email: userData.email,
+					preferences: {
+						language: this.state.currentLanguage,
+						theme: this.state.currentTheme,
+						notifications: true,
+						email_updates: false,
+						default_category: 'all'
+					}
+				})
+			});
+
+			if (!profileResponse.ok) {
+				const errorText = await profileResponse.text();
+				console.error('Profile creation failed:', errorText);
+				throw new Error('Profile creation failed');
+			}
+
+			const profileData = await profileResponse.json();
+			
+			// Auto-login after registration
+			this.state.user = {
+				...profileData[0],
+				token: loginData.access_token,
+				refresh_token: loginData.refresh_token
+			};
+			
+			this.saveUserState();
+			this.updateUserUI();
+			
+			// Show success message
+			this.showMessage('An.message.registerSuccess', 'success');
+			return true;
+		} catch (error) {
+			console.error('Registration error:', error);
+			this.showMessage(error.message || 'An.message.error', 'error');
+			return false;
+		}
+	},
+
     
     logout: function() {
         this.state.user = null;
